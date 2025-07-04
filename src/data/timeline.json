@@ -1,0 +1,59 @@
+{
+  "timeline": [
+    {
+      "year": "2021",
+      "title": "Started Backend Development",
+      "subtitle": "Python & Laravel Foundation",
+      "description": "Began my journey into backend development, learning Python fundamentals and exploring Laravel for web development. Built my first database-driven applications and discovered my passion for server-side logic.",
+      "technologies": ["Python", "Laravel", "MySQL", "HTML/CSS"],
+      "achievements": [
+        "Completed first full-stack web application",
+        "Learned MVC architecture principles",
+        "Built basic CRUD operations"
+      ],
+      "icon": "🚀"
+    },
+    {
+      "year": "2022",
+      "title": "Scalable APIs with Django",
+      "subtitle": "School Power Schedule Project",
+      "description": "Developed a comprehensive school power schedule management system using Django. This project taught me about API design, database optimization, and handling real-world business logic.",
+      "technologies": ["Django", "Django REST Framework", "PostgreSQL", "Redis"],
+      "achievements": [
+        "Built RESTful APIs serving 500+ daily requests",
+        "Implemented user authentication and authorization",
+        "Optimized database queries for better performance",
+        "Created comprehensive API documentation"
+      ],
+      "icon": "⚡"
+    },
+    {
+      "year": "2023",
+      "title": "Team Leadership & Complex Systems",
+      "subtitle": "Student Task Tracking System",
+      "description": "Led backend development for a student task tracking system, managing a small team and implementing complex business logic. Focused on code quality, testing, and maintainable architecture.",
+      "technologies": ["Django", "PostgreSQL", "Docker", "Git", "Celery"],
+      "achievements": [
+        "Led a team of 3 developers",
+        "Implemented automated testing with 90% coverage",
+        "Deployed using Docker containers",
+        "Built real-time notification system"
+      ],
+      "icon": "👥"
+    },
+    {
+      "year": "2024",
+      "title": "Freelance & Client Solutions",
+      "subtitle": "Secure & Maintainable Systems",
+      "description": "Transitioned to freelance work, building secure and maintainable backend systems for various clients. Focused on delivering high-quality solutions that scale with business needs.",
+      "technologies": ["Django", "Laravel", "PostgreSQL", "Redis", "AWS", "Docker"],
+      "achievements": [
+        "Delivered 15+ successful projects",
+        "Built e-commerce APIs handling 10k+ transactions",
+        "Implemented advanced security measures",
+        "Achieved 99.9% uptime for client applications"
+      ],
+      "icon": "💼"
+    }
+  ]
+}
