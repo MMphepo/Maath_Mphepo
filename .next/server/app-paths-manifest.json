@@ -1,5 +1,9 @@
 {
   "/not-found": "app/not-found.js",
-  "/about/page": "app/about/page.js",
-  "/page": "app/page.js"
+  "/page": "app/page.js",
+  "/blog/page": "app/blog/page.js",
+  "/blog/[slug]/page": "app/blog/[slug]/page.js",
+  "/admin/page": "app/admin/page.js",
+  "/api/blog/tags/route": "app/api/blog/tags/route.js",
+  "/api/blog/route": "app/api/blog/route.js"
 }
