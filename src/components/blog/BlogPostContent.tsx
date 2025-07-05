@@ -7,6 +7,7 @@ import Link from 'next/link'
 import { ArrowLeft, Calendar, Clock, Eye, Heart, Share2, Tag } from 'lucide-react'
 import { BlogPost } from '@/types/blog'
 import { formatDate } from '@/lib/blog-utils'
+import { api } from '@/lib/api-config'
 import BlogTableOfContents from './BlogTableOfContents'
 import BlogSocialShare from './BlogSocialShare'
 import BlogComments from './BlogComments'
@@ -25,30 +26,27 @@ const BlogPostContent = ({ post }: BlogPostContentProps) => {
   useEffect(() => {
     const checkLikeStatus = async () => {
       try {
-        const response = await fetch(`/api/blog/${post.slug}/like`)
-        const data = await response.json()
-        if (data.success) {
-          setIsLiked(data.data.liked)
-          setLikeCount(data.data.likes)
-        }
+        // Note: Django backend doesn't have a GET endpoint for like status
+        // We'll handle this in the like action itself
+        setIsLiked(false) // Default to not liked
+        setLikeCount(post.likes)
       } catch (error) {
         console.error('Error checking like status:', error)
       }
     }
 
     checkLikeStatus()
-  }, [post.slug])
+  }, [post.slug, post.likes])
 
   const handleLike = async () => {
     try {
-      const response = await fetch(`/api/blog/${post.slug}/like`, {
-        method: 'POST',
-      })
-      const data = await response.json()
-      
-      if (data.success) {
-        setIsLiked(data.data.liked)
-        setLikeCount(data.data.likes)
+      const response = await api.blog.like(post.slug)
+
+      if (response.success && response.data) {
+        setIsLiked(response.data.liked)
+        setLikeCount(response.data.likes)
+      } else {
+        console.error('Error liking post:', response.error)
       }
     } catch (error) {
       console.error('Error handling like:', error)
@@ -87,11 +85,11 @@ const BlogPostContent = ({ post }: BlogPostContentProps) => {
           <div className="flex flex-wrap gap-2 mb-6">
             {post.tags.map((tag) => (
               <span
-                key={tag}
+                key={typeof tag === 'string' ? tag : tag.id}
                 className="inline-flex items-center gap-1 px-3 py-1 bg-primary/10 text-primary rounded-full text-sm font-medium"
               >
                 <Tag className="w-3 h-3" />
-                {tag}
+                {typeof tag === 'string' ? tag : tag.name}
               </span>
             ))}
           </div>

@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Search, Filter, Calendar, Clock, Eye, Heart, Tag } from 'lucide-react'
 import { BlogPost, BlogTag, BlogListResponse } from '@/types/blog'
 import { formatDate, extractExcerpt } from '@/lib/blog-utils'
+import { api } from '@/lib/api-config'
 import BlogCard from './BlogCard'
 import BlogFilters from './BlogFilters'
 import BlogPagination from './BlogPagination'
@@ -24,21 +25,22 @@ const BlogList = () => {
   const fetchPosts = async () => {
     try {
       setLoading(true)
-      const params = new URLSearchParams({
+      const params = {
         page: currentPage.toString(),
         limit: '6',
         ...(searchQuery && { search: searchQuery }),
         ...(selectedTag && { tag: selectedTag }),
         sortBy,
         sortOrder: 'desc'
-      })
+      }
 
-      const response = await fetch(`/api/blog?${params}`)
-      const data = await response.json()
+      const response = await api.blog.list(params)
 
-      if (data.success) {
-        setPosts(data.data.posts)
-        setTotalPages(data.data.totalPages)
+      if (response.success && response.data) {
+        setPosts(response.data.posts)
+        setTotalPages(response.data.totalPages)
+      } else {
+        console.error('Error fetching posts:', response.error)
       }
     } catch (error) {
       console.error('Error fetching posts:', error)
@@ -50,10 +52,11 @@ const BlogList = () => {
   // Fetch tags
   const fetchTags = async () => {
     try {
-      const response = await fetch('/api/blog/tags')
-      const data = await response.json()
-      if (data.success) {
-        setTags(data.data)
+      const response = await api.blog.tags()
+      if (response.success && response.data) {
+        setTags(response.data)
+      } else {
+        console.error('Error fetching tags:', response.error)
       }
     } catch (error) {
       console.error('Error fetching tags:', error)

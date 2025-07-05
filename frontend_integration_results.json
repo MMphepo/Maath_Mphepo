@@ -1,0 +1,79 @@
+[
+  {
+    "endpoint": "/api/auth/login/",
+    "method": "POST",
+    "success": true,
+    "message": "Valid API response structure",
+    "timestamp": "2025-07-04T14:00:02.300Z"
+  },
+  {
+    "endpoint": "/api/blog/",
+    "method": "GET",
+    "success": true,
+    "message": "Valid API response structure",
+    "timestamp": "2025-07-04T14:00:02.493Z"
+  },
+  {
+    "endpoint": "/api/blog/tags/",
+    "method": "GET",
+    "success": true,
+    "message": "Valid API response structure",
+    "timestamp": "2025-07-04T14:00:02.860Z"
+  },
+  {
+    "endpoint": "/api/blog/react-state-management-best-practices/",
+    "method": "GET",
+    "success": true,
+    "message": "Valid API response structure",
+    "timestamp": "2025-07-04T14:00:03.252Z"
+  },
+  {
+    "endpoint": "/api/projects/",
+    "method": "GET",
+    "success": true,
+    "message": "Valid API response structure",
+    "timestamp": "2025-07-04T14:00:03.285Z"
+  },
+  {
+    "endpoint": "/api/skills/",
+    "method": "GET",
+    "success": true,
+    "message": "Valid API response structure",
+    "timestamp": "2025-07-04T14:00:03.345Z"
+  },
+  {
+    "endpoint": "/api/contact/info/",
+    "method": "GET",
+    "success": true,
+    "message": "Valid API response structure",
+    "timestamp": "2025-07-04T14:00:03.371Z"
+  },
+  {
+    "endpoint": "/api/testimonials/",
+    "method": "GET",
+    "success": true,
+    "message": "Valid API response structure",
+    "timestamp": "2025-07-04T14:00:03.421Z"
+  },
+  {
+    "endpoint": "/api/config/",
+    "method": "GET",
+    "success": true,
+    "message": "Valid API response structure",
+    "timestamp": "2025-07-04T14:00:03.461Z"
+  },
+  {
+    "endpoint": "/api/blog/react-state-management-best-practices/like/",
+    "method": "POST",
+    "success": true,
+    "message": "Valid API response structure",
+    "timestamp": "2025-07-04T14:00:03.927Z"
+  },
+  {
+    "endpoint": "/api/contact/newsletter/subscribe/",
+    "method": "POST",
+    "success": false,
+    "message": "HTTP 401: Authentication credentials were not provided.",
+    "timestamp": "2025-07-04T14:00:03.941Z"
+  }
+]

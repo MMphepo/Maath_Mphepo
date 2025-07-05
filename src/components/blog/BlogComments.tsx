@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { MessageCircle, Reply, Send, User } from 'lucide-react'
 import { Comment } from '@/types/blog'
+import { api } from '@/lib/api-config'
 import { formatRelativeTime } from '@/lib/blog-utils'
 
 interface BlogCommentsProps {
@@ -25,11 +26,12 @@ const BlogComments = ({ postSlug }: BlogCommentsProps) => {
   const fetchComments = async () => {
     try {
       setLoading(true)
-      const response = await fetch(`/api/blog/${postSlug}/comments`)
-      const data = await response.json()
-      
-      if (data.success) {
-        setComments(data.data)
+      const response = await api.blog.comments(postSlug)
+
+      if (response.success && response.data) {
+        setComments(response.data)
+      } else {
+        console.error('Error fetching comments:', response.error)
       }
     } catch (error) {
       console.error('Error fetching comments:', error)
@@ -45,30 +47,24 @@ const BlogComments = ({ postSlug }: BlogCommentsProps) => {
   // Submit comment
   const handleSubmit = async (e: React.FormEvent, parentId?: string) => {
     e.preventDefault()
-    
+
     if (!formData.name || !formData.email || !formData.content) {
       return
     }
 
     try {
       setSubmitting(true)
-      const response = await fetch(`/api/blog/${postSlug}/comments`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          ...formData,
-          parentId
-        }),
+      const response = await api.blog.addComment(postSlug, {
+        ...formData,
+        parentId
       })
 
-      const data = await response.json()
-      
-      if (data.success) {
+      if (response.success) {
         setFormData({ name: '', email: '', content: '' })
         setReplyingTo(null)
         fetchComments() // Refresh comments
+      } else {
+        console.error('Error submitting comment:', response.error)
       }
     } catch (error) {
       console.error('Error submitting comment:', error)

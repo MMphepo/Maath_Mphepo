@@ -1,0 +1,53 @@
+# Core Django Framework
+Django==4.2.7
+djangorestframework==3.14.0
+djangorestframework-simplejwt==5.3.0
+
+# CORS and Security
+django-cors-headers==4.3.1
+django-ratelimit==4.1.0
+django-csp==3.7
+
+# Database Support
+psycopg2-binary==2.9.9
+dj-database-url==2.1.0
+
+# Caching and Performance
+django-redis==5.4.0
+redis==5.0.1
+django-compressor==4.4
+
+# Static Files and Media
+whitenoise==6.6.0
+Pillow==10.1.0
+
+# Environment Configuration
+python-decouple==3.8
+
+# Content Processing
+markdown==3.5.1
+bleach==6.1.0
+python-slugify==8.0.1
+django-filter==23.5
+
+# HTTP and Utilities
+requests==2.31.0
+python-dateutil==2.8.2
+pytz==2023.3
+
+# Monitoring and Error Tracking
+sentry-sdk==1.38.0
+
+# Health Checks
+django-health-check==3.17.0
+
+# Email Services
+django-anymail==10.2
+
+# Development Tools
+django-extensions==3.2.3
+django-debug-toolbar==4.2.0
+
+# Production WSGI/ASGI Servers
+gunicorn==21.2.0
+uvicorn==0.24.0

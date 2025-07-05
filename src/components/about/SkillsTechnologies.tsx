@@ -3,11 +3,12 @@
 import { motion } from 'framer-motion'
 import { Filter, SortAsc } from 'lucide-react'
 import { useEffect, useState } from 'react'
+import api from '@/lib/api-config'
 
 interface Skill {
   name: string
-  category: 'Languages' | 'Frameworks' | 'Databases' | 'Tools'
-  level: 'Most Used' | 'Recently Used' | 'Learning Now'
+  category: string
+  level: string
   description: string
   icon: string
   color: string
@@ -18,8 +19,96 @@ const SkillsTechnologies = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('All')
   const [sortBy, setSortBy] = useState<string>('Most Used')
   const [hoveredSkill, setHoveredSkill] = useState<string | null>(null)
+  const [skills, setSkills] = useState<Skill[]>([])
+  const [categories, setCategories] = useState<string[]>(['All'])
+  const [loading, setLoading] = useState(true)
 
-  const skills: Skill[] = [
+  // Fetch skills from Django API
+  const fetchSkills = async () => {
+    try {
+      setLoading(true)
+      const response = await api.skills.list()
+
+      if (response.success && response.data) {
+        // Transform Django skills data to match component interface
+        const transformedSkills: Skill[] = response.data.skillsByCategory
+          .flatMap((category: any) =>
+            category.skills.map((skill: any) => ({
+              name: skill.name,
+              category: category.name,
+              level: getLevelFromProficiency(skill.proficiency),
+              description: skill.description || `${skill.name} technology`,
+              icon: skill.icon || getDefaultIcon(skill.name),
+              color: getColorForSkill(skill.name)
+            }))
+          )
+
+        // Extract unique categories
+        const uniqueCategories = ['All', ...Array.from(new Set(transformedSkills.map(skill => skill.category)))]
+
+        setSkills(transformedSkills)
+        setCategories(uniqueCategories)
+      } else {
+        console.error('Error fetching skills:', response.error)
+        // Fallback to default skills if API fails
+        setSkills(getDefaultSkills())
+      }
+    } catch (error) {
+      console.error('Error fetching skills:', error)
+      setSkills(getDefaultSkills())
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  // Helper function to convert proficiency to level
+  const getLevelFromProficiency = (proficiency: number): string => {
+    if (proficiency >= 90) return 'Most Used'
+    if (proficiency >= 70) return 'Recently Used'
+    return 'Learning Now'
+  }
+
+  // Helper function to get default icon based on skill name
+  const getDefaultIcon = (skillName: string): string => {
+    const iconMap: Record<string, string> = {
+      'Python': '🐍',
+      'Django': '🎯',
+      'Laravel': '🔥',
+      'PostgreSQL': '🐘',
+      'MySQL': '🗄️',
+      'Git': '📚',
+      'REST API': '🔗',
+      'Docker': '🐳',
+      'JavaScript': '⚡',
+      'TypeScript': '📘',
+      'React': '⚛️',
+      'Vue': '💚',
+      'Node.js': '🟢',
+      'MongoDB': '🍃',
+      'Redis': '🔴',
+      'AWS': '☁️',
+      'Linux': '🐧'
+    }
+    return iconMap[skillName] || '⚙️'
+  }
+
+  // Helper function to get color for skill
+  const getColorForSkill = (skillName: string): string => {
+    const colorMap: Record<string, string> = {
+      'Python': 'from-yellow-400 to-blue-500',
+      'Django': 'from-green-400 to-green-600',
+      'Laravel': 'from-red-400 to-red-600',
+      'PostgreSQL': 'from-blue-400 to-blue-600',
+      'MySQL': 'from-orange-400 to-orange-600',
+      'Git': 'from-gray-400 to-gray-600',
+      'REST API': 'from-purple-400 to-purple-600',
+      'Docker': 'from-cyan-400 to-cyan-600'
+    }
+    return colorMap[skillName] || 'from-gray-400 to-gray-600'
+  }
+
+  // Fallback default skills
+  const getDefaultSkills = (): Skill[] => [
     {
       name: 'Python',
       category: 'Languages',
@@ -124,9 +213,8 @@ const SkillsTechnologies = () => {
       icon: '💻',
       color: 'from-blue-600 to-purple-700'
     }
-  ]
+    ]
 
-  const categories = ['All', 'Languages', 'Frameworks', 'Databases', 'Tools']
   const sortOptions = ['Most Used', 'Recently Used', 'Learning Now']
 
   const filteredAndSortedSkills = skills
@@ -140,6 +228,10 @@ const SkillsTechnologies = () => {
         return a.level === 'Learning Now' ? -1 : 1
       }
     })
+
+  useEffect(() => {
+    fetchSkills()
+  }, [])
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -229,8 +321,20 @@ const SkillsTechnologies = () => {
         </motion.div>
 
         {/* Skills Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-          {filteredAndSortedSkills.map((skill, index) => (
+        {loading ? (
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+            {[...Array(15)].map((_, i) => (
+              <div key={i} className="glass rounded-xl p-4 text-center animate-pulse">
+                <div className="w-12 h-12 bg-dark-300/50 rounded-full mx-auto mb-3" />
+                <div className="h-4 bg-dark-300/50 rounded mb-2" />
+                <div className="h-3 bg-dark-300/50 rounded w-3/4 mx-auto mb-2" />
+                <div className="h-6 w-16 bg-dark-300/50 rounded-full mx-auto" />
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+            {filteredAndSortedSkills.map((skill, index) => (
             <motion.div
               key={skill.name}
               initial={{ opacity: 0, scale: 0.5 }}
@@ -303,7 +407,8 @@ const SkillsTechnologies = () => {
               </motion.div>
             </motion.div>
           ))}
-        </div>
+          </div>
+        )}
 
         {/* Skills Summary */}
         <motion.div

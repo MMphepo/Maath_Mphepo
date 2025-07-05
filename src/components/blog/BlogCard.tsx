@@ -54,11 +54,11 @@ const BlogCard = ({ post, index }: BlogCardProps) => {
         <div className="flex flex-wrap gap-2 mb-4">
           {post.tags.slice(0, 3).map((tag) => (
             <span
-              key={tag}
+              key={typeof tag === 'string' ? tag : tag.id}
               className="inline-flex items-center gap-1 px-2 py-1 bg-primary/10 text-primary rounded-md text-xs font-medium"
             >
               <Tag className="w-3 h-3" />
-              {tag}
+              {typeof tag === 'string' ? tag : tag.name}
             </span>
           ))}
           {post.tags.length > 3 && (

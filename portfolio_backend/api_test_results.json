@@ -1,0 +1,106 @@
+[
+  {
+    "endpoint": "/api/auth/login/",
+    "method": "POST",
+    "status_code": 200,
+    "success": true,
+    "message": "Authentication successful",
+    "timestamp": "2025-07-04T15:58:00.763873"
+  },
+  {
+    "endpoint": "/api/blog/",
+    "method": "GET",
+    "status_code": 200,
+    "success": true,
+    "message": "Valid API response structure",
+    "timestamp": "2025-07-04T15:58:00.904583"
+  },
+  {
+    "endpoint": "/api/blog/react-state-management-best-practices/",
+    "method": "GET",
+    "status_code": 200,
+    "success": true,
+    "message": "Valid API response structure",
+    "timestamp": "2025-07-04T15:58:01.344118"
+  },
+  {
+    "endpoint": "/api/blog/tags/",
+    "method": "GET",
+    "status_code": 200,
+    "success": true,
+    "message": "Valid API response structure",
+    "timestamp": "2025-07-04T15:58:01.361120"
+  },
+  {
+    "endpoint": "/api/projects/",
+    "method": "GET",
+    "status_code": 200,
+    "success": true,
+    "message": "Valid API response structure",
+    "timestamp": "2025-07-04T15:58:01.458247"
+  },
+  {
+    "endpoint": "/api/skills/",
+    "method": "GET",
+    "status_code": 200,
+    "success": true,
+    "message": "Valid API response structure",
+    "timestamp": "2025-07-04T15:58:01.537982"
+  },
+  {
+    "endpoint": "/api/contact/info/",
+    "method": "GET",
+    "status_code": 200,
+    "success": true,
+    "message": "Valid API response structure",
+    "timestamp": "2025-07-04T15:58:01.562730"
+  },
+  {
+    "endpoint": "/api/testimonials/",
+    "method": "GET",
+    "status_code": 200,
+    "success": true,
+    "message": "Valid API response structure",
+    "timestamp": "2025-07-04T15:58:02.012257"
+  },
+  {
+    "endpoint": "/api/config/",
+    "method": "GET",
+    "status_code": 200,
+    "success": true,
+    "message": "Valid API response structure",
+    "timestamp": "2025-07-04T15:58:02.239944"
+  },
+  {
+    "endpoint": "/api/achievements/",
+    "method": "GET",
+    "status_code": 200,
+    "success": true,
+    "message": "Valid API response structure",
+    "timestamp": "2025-07-04T15:58:02.288823"
+  },
+  {
+    "endpoint": "/api/auth/verify/",
+    "method": "GET",
+    "status_code": 200,
+    "success": true,
+    "message": "Valid API response structure",
+    "timestamp": "2025-07-04T15:58:02.309890"
+  },
+  {
+    "endpoint": "/api/blog/react-state-management-best-practices/like/",
+    "method": "POST",
+    "status_code": 200,
+    "success": true,
+    "message": "Valid API response structure",
+    "timestamp": "2025-07-04T15:58:02.754658"
+  },
+  {
+    "endpoint": "/api/contact/newsletter/subscribe/",
+    "method": "POST",
+    "status_code": 201,
+    "success": true,
+    "message": "Valid API response structure",
+    "timestamp": "2025-07-04T15:58:02.993912"
+  }
+]

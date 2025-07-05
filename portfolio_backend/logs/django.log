@@ -1,0 +1,518 @@
+INFO 2025-07-04 14:11:30,457 autoreload 13700 1724 Watching for file changes with StatReloader
+INFO 2025-07-04 15:39:56,550 autoreload 13564 15504 Watching for file changes with StatReloader
+WARNING 2025-07-04 15:40:14,107 log 13564 14808 Not Found: /
+WARNING 2025-07-04 15:40:14,158 basehttp 13564 14808 "GET / HTTP/1.1" 404 3140
+WARNING 2025-07-04 15:40:14,733 log 13564 14808 Not Found: /favicon.ico
+WARNING 2025-07-04 15:40:14,788 basehttp 13564 14808 "GET /favicon.ico HTTP/1.1" 404 3191
+INFO 2025-07-04 15:40:28,902 basehttp 13564 16832 "GET /api/blog/ HTTP/1.1" 200 2104
+INFO 2025-07-04 15:40:41,042 basehttp 13564 16832 - Broken pipe from ('127.0.0.1', 4069)
+INFO 2025-07-04 15:40:43,608 basehttp 13564 16888 "GET /api/projects/ HTTP/1.1" 200 1470
+INFO 2025-07-04 15:40:53,833 basehttp 13564 16888 - Broken pipe from ('127.0.0.1', 4080)
+ERROR 2025-07-04 15:40:57,229 log 13564 16104 Internal Server Error: /api/skills/
+Traceback (most recent call last):
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\db\models\fields\__init__.py", line 2053, in get_prep_value
+    return int(value)
+           ^^^^^^^^^^
+ValueError: invalid literal for int() with base 10: 'expert'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\rest_framework\generics.py", line 199, in get
+    return self.list(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\skills\views.py", line 51, in list
+    expert_skills = queryset.filter(proficiency='expert').count()
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\db\models\query.py", line 1436, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\db\models\query.py", line 1454, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\db\models\query.py", line 1461, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\db\models\sql\query.py", line 1545, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\db\models\sql\query.py", line 1576, in _add_q
+    child_clause, needed_inner = self.build_filter(
+                                 ^^^^^^^^^^^^^^^^^^
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\db\models\sql\query.py", line 1491, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\db\models\sql\query.py", line 1318, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\db\models\lookups.py", line 27, in __init__
+    self.rhs = self.get_prep_lookup()
+               ^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\db\models\lookups.py", line 341, in get_prep_lookup
+    return super().get_prep_lookup()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\db\models\lookups.py", line 85, in get_prep_lookup
+    return self.lhs.output_field.get_prep_value(self.rhs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\db\models\fields\__init__.py", line 2055, in get_prep_value
+    raise e.__class__(
+ValueError: Field 'proficiency' expected a number but got 'expert'.
+ERROR 2025-07-04 15:40:57,241 basehttp 13564 16104 "GET /api/skills/ HTTP/1.1" 500 163717
+INFO 2025-07-04 15:40:57,254 basehttp 13564 16104 - Broken pipe from ('127.0.0.1', 4092)
+INFO 2025-07-04 15:41:19,109 autoreload 13564 15504 D:\PROJ\Maath_Mphepo\portfolio_backend\skills\views.py changed, reloading.
+INFO 2025-07-04 15:41:22,142 autoreload 16876 15748 Watching for file changes with StatReloader
+INFO 2025-07-04 15:41:35,121 basehttp 16876 12276 "GET /api/skills/ HTTP/1.1" 200 1628
+INFO 2025-07-04 15:41:44,270 basehttp 16876 12276 - Broken pipe from ('127.0.0.1', 4121)
+WARNING 2025-07-04 15:41:48,040 log 16876 16716 Unauthorized: /api/auth/login/
+WARNING 2025-07-04 15:41:48,040 basehttp 16876 16716 "POST /api/auth/login/ HTTP/1.1" 401 58
+INFO 2025-07-04 15:42:05,908 basehttp 16876 16716 - Broken pipe from ('127.0.0.1', 4131)
+INFO 2025-07-04 15:42:09,530 basehttp 16876 16208 "GET /api/contact/info/ HTTP/1.1" 200 629
+INFO 2025-07-04 15:43:13,864 autoreload 16876 15748 D:\PROJ\Maath_Mphepo\portfolio_backend\portfolio_backend\settings.py changed, reloading.
+INFO 2025-07-04 15:43:16,936 autoreload 5980 2080 Watching for file changes with StatReloader
+INFO 2025-07-04 15:43:17,414 autoreload 12796 12728 Watching for file changes with StatReloader
+INFO 2025-07-04 15:44:00,265 autoreload 5980 2080 D:\PROJ\Maath_Mphepo\portfolio_backend\portfolio_backend\settings.py changed, reloading.
+INFO 2025-07-04 15:44:00,320 autoreload 12796 12728 D:\PROJ\Maath_Mphepo\portfolio_backend\portfolio_backend\settings.py changed, reloading.
+INFO 2025-07-04 15:44:03,147 autoreload 2732 15552 Watching for file changes with StatReloader
+INFO 2025-07-04 15:44:03,350 autoreload 7404 8660 Watching for file changes with StatReloader
+INFO 2025-07-04 15:47:27,787 autoreload 7404 8660 D:\PROJ\Maath_Mphepo\portfolio_backend\portfolio_backend\urls.py changed, reloading.
+INFO 2025-07-04 15:47:27,819 autoreload 2732 15552 D:\PROJ\Maath_Mphepo\portfolio_backend\portfolio_backend\urls.py changed, reloading.
+INFO 2025-07-04 15:47:30,699 autoreload 15140 14252 Watching for file changes with StatReloader
+INFO 2025-07-04 15:47:31,103 autoreload 1180 13548 Watching for file changes with StatReloader
+INFO 2025-07-04 15:47:47,785 autoreload 1180 13548 D:\PROJ\Maath_Mphepo\portfolio_backend\portfolio_backend\urls.py changed, reloading.
+INFO 2025-07-04 15:47:48,642 autoreload 15140 14252 D:\PROJ\Maath_Mphepo\portfolio_backend\portfolio_backend\urls.py changed, reloading.
+INFO 2025-07-04 15:47:54,542 autoreload 14996 16000 Watching for file changes with StatReloader
+INFO 2025-07-04 15:47:55,063 autoreload 16708 12448 Watching for file changes with StatReloader
+INFO 2025-07-04 15:48:06,549 autoreload 14996 16000 D:\PROJ\Maath_Mphepo\portfolio_backend\portfolio_backend\settings.py changed, reloading.
+INFO 2025-07-04 15:48:07,203 autoreload 16708 12448 D:\PROJ\Maath_Mphepo\portfolio_backend\portfolio_backend\settings.py changed, reloading.
+INFO 2025-07-04 15:48:09,737 autoreload 13540 16524 Watching for file changes with StatReloader
+INFO 2025-07-04 15:48:10,692 autoreload 11604 2788 Watching for file changes with StatReloader
+INFO 2025-07-04 15:48:25,997 utils 13540 17388 API Access: {'timestamp': '2025-07-04T13:48:25.997267+00:00', 'endpoint': 'auth/login', 'method': 'POST', 'ip': '127.0.0.1', 'user_agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.4202', 'user': 'admin'}
+INFO 2025-07-04 15:48:26,117 basehttp 13540 17388 "POST /api/auth/login/ HTTP/1.1" 200 667
+WARNING 2025-07-04 15:53:48,717 log 13540 16432 Unauthorized: /api/auth/verify/
+WARNING 2025-07-04 15:53:48,717 basehttp 13540 16432 "GET /api/auth/verify/ HTTP/1.1" 401 183
+INFO 2025-07-04 15:54:00,955 basehttp 13540 16432 - Broken pipe from ('127.0.0.1', 4542)
+INFO 2025-07-04 15:54:05,330 utils 13540 16912 API Access: {'timestamp': '2025-07-04T13:54:05.330401+00:00', 'endpoint': 'auth/login', 'method': 'POST', 'ip': '127.0.0.1', 'user_agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.4202', 'user': 'admin'}
+INFO 2025-07-04 15:54:05,535 basehttp 13540 16912 "POST /api/auth/login/ HTTP/1.1" 200 667
+INFO 2025-07-04 15:54:16,724 basehttp 13540 16912 - Broken pipe from ('127.0.0.1', 4552)
+INFO 2025-07-04 15:54:19,999 basehttp 13540 11964 "GET /api/auth/verify/ HTTP/1.1" 200 143
+INFO 2025-07-04 15:54:42,380 basehttp 13540 11964 - Broken pipe from ('127.0.0.1', 4561)
+WARNING 2025-07-04 15:54:45,358 log 13540 15088 Not Found: /api/blog/posts/
+WARNING 2025-07-04 15:54:45,359 basehttp 13540 15088 "GET /api/blog/posts/ HTTP/1.1" 404 23
+INFO 2025-07-04 15:54:53,108 basehttp 13540 15088 - Broken pipe from ('127.0.0.1', 4576)
+INFO 2025-07-04 15:54:57,162 basehttp 13540 11576 "GET /api/blog/ HTTP/1.1" 200 2104
+INFO 2025-07-04 15:55:11,060 basehttp 13540 11576 - Broken pipe from ('127.0.0.1', 4587)
+INFO 2025-07-04 15:55:14,573 basehttp 13540 12956 "GET /api/projects/ HTTP/1.1" 200 1470
+INFO 2025-07-04 15:55:14,816 basehttp 13540 12956 "GET /api/skills/ HTTP/1.1" 200 1628
+INFO 2025-07-04 15:55:14,931 basehttp 13540 12956 "GET /api/contact/info/ HTTP/1.1" 200 629
+INFO 2025-07-04 15:55:15,072 basehttp 13540 12956 "GET /api/testimonials/ HTTP/1.1" 200 360
+INFO 2025-07-04 15:55:15,447 basehttp 13540 12956 "GET /api/blog/tags/ HTTP/1.1" 200 505
+INFO 2025-07-04 15:55:29,214 basehttp 13540 12956 - Broken pipe from ('127.0.0.1', 4601)
+INFO 2025-07-04 15:55:32,598 basehttp 13540 11688 "GET /api/projects/ HTTP/1.1" 200 1470
+INFO 2025-07-04 15:55:42,347 basehttp 13540 11688 - Broken pipe from ('127.0.0.1', 4616)
+INFO 2025-07-04 15:55:45,630 basehttp 13540 15684 "GET /api/blog/react-state-management-best-practices/ HTTP/1.1" 200 1487
+INFO 2025-07-04 15:55:55,340 basehttp 13540 15684 - Broken pipe from ('127.0.0.1', 4623)
+WARNING 2025-07-04 15:55:58,610 log 13540 2604 Not Found: /api/contact/submit/
+WARNING 2025-07-04 15:55:58,610 basehttp 13540 2604 "POST /api/contact/submit/ HTTP/1.1" 404 4965
+INFO 2025-07-04 15:56:08,213 basehttp 13540 2604 - Broken pipe from ('127.0.0.1', 4632)
+WARNING 2025-07-04 15:56:12,437 log 13540 16600 Unauthorized: /api/contact/
+WARNING 2025-07-04 15:56:12,437 basehttp 13540 16600 "POST /api/contact/ HTTP/1.1" 401 58
+INFO 2025-07-04 15:56:30,475 basehttp 13540 16600 - Broken pipe from ('127.0.0.1', 4643)
+WARNING 2025-07-04 15:56:34,202 log 13540 10792 Unauthorized: /api/blog/react-state-management-best-practices/like/
+WARNING 2025-07-04 15:56:34,208 basehttp 13540 10792 "POST /api/blog/react-state-management-best-practices/like/ HTTP/1.1" 401 58
+INFO 2025-07-04 15:56:45,520 basehttp 13540 10792 - Broken pipe from ('127.0.0.1', 4658)
+INFO 2025-07-04 15:56:49,929 utils 13540 15780 API Access: {'timestamp': '2025-07-04T13:56:49.929081+00:00', 'endpoint': 'auth/login', 'method': 'POST', 'ip': '127.0.0.1', 'user_agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.4202', 'user': 'admin'}
+INFO 2025-07-04 15:56:50,213 basehttp 13540 15780 "POST /api/auth/login/ HTTP/1.1" 200 667
+INFO 2025-07-04 15:56:50,874 basehttp 13540 15780 "POST /api/blog/react-state-management-best-practices/like/ HTTP/1.1" 200 49
+INFO 2025-07-04 15:57:47,068 basehttp 13540 15780 - Broken pipe from ('127.0.0.1', 4668)
+WARNING 2025-07-04 15:57:59,347 utils 13540 16532 Suspicious user agent from 127.0.0.1: python-requests/2.31.0
+INFO 2025-07-04 15:58:00,256 utils 13540 16532 API Access: {'timestamp': '2025-07-04T13:58:00.256072+00:00', 'endpoint': 'auth/login', 'method': 'POST', 'ip': '127.0.0.1', 'user_agent': 'python-requests/2.31.0', 'user': 'admin'}
+INFO 2025-07-04 15:58:00,763 basehttp 13540 16532 "POST /api/auth/login/ HTTP/1.1" 200 667
+WARNING 2025-07-04 15:58:00,878 utils 13540 16532 Suspicious user agent from 127.0.0.1: python-requests/2.31.0
+INFO 2025-07-04 15:58:00,902 basehttp 13540 16532 "GET /api/blog/ HTTP/1.1" 200 2104
+WARNING 2025-07-04 15:58:00,910 utils 13540 16532 Suspicious user agent from 127.0.0.1: python-requests/2.31.0
+INFO 2025-07-04 15:58:01,344 basehttp 13540 16532 "GET /api/blog/react-state-management-best-practices/ HTTP/1.1" 200 1487
+WARNING 2025-07-04 15:58:01,350 utils 13540 16532 Suspicious user agent from 127.0.0.1: python-requests/2.31.0
+INFO 2025-07-04 15:58:01,363 basehttp 13540 16532 "GET /api/blog/tags/ HTTP/1.1" 200 505
+WARNING 2025-07-04 15:58:01,372 utils 13540 16532 Suspicious user agent from 127.0.0.1: python-requests/2.31.0
+INFO 2025-07-04 15:58:01,458 basehttp 13540 16532 "GET /api/projects/ HTTP/1.1" 200 1470
+WARNING 2025-07-04 15:58:01,462 utils 13540 16532 Suspicious user agent from 127.0.0.1: python-requests/2.31.0
+INFO 2025-07-04 15:58:01,536 basehttp 13540 16532 "GET /api/skills/ HTTP/1.1" 200 1628
+WARNING 2025-07-04 15:58:01,547 utils 13540 16532 Suspicious user agent from 127.0.0.1: python-requests/2.31.0
+INFO 2025-07-04 15:58:01,561 basehttp 13540 16532 "GET /api/contact/info/ HTTP/1.1" 200 629
+WARNING 2025-07-04 15:58:01,576 utils 13540 16532 Suspicious user agent from 127.0.0.1: python-requests/2.31.0
+INFO 2025-07-04 15:58:02,012 basehttp 13540 16532 "GET /api/testimonials/ HTTP/1.1" 200 360
+WARNING 2025-07-04 15:58:02,172 utils 13540 16532 Suspicious user agent from 127.0.0.1: python-requests/2.31.0
+INFO 2025-07-04 15:58:02,241 basehttp 13540 16532 "GET /api/config/ HTTP/1.1" 200 556
+WARNING 2025-07-04 15:58:02,243 utils 13540 16532 Suspicious user agent from 127.0.0.1: python-requests/2.31.0
+INFO 2025-07-04 15:58:02,287 basehttp 13540 16532 "GET /api/achievements/ HTTP/1.1" 200 571
+WARNING 2025-07-04 15:58:02,292 utils 13540 16532 Suspicious user agent from 127.0.0.1: python-requests/2.31.0
+INFO 2025-07-04 15:58:02,312 basehttp 13540 16532 "GET /api/auth/verify/ HTTP/1.1" 200 143
+WARNING 2025-07-04 15:58:02,357 utils 13540 16532 Suspicious user agent from 127.0.0.1: python-requests/2.31.0
+INFO 2025-07-04 15:58:02,755 basehttp 13540 16532 "POST /api/blog/react-state-management-best-practices/like/ HTTP/1.1" 200 50
+WARNING 2025-07-04 15:58:02,757 utils 13540 16532 Suspicious user agent from 127.0.0.1: python-requests/2.31.0
+INFO 2025-07-04 15:58:02,999 basehttp 13540 16532 "POST /api/contact/newsletter/subscribe/ HTTP/1.1" 201 153
+INFO 2025-07-04 16:00:02,151 utils 13540 3188 API Access: {'timestamp': '2025-07-04T14:00:02.151255+00:00', 'endpoint': 'auth/login', 'method': 'POST', 'ip': '127.0.0.1', 'user_agent': 'node', 'user': 'admin'}
+INFO 2025-07-04 16:00:02,287 basehttp 13540 3188 "POST /api/auth/login/ HTTP/1.1" 200 667
+INFO 2025-07-04 16:00:02,492 basehttp 13540 15368 "GET /api/blog/ HTTP/1.1" 200 2104
+INFO 2025-07-04 16:00:02,859 basehttp 13540 3188 "GET /api/blog/tags/ HTTP/1.1" 200 505
+INFO 2025-07-04 16:00:03,252 basehttp 13540 15368 "GET /api/blog/react-state-management-best-practices/ HTTP/1.1" 200 1487
+INFO 2025-07-04 16:00:03,284 basehttp 13540 3188 "GET /api/projects/ HTTP/1.1" 200 1470
+INFO 2025-07-04 16:00:03,343 basehttp 13540 15368 "GET /api/skills/ HTTP/1.1" 200 1628
+INFO 2025-07-04 16:00:03,369 basehttp 13540 3188 "GET /api/contact/info/ HTTP/1.1" 200 629
+INFO 2025-07-04 16:00:03,420 basehttp 13540 15368 "GET /api/testimonials/ HTTP/1.1" 200 360
+INFO 2025-07-04 16:00:03,458 basehttp 13540 3188 "GET /api/config/ HTTP/1.1" 200 556
+INFO 2025-07-04 16:00:03,925 basehttp 13540 15368 "POST /api/blog/react-state-management-best-practices/like/ HTTP/1.1" 200 49
+WARNING 2025-07-04 16:00:03,937 log 13540 3188 Unauthorized: /api/contact/newsletter/subscribe/
+WARNING 2025-07-04 16:00:03,938 basehttp 13540 3188 "POST /api/contact/newsletter/subscribe/ HTTP/1.1" 401 58
+INFO 2025-07-04 16:00:04,159 basehttp 13540 3188 - Broken pipe from ('127.0.0.1', 4739)
+INFO 2025-07-04 16:00:04,159 basehttp 13540 15368 - Broken pipe from ('127.0.0.1', 4741)
+INFO 2025-07-04 16:14:41,129 basehttp 13540 14448 "OPTIONS /api/blog/tags/ HTTP/1.1" 200 0
+INFO 2025-07-04 16:14:41,187 basehttp 13540 13084 "OPTIONS /api/blog/?page=1&limit=6&sortBy=createdAt&sortOrder=desc HTTP/1.1" 200 0
+INFO 2025-07-04 16:14:41,204 basehttp 13540 15256 "OPTIONS /api/blog/tags/ HTTP/1.1" 200 0
+INFO 2025-07-04 16:14:41,211 basehttp 13540 2604 "OPTIONS /api/blog/?page=1&limit=6&sortBy=createdAt&sortOrder=desc HTTP/1.1" 200 0
+INFO 2025-07-04 16:14:41,324 basehttp 13540 2604 "GET /api/blog/?page=1&limit=6&sortBy=createdAt&sortOrder=desc HTTP/1.1" 200 2104
+INFO 2025-07-04 16:14:41,326 basehttp 13540 15256 "GET /api/blog/tags/ HTTP/1.1" 200 505
+INFO 2025-07-04 16:14:41,473 basehttp 13540 2604 "GET /api/blog/tags/ HTTP/1.1" 200 505
+INFO 2025-07-04 16:14:41,481 basehttp 13540 15256 "GET /api/blog/?page=1&limit=6&sortBy=createdAt&sortOrder=desc HTTP/1.1" 200 2104
+INFO 2025-07-05 06:58:04,331 autoreload 11604 2788 D:\PROJ\Maath_Mphepo\portfolio_backend\portfolio_backend\settings.py changed, reloading.
+
+INFO 2025-07-05 06:58:13,472 autoreload 8732 13748 Watching for file changes with StatReloader
+INFO 2025-07-05 06:58:13,502 autoreload 18092 18428 Watching for file changes with StatReloader
+INFO 2025-07-05 06:58:23,061 autoreload 8732 13748 D:\PROJ\Maath_Mphepo\portfolio_backend\portfolio_backend\settings.py changed, reloading.
+INFO 2025-07-05 06:58:23,145 autoreload 18092 18428 D:\PROJ\Maath_Mphepo\portfolio_backend\portfolio_backend\settings.py changed, reloading.
+INFO 2025-07-05 06:58:28,094 autoreload 14472 17676 Watching for file changes with StatReloader
+INFO 2025-07-05 06:58:28,096 autoreload 17276 3888 Watching for file changes with StatReloader
+INFO 2025-07-05 07:00:17,268 autoreload 1664 17604 Watching for file changes with StatReloader
+WARNING 2025-07-05 07:01:41,909 log 14472 17064 Not Found: /api/
+WARNING 2025-07-05 07:01:41,914 basehttp 14472 17064 "GET /api/ HTTP/1.1" 404 4049
+INFO 2025-07-05 07:01:53,279 basehttp 14472 17064 - Broken pipe from ('127.0.0.1', 12180)
+INFO 2025-07-05 07:01:56,741 basehttp 14472 18068 "GET /api/config/ HTTP/1.1" 200 556
+INFO 2025-07-05 07:03:05,255 basehttp 14472 18068 - Broken pipe from ('127.0.0.1', 12191)
+INFO 2025-07-05 07:09:29,969 autoreload 12932 11292 Watching for file changes with StatReloader
+INFO 2025-07-05 07:09:47,849 basehttp 14472 19132 "GET /api/config/ HTTP/1.1" 200 556
+INFO 2025-07-05 07:09:58,455 basehttp 14472 19132 - Broken pipe from ('127.0.0.1', 12452)
+INFO 2025-07-05 07:35:30,401 basehttp 14472 16428 "GET /api/config/ HTTP/1.1" 200 556
+INFO 2025-07-05 07:35:57,415 basehttp 14472 16428 - Broken pipe from ('127.0.0.1', 13271)
+INFO 2025-07-05 07:37:02,147 basehttp 14472 18000 "GET /api/projects/ HTTP/1.1" 200 1470
+INFO 2025-07-05 07:37:08,842 basehttp 14472 18000 "GET /api/skills/ HTTP/1.1" 200 1628
+INFO 2025-07-05 07:37:12,437 basehttp 14472 18000 "GET /api/contact/info/ HTTP/1.1" 200 629
+INFO 2025-07-05 07:37:28,820 basehttp 14472 18000 - Broken pipe from ('127.0.0.1', 13384)
+INFO 2025-07-05 07:37:41,817 basehttp 14472 18244 "GET /api/blog/ HTTP/1.1" 200 2104
+INFO 2025-07-05 07:37:42,104 basehttp 14472 18244 "GET /api/testimonials/ HTTP/1.1" 200 360
+INFO 2025-07-05 07:37:44,470 utils 14472 18244 API Access: {'timestamp': '2025-07-05T05:37:44.470516+00:00', 'endpoint': 'auth/login', 'method': 'POST', 'ip': '127.0.0.1', 'user_agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.4202', 'user': 'admin'}
+INFO 2025-07-05 07:37:44,653 basehttp 14472 18244 "POST /api/auth/login/ HTTP/1.1" 200 667
+INFO 2025-07-05 07:37:58,551 basehttp 14472 18244 - Broken pipe from ('127.0.0.1', 13419)
+WARNING 2025-07-05 07:38:03,875 log 14472 20340 Unauthorized: /api/contact/
+WARNING 2025-07-05 07:38:04,054 basehttp 14472 20340 "POST /api/contact/ HTTP/1.1" 401 58
+INFO 2025-07-05 07:38:31,472 basehttp 14472 20340 - Broken pipe from ('127.0.0.1', 13442)
+INFO 2025-07-05 07:38:37,103 basehttp 14472 15972 "GET /api/blog/react-state-management-best-practices/ HTTP/1.1" 200 1487
+INFO 2025-07-05 07:38:37,385 basehttp 14472 15972 "GET /api/blog/tags/ HTTP/1.1" 200 505
+INFO 2025-07-05 07:38:59,314 basehttp 14472 15972 - Broken pipe from ('127.0.0.1', 13464)
+INFO 2025-07-05 07:39:04,774 basehttp 14472 3172 "GET /api/config/ HTTP/1.1" 200 556
+WARNING 2025-07-05 07:51:12,374 log 14472 3516 Not Found: /courses
+WARNING 2025-07-05 07:51:12,743 basehttp 14472 3516 "GET /courses HTTP/1.1" 404 3604
+INFO 2025-07-05 08:04:42,418 basehttp 14472 18904 "GET /api/config/ HTTP/1.1" 200 556
+INFO 2025-07-05 10:30:51,475 basehttp 14472 7572 "GET /api/config/ HTTP/1.1" 200 556
+INFO 2025-07-05 11:26:05,657 autoreload 9432 13964 Watching for file changes with StatReloader
+INFO 2025-07-05 11:26:24,290 basehttp 9432 13788 "GET /api/config/ HTTP/1.1" 200 556
+INFO 2025-07-05 11:26:24,316 basehttp 9432 13788 "GET /api/config/ HTTP/1.1" 200 556
+INFO 2025-07-05 11:26:38,283 basehttp 9432 11900 "OPTIONS /api/skills/ HTTP/1.1" 200 0
+INFO 2025-07-05 11:26:38,498 basehttp 9432 6076 "OPTIONS /api/skills/ HTTP/1.1" 200 0
+INFO 2025-07-05 11:26:39,528 basehttp 9432 11900 "GET /api/skills/ HTTP/1.1" 200 1628
+INFO 2025-07-05 11:26:40,162 basehttp 9432 11900 "GET /api/skills/ HTTP/1.1" 200 1628
+INFO 2025-07-05 11:26:52,631 basehttp 9432 4596 "GET /api/config/ HTTP/1.1" 200 556
+INFO 2025-07-05 11:26:52,647 basehttp 9432 4596 "GET /api/config/ HTTP/1.1" 200 556
+INFO 2025-07-05 11:27:23,981 basehttp 9432 14200 "OPTIONS /api/blog/tags/ HTTP/1.1" 200 0
+INFO 2025-07-05 11:27:23,996 basehttp 9432 14200 "OPTIONS /api/blog/tags/ HTTP/1.1" 200 0
+INFO 2025-07-05 11:27:24,004 basehttp 9432 8692 "OPTIONS /api/blog/?page=1&limit=6&sortBy=createdAt&sortOrder=desc HTTP/1.1" 200 0
+INFO 2025-07-05 11:27:24,029 basehttp 9432 14200 "OPTIONS /api/blog/?page=1&limit=6&sortBy=createdAt&sortOrder=desc HTTP/1.1" 200 0
+INFO 2025-07-05 11:27:24,166 basehttp 9432 8692 "GET /api/blog/tags/ HTTP/1.1" 200 505
+INFO 2025-07-05 11:27:24,418 basehttp 9432 8692 "GET /api/blog/tags/ HTTP/1.1" 200 505
+INFO 2025-07-05 11:27:24,635 basehttp 9432 13076 "GET /api/blog/?page=1&limit=6&sortBy=createdAt&sortOrder=desc HTTP/1.1" 200 2104
+INFO 2025-07-05 11:27:24,938 basehttp 9432 13076 "GET /api/blog/?page=1&limit=6&sortBy=createdAt&sortOrder=desc HTTP/1.1" 200 2104
+INFO 2025-07-05 11:27:38,553 basehttp 9432 13436 "GET /api/config/ HTTP/1.1" 200 556
+INFO 2025-07-05 11:27:38,574 basehttp 9432 13436 "GET /api/config/ HTTP/1.1" 200 556
+INFO 2025-07-05 11:44:56,738 autoreload 11300 12964 Watching for file changes with StatReloader
+INFO 2025-07-05 12:09:27,326 autoreload 1168 8744 Watching for file changes with StatReloader
+INFO 2025-07-05 12:11:51,282 basehttp 1168 12936 "OPTIONS /api/projects/ HTTP/1.1" 200 0
+INFO 2025-07-05 12:11:51,300 basehttp 1168 9444 "OPTIONS /api/testimonials/ HTTP/1.1" 200 0
+INFO 2025-07-05 12:11:51,304 basehttp 1168 12184 "OPTIONS /api/projects/ HTTP/1.1" 200 0
+INFO 2025-07-05 12:11:51,314 basehttp 1168 12300 "OPTIONS /api/testimonials/ HTTP/1.1" 200 0
+INFO 2025-07-05 12:11:51,411 basehttp 1168 12936 "OPTIONS /api/skills/ HTTP/1.1" 200 0
+INFO 2025-07-05 12:11:51,420 basehttp 1168 9444 "OPTIONS /api/contact/info/ HTTP/1.1" 200 0
+INFO 2025-07-05 12:11:51,430 basehttp 1168 12184 "OPTIONS /api/skills/ HTTP/1.1" 200 0
+INFO 2025-07-05 12:11:51,434 basehttp 1168 12300 "OPTIONS /api/contact/info/ HTTP/1.1" 200 0
+INFO 2025-07-05 12:11:51,558 basehttp 1168 3528 "GET /api/testimonials/ HTTP/1.1" 200 360
+INFO 2025-07-05 12:11:51,576 basehttp 1168 12936 "GET /api/contact/info/ HTTP/1.1" 200 629
+INFO 2025-07-05 12:11:51,615 basehttp 1168 11004 "GET /api/projects/ HTTP/1.1" 200 1470
+INFO 2025-07-05 12:11:51,619 basehttp 1168 9444 "GET /api/skills/ HTTP/1.1" 200 1628
+INFO 2025-07-05 12:11:51,660 basehttp 1168 11004 "GET /api/testimonials/ HTTP/1.1" 200 360
+INFO 2025-07-05 12:11:51,683 basehttp 1168 12936 "GET /api/projects/ HTTP/1.1" 200 1470
+INFO 2025-07-05 12:11:51,695 basehttp 1168 3528 "GET /api/skills/ HTTP/1.1" 200 1628
+INFO 2025-07-05 12:11:51,705 basehttp 1168 9444 "GET /api/contact/info/ HTTP/1.1" 200 629
+INFO 2025-07-05 12:13:53,763 basehttp 1168 5688 "GET /api/projects/ HTTP/1.1" 200 1470
+INFO 2025-07-05 12:13:53,815 basehttp 1168 10884 "GET /api/skills/ HTTP/1.1" 200 1628
+INFO 2025-07-05 12:13:53,848 basehttp 1168 5688 "GET /api/testimonials/ HTTP/1.1" 200 360
+INFO 2025-07-05 12:13:53,867 basehttp 1168 10884 "GET /api/contact/info/ HTTP/1.1" 200 629
+INFO 2025-07-05 12:13:53,898 basehttp 1168 5688 "GET /api/projects/ HTTP/1.1" 200 1470
+INFO 2025-07-05 12:13:53,955 basehttp 1168 10884 "GET /api/skills/ HTTP/1.1" 200 1628
+INFO 2025-07-05 12:13:54,011 basehttp 1168 10884 "GET /api/testimonials/ HTTP/1.1" 200 360
+INFO 2025-07-05 12:13:54,042 basehttp 1168 10884 "GET /api/contact/info/ HTTP/1.1" 200 629
+INFO 2025-07-05 12:15:17,711 basehttp 1168 12312 "GET /api/projects/ HTTP/1.1" 200 1470
+INFO 2025-07-05 12:15:18,057 basehttp 1168 1100 "GET /api/testimonials/ HTTP/1.1" 200 360
+INFO 2025-07-05 12:15:18,067 basehttp 1168 12160 "GET /api/contact/info/ HTTP/1.1" 200 629
+INFO 2025-07-05 12:15:18,154 basehttp 1168 7632 "GET /api/testimonials/ HTTP/1.1" 200 360
+INFO 2025-07-05 12:15:18,209 basehttp 1168 12312 "GET /api/projects/ HTTP/1.1" 200 1470
+INFO 2025-07-05 12:15:18,241 basehttp 1168 12160 "GET /api/contact/info/ HTTP/1.1" 200 629
+INFO 2025-07-05 12:15:18,243 basehttp 1168 8528 "GET /api/skills/ HTTP/1.1" 200 1628
+INFO 2025-07-05 12:15:18,376 basehttp 1168 12312 "GET /api/skills/ HTTP/1.1" 200 1628
+INFO 2025-07-05 12:16:25,534 basehttp 1168 12296 "GET /api/projects/ HTTP/1.1" 200 1470
+INFO 2025-07-05 12:16:25,611 basehttp 1168 3560 "GET /api/skills/ HTTP/1.1" 200 1628
+INFO 2025-07-05 12:16:25,653 basehttp 1168 7140 "GET /api/testimonials/ HTTP/1.1" 200 360
+INFO 2025-07-05 12:16:25,752 basehttp 1168 7140 "GET /api/contact/info/ HTTP/1.1" 200 629
+INFO 2025-07-05 12:16:25,854 basehttp 1168 7140 "GET /api/projects/ HTTP/1.1" 200 1470
+INFO 2025-07-05 12:16:26,240 basehttp 1168 7140 "GET /api/skills/ HTTP/1.1" 200 1628
+INFO 2025-07-05 12:16:26,285 basehttp 1168 7140 "GET /api/testimonials/ HTTP/1.1" 200 360
+INFO 2025-07-05 12:16:26,308 basehttp 1168 7140 "GET /api/contact/info/ HTTP/1.1" 200 629
+INFO 2025-07-05 12:37:18,683 basehttp 1168 11128 "OPTIONS /api/blog/tags/ HTTP/1.1" 200 0
+INFO 2025-07-05 12:37:18,758 basehttp 1168 5528 "OPTIONS /api/blog/?page=1&limit=6&sortBy=createdAt&sortOrder=desc HTTP/1.1" 200 0
+INFO 2025-07-05 12:37:18,764 basehttp 1168 12236 "OPTIONS /api/blog/?page=1&limit=6&sortBy=createdAt&sortOrder=desc HTTP/1.1" 200 0
+INFO 2025-07-05 12:37:18,815 basehttp 1168 1516 "OPTIONS /api/blog/tags/ HTTP/1.1" 200 0
+INFO 2025-07-05 12:37:19,120 basehttp 1168 11128 "GET /api/blog/tags/ HTTP/1.1" 200 505
+INFO 2025-07-05 12:37:19,178 basehttp 1168 12236 "GET /api/blog/?page=1&limit=6&sortBy=createdAt&sortOrder=desc HTTP/1.1" 200 2104
+INFO 2025-07-05 12:37:19,198 basehttp 1168 11128 "GET /api/blog/tags/ HTTP/1.1" 200 505
+INFO 2025-07-05 12:37:19,239 basehttp 1168 12236 "GET /api/blog/?page=1&limit=6&sortBy=createdAt&sortOrder=desc HTTP/1.1" 200 2104
+INFO 2025-07-05 12:37:24,465 basehttp 1168 12236 "GET /api/projects/ HTTP/1.1" 200 1470
+INFO 2025-07-05 12:37:24,543 basehttp 1168 12236 "GET /api/skills/ HTTP/1.1" 200 1628
+INFO 2025-07-05 12:37:24,577 basehttp 1168 12236 "GET /api/testimonials/ HTTP/1.1" 200 360
+INFO 2025-07-05 12:37:24,616 basehttp 1168 12236 "GET /api/contact/info/ HTTP/1.1" 200 629
+INFO 2025-07-05 12:37:24,680 basehttp 1168 12236 "GET /api/projects/ HTTP/1.1" 200 1470
+INFO 2025-07-05 12:37:24,917 basehttp 1168 12236 "GET /api/skills/ HTTP/1.1" 200 1628
+INFO 2025-07-05 12:37:24,941 basehttp 1168 12236 "GET /api/testimonials/ HTTP/1.1" 200 360
+INFO 2025-07-05 12:37:24,962 basehttp 1168 12236 "GET /api/contact/info/ HTTP/1.1" 200 629
+INFO 2025-07-05 12:40:43,460 basehttp 1168 9256 "GET /api/blog/tags/ HTTP/1.1" 200 505
+INFO 2025-07-05 12:40:45,353 basehttp 1168 9256 "GET /api/blog/tags/ HTTP/1.1" 200 505
+INFO 2025-07-05 12:40:45,707 basehttp 1168 1596 "GET /api/blog/?page=1&limit=6&sortBy=createdAt&sortOrder=desc HTTP/1.1" 200 2104
+INFO 2025-07-05 12:40:46,006 basehttp 1168 1596 "GET /api/blog/?page=1&limit=6&sortBy=createdAt&sortOrder=desc HTTP/1.1" 200 2104
+INFO 2025-07-05 12:41:08,042 basehttp 1168 7304 "GET /api/skills/ HTTP/1.1" 200 8336
+INFO 2025-07-05 12:41:08,898 basehttp 1168 7304 "GET /api/skills/ HTTP/1.1" 200 8336
+INFO 2025-07-05 12:41:14,520 basehttp 1168 14332 "GET /api/blog/tags/ HTTP/1.1" 200 505
+INFO 2025-07-05 12:41:14,564 basehttp 1168 14332 "GET /api/blog/tags/ HTTP/1.1" 200 505
+INFO 2025-07-05 12:41:14,585 basehttp 1168 12088 "GET /api/blog/?page=1&limit=6&sortBy=createdAt&sortOrder=desc HTTP/1.1" 200 2104
+INFO 2025-07-05 12:41:14,631 basehttp 1168 12088 "GET /api/blog/?page=1&limit=6&sortBy=createdAt&sortOrder=desc HTTP/1.1" 200 2104
+INFO 2025-07-05 12:41:28,101 basehttp 1168 5352 "GET /api/testimonials/ HTTP/1.1" 200 360
+INFO 2025-07-05 12:41:29,313 basehttp 1168 2900 "GET /api/contact/info/ HTTP/1.1" 200 629
+INFO 2025-07-05 12:41:28,947 basehttp 1168 8408 "GET /api/testimonials/ HTTP/1.1" 200 360
+INFO 2025-07-05 12:41:31,630 basehttp 1168 4040 "GET /api/projects/ HTTP/1.1" 200 12131
+INFO 2025-07-05 12:41:31,645 basehttp 1168 8408 "GET /api/contact/info/ HTTP/1.1" 200 629
+INFO 2025-07-05 12:41:36,477 basehttp 1168 4040 "GET /api/projects/ HTTP/1.1" 200 12131
+INFO 2025-07-05 12:41:37,239 basehttp 1168 6940 "GET /api/skills/ HTTP/1.1" 200 8336
+INFO 2025-07-05 12:41:38,004 basehttp 1168 6940 "GET /api/skills/ HTTP/1.1" 200 8336
+INFO 2025-07-05 12:42:06,181 basehttp 1168 6380 "GET /api/testimonials/ HTTP/1.1" 200 360
+INFO 2025-07-05 12:42:06,778 basehttp 1168 11028 "GET /api/projects/ HTTP/1.1" 200 12131
+INFO 2025-07-05 12:42:07,114 basehttp 1168 10384 "GET /api/contact/info/ HTTP/1.1" 200 629
+INFO 2025-07-05 12:42:07,477 basehttp 1168 6380 "GET /api/testimonials/ HTTP/1.1" 200 360
+INFO 2025-07-05 12:42:08,245 basehttp 1168 10384 "GET /api/contact/info/ HTTP/1.1" 200 629
+INFO 2025-07-05 12:42:10,138 basehttp 1168 11028 "GET /api/projects/ HTTP/1.1" 200 12131
+INFO 2025-07-05 12:42:11,972 basehttp 1168 9832 "GET /api/skills/ HTTP/1.1" 200 8336
+INFO 2025-07-05 12:42:12,342 basehttp 1168 9832 "GET /api/skills/ HTTP/1.1" 200 8336
+INFO 2025-07-05 12:43:26,085 basehttp 1168 1748 "GET /api/projects/ HTTP/1.1" 200 12131
+INFO 2025-07-05 12:43:27,004 basehttp 1168 1748 "GET /api/projects/ HTTP/1.1" 200 12131
+INFO 2025-07-05 12:43:28,123 basehttp 1168 4128 "GET /api/testimonials/ HTTP/1.1" 200 360
+INFO 2025-07-05 12:43:28,380 basehttp 1168 4128 "GET /api/testimonials/ HTTP/1.1" 200 360
+INFO 2025-07-05 12:43:32,562 basehttp 1168 7528 "GET /api/contact/info/ HTTP/1.1" 200 629
+INFO 2025-07-05 12:43:32,974 basehttp 1168 7528 "GET /api/contact/info/ HTTP/1.1" 200 629
+INFO 2025-07-05 12:43:32,996 basehttp 1168 10328 "GET /api/skills/ HTTP/1.1" 200 8336
+INFO 2025-07-05 12:43:33,954 basehttp 1168 10328 "GET /api/skills/ HTTP/1.1" 200 8336
+INFO 2025-07-05 12:43:42,349 basehttp 1168 5948 "GET /api/testimonials/ HTTP/1.1" 200 360
+INFO 2025-07-05 12:43:42,426 basehttp 1168 2320 "GET /api/contact/info/ HTTP/1.1" 200 629
+INFO 2025-07-05 12:43:42,470 basehttp 1168 5948 "GET /api/testimonials/ HTTP/1.1" 200 360
+INFO 2025-07-05 12:43:42,547 basehttp 1168 4340 "GET /api/projects/ HTTP/1.1" 200 12131
+INFO 2025-07-05 12:43:42,555 basehttp 1168 2320 "GET /api/contact/info/ HTTP/1.1" 200 629
+INFO 2025-07-05 12:43:42,710 basehttp 1168 8524 "GET /api/skills/ HTTP/1.1" 200 8336
+INFO 2025-07-05 12:43:42,734 basehttp 1168 5948 "GET /api/projects/ HTTP/1.1" 200 12131
+INFO 2025-07-05 12:43:43,246 basehttp 1168 2320 "GET /api/skills/ HTTP/1.1" 200 8336
+INFO 2025-07-05 12:46:01,588 basehttp 1168 12520 "GET /api/blog/tags/ HTTP/1.1" 200 505
+INFO 2025-07-05 12:46:04,137 basehttp 1168 12520 "GET /api/blog/tags/ HTTP/1.1" 200 505
+INFO 2025-07-05 12:46:05,285 basehttp 1168 2488 "GET /api/blog/?page=1&limit=6&sortBy=createdAt&sortOrder=desc HTTP/1.1" 200 2104
+INFO 2025-07-05 12:46:11,279 basehttp 1168 2488 "GET /api/blog/?page=1&limit=6&sortBy=createdAt&sortOrder=desc HTTP/1.1" 200 2104
+INFO 2025-07-05 12:46:17,272 basehttp 1168 12788 "GET /api/testimonials/ HTTP/1.1" 200 360
+INFO 2025-07-05 12:46:17,612 basehttp 1168 10468 "GET /api/contact/info/ HTTP/1.1" 200 629
+INFO 2025-07-05 12:46:18,089 basehttp 1168 2488 "GET /api/projects/ HTTP/1.1" 200 12131
+INFO 2025-07-05 12:46:18,465 basehttp 1168 12788 "GET /api/testimonials/ HTTP/1.1" 200 360
+INFO 2025-07-05 12:46:27,976 basehttp 1168 10468 "GET /api/contact/info/ HTTP/1.1" 200 629
+INFO 2025-07-05 12:46:29,792 basehttp 1168 2488 "GET /api/projects/ HTTP/1.1" 200 12131
+INFO 2025-07-05 12:46:30,091 basehttp 1168 4916 "GET /api/skills/ HTTP/1.1" 200 8336
+INFO 2025-07-05 12:46:31,355 basehttp 1168 4916 "GET /api/skills/ HTTP/1.1" 200 8336
+INFO 2025-07-05 12:48:58,351 basehttp 1168 5456 "GET /api/testimonials/ HTTP/1.1" 200 360
+INFO 2025-07-05 12:48:58,844 basehttp 1168 14068 "GET /api/contact/info/ HTTP/1.1" 200 629
+INFO 2025-07-05 12:49:16,220 basehttp 1168 5456 "GET /api/testimonials/ HTTP/1.1" 200 360
+INFO 2025-07-05 12:49:36,222 basehttp 1168 9256 "GET /api/projects/ HTTP/1.1" 200 12131
+INFO 2025-07-05 12:49:41,262 basehttp 1168 14068 "GET /api/contact/info/ HTTP/1.1" 200 629
+INFO 2025-07-05 12:49:50,656 basehttp 1168 9924 "GET /api/projects/ HTTP/1.1" 200 12131
+INFO 2025-07-05 12:49:50,777 basehttp 1168 12416 "GET /api/skills/ HTTP/1.1" 200 8336
+INFO 2025-07-05 12:49:50,977 basehttp 1168 8408 "GET /api/skills/ HTTP/1.1" 200 8336
+INFO 2025-07-05 12:54:37,659 basehttp 1168 6196 "GET /api/blog/tags/ HTTP/1.1" 200 505
+INFO 2025-07-05 12:54:38,169 basehttp 1168 6196 "GET /api/blog/tags/ HTTP/1.1" 200 505
+INFO 2025-07-05 12:54:38,483 basehttp 1168 4904 "GET /api/blog/?page=1&limit=6&sortBy=createdAt&sortOrder=desc HTTP/1.1" 200 2104
+INFO 2025-07-05 12:54:43,965 basehttp 1168 4904 "GET /api/blog/?page=1&limit=6&sortBy=createdAt&sortOrder=desc HTTP/1.1" 200 2104
+INFO 2025-07-05 12:57:32,714 basehttp 1168 1360 "GET /api/projects/ HTTP/1.1" 200 12131
+INFO 2025-07-05 12:57:33,037 basehttp 1168 1360 "GET /api/testimonials/ HTTP/1.1" 200 360
+INFO 2025-07-05 12:57:35,699 basehttp 1168 13044 "GET /api/testimonials/ HTTP/1.1" 200 360
+INFO 2025-07-05 12:57:35,709 basehttp 1168 1360 "GET /api/contact/info/ HTTP/1.1" 200 629
+INFO 2025-07-05 12:57:37,941 basehttp 1168 7528 "GET /api/contact/info/ HTTP/1.1" 200 629
+INFO 2025-07-05 12:57:46,530 basehttp 1168 8916 "GET /api/projects/ HTTP/1.1" 200 12131
+INFO 2025-07-05 12:57:47,402 basehttp 1168 8300 "GET /api/skills/ HTTP/1.1" 200 8336
+INFO 2025-07-05 12:57:50,454 basehttp 1168 14004 "GET /api/skills/ HTTP/1.1" 200 8336
+INFO 2025-07-05 13:02:58,694 basehttp 1168 11584 "GET /api/blog/tags/ HTTP/1.1" 200 505
+INFO 2025-07-05 13:03:02,042 basehttp 1168 7964 "GET /api/blog/tags/ HTTP/1.1" 200 505
+INFO 2025-07-05 13:03:02,307 basehttp 1168 13940 "GET /api/blog/?page=1&limit=6&sortBy=createdAt&sortOrder=desc HTTP/1.1" 200 2104
+INFO 2025-07-05 13:03:06,347 basehttp 1168 13940 "GET /api/blog/?page=1&limit=6&sortBy=createdAt&sortOrder=desc HTTP/1.1" 200 2104
+INFO 2025-07-05 13:10:12,127 autoreload 2836 8524 Watching for file changes with StatReloader
+INFO 2025-07-05 13:11:51,680 basehttp 1168 13196 "GET /api/skills/ HTTP/1.1" 200 8336
+INFO 2025-07-05 13:12:22,336 basehttp 1168 13196 - Broken pipe from ('127.0.0.1', 5249)
+INFO 2025-07-05 13:12:30,409 basehttp 1168 14320 "GET /api/projects/ HTTP/1.1" 200 12131
+INFO 2025-07-05 13:12:53,971 basehttp 1168 14320 - Broken pipe from ('127.0.0.1', 5275)
+INFO 2025-07-05 13:12:59,160 basehttp 1168 9604 "GET /api/skills/ HTTP/1.1" 200 8336
+INFO 2025-07-05 13:14:08,098 basehttp 1168 9604 - Broken pipe from ('127.0.0.1', 5292)
+INFO 2025-07-05 13:14:22,214 basehttp 1168 11852 "GET /api/skills/ HTTP/1.1" 200 8336
+INFO 2025-07-05 13:22:23,135 basehttp 1168 14500 - Broken pipe from ('127.0.0.1', 5585)
+INFO 2025-07-05 13:32:11,920 basehttp 1168 15112 "GET /api/blog/tags/ HTTP/1.1" 200 505
+INFO 2025-07-05 13:32:12,019 basehttp 1168 1160 "GET /api/contact/info/ HTTP/1.1" 200 629
+INFO 2025-07-05 13:32:12,092 basehttp 1168 1552 "GET /api/testimonials/ HTTP/1.1" 200 360
+INFO 2025-07-05 13:32:12,587 basehttp 1168 12416 "GET /api/blog/?page=1&limit=6&sortBy=createdAt&sortOrder=desc HTTP/1.1" 200 2104
+INFO 2025-07-05 13:32:12,738 basehttp 1168 1160 "GET /api/contact/info/ HTTP/1.1" 200 629
+INFO 2025-07-05 13:32:12,706 basehttp 1168 15112 "GET /api/blog/tags/ HTTP/1.1" 200 505
+INFO 2025-07-05 13:32:12,738 basehttp 1168 1552 "GET /api/testimonials/ HTTP/1.1" 200 360
+INFO 2025-07-05 13:32:12,887 basehttp 1168 1068 "GET /api/projects/ HTTP/1.1" 200 12131
+INFO 2025-07-05 13:32:13,754 basehttp 1168 12416 "GET /api/blog/?page=1&limit=6&sortBy=createdAt&sortOrder=desc HTTP/1.1" 200 2104
+INFO 2025-07-05 13:32:14,103 basehttp 1168 1068 "GET /api/projects/ HTTP/1.1" 200 12131
+INFO 2025-07-05 13:32:14,156 basehttp 1168 15200 "GET /api/skills/ HTTP/1.1" 200 8336
+INFO 2025-07-05 13:32:26,499 basehttp 1168 1068 "GET /api/skills/ HTTP/1.1" 200 8336
+INFO 2025-07-05 13:39:03,327 basehttp 1168 13868 "GET /api/blog/tags/ HTTP/1.1" 200 505
+INFO 2025-07-05 13:39:03,928 basehttp 1168 13868 "GET /api/blog/tags/ HTTP/1.1" 200 505
+INFO 2025-07-05 13:39:04,224 basehttp 1168 11712 "GET /api/blog/?page=1&limit=6&sortBy=createdAt&sortOrder=desc HTTP/1.1" 200 2104
+INFO 2025-07-05 13:39:04,579 basehttp 1168 13868 "GET /api/blog/?page=1&limit=6&sortBy=createdAt&sortOrder=desc HTTP/1.1" 200 2104
+INFO 2025-07-05 13:39:04,644 basehttp 1168 7588 "GET /api/skills/ HTTP/1.1" 200 8336
+INFO 2025-07-05 13:39:06,228 basehttp 1168 13868 "GET /api/skills/ HTTP/1.1" 200 8336
+INFO 2025-07-05 13:49:56,434 basehttp 1168 6284 "GET /api/testimonials/ HTTP/1.1" 200 360
+INFO 2025-07-05 13:49:56,913 basehttp 1168 15052 "GET /api/projects/ HTTP/1.1" 200 12131
+INFO 2025-07-05 13:49:57,081 basehttp 1168 6284 "GET /api/testimonials/ HTTP/1.1" 200 360
+INFO 2025-07-05 13:49:57,152 basehttp 1168 15052 "GET /api/projects/ HTTP/1.1" 200 12131
+INFO 2025-07-05 13:49:57,186 basehttp 1168 6980 "GET /api/contact/info/ HTTP/1.1" 200 629
+INFO 2025-07-05 13:49:57,214 basehttp 1168 6980 "GET /api/contact/info/ HTTP/1.1" 200 629
+INFO 2025-07-05 13:49:57,247 basehttp 1168 11012 "GET /api/skills/ HTTP/1.1" 200 8336
+INFO 2025-07-05 13:49:57,411 basehttp 1168 6980 "GET /api/skills/ HTTP/1.1" 200 8336
+INFO 2025-07-05 13:54:04,775 basehttp 1168 4960 "GET /api/blog/tags/ HTTP/1.1" 200 505
+INFO 2025-07-05 13:54:06,052 basehttp 1168 4960 "GET /api/blog/tags/ HTTP/1.1" 200 505
+INFO 2025-07-05 13:54:06,088 basehttp 1168 3800 "GET /api/blog/?page=1&limit=6&sortBy=createdAt&sortOrder=desc HTTP/1.1" 200 2104
+INFO 2025-07-05 13:54:06,205 basehttp 1168 3800 "GET /api/blog/?page=1&limit=6&sortBy=createdAt&sortOrder=desc HTTP/1.1" 200 2104
+INFO 2025-07-05 13:56:52,263 basehttp 1168 3180 "GET /api/skills/ HTTP/1.1" 200 8336
+INFO 2025-07-05 13:56:52,785 basehttp 1168 3180 - Broken pipe from ('127.0.0.1', 6668)
+INFO 2025-07-05 14:07:30,354 basehttp 1168 3096 "GET /api/skills/ HTTP/1.1" 200 8336
+INFO 2025-07-05 14:07:38,515 basehttp 1168 14472 "GET /api/skills/ HTTP/1.1" 200 8336
+INFO 2025-07-05 14:09:44,744 basehttp 1168 13436 "GET /api/testimonials/ HTTP/1.1" 200 360
+INFO 2025-07-05 14:09:45,144 basehttp 1168 13784 "GET /api/contact/info/ HTTP/1.1" 200 629
+INFO 2025-07-05 14:09:46,659 basehttp 1168 4144 "GET /api/testimonials/ HTTP/1.1" 200 360
+INFO 2025-07-05 14:09:50,019 basehttp 1168 13436 "GET /api/contact/info/ HTTP/1.1" 200 629
+INFO 2025-07-05 14:09:50,465 basehttp 1168 9088 "GET /api/projects/ HTTP/1.1" 200 12131
+INFO 2025-07-05 14:09:51,186 basehttp 1168 13436 "GET /api/projects/ HTTP/1.1" 200 12131
+INFO 2025-07-05 14:09:52,753 basehttp 1168 14852 "GET /api/skills/ HTTP/1.1" 200 8336
+INFO 2025-07-05 14:09:54,951 basehttp 1168 14852 "GET /api/skills/ HTTP/1.1" 200 8336
+INFO 2025-07-05 14:14:31,885 basehttp 1168 9576 "GET /api/blog/tags/ HTTP/1.1" 200 505
+INFO 2025-07-05 14:14:34,346 basehttp 1168 9576 "GET /api/blog/tags/ HTTP/1.1" 200 505
+INFO 2025-07-05 14:14:34,677 basehttp 1168 2184 "GET /api/blog/?page=1&limit=6&sortBy=createdAt&sortOrder=desc HTTP/1.1" 200 2104
+INFO 2025-07-05 14:14:34,995 basehttp 1168 9576 "GET /api/blog/?page=1&limit=6&sortBy=createdAt&sortOrder=desc HTTP/1.1" 200 2104
+WARNING 2025-07-05 14:15:28,924 log 1168 14296 Not Found: /api/blog/posts/
+WARNING 2025-07-05 14:15:28,924 basehttp 1168 14296 "GET /api/blog/posts/ HTTP/1.1" 404 23
+INFO 2025-07-05 14:15:30,324 basehttp 1168 14296 - Broken pipe from ('127.0.0.1', 7025)
+INFO 2025-07-05 14:17:20,118 basehttp 1168 6664 "GET /api/blog/ HTTP/1.1" 200 2104
+INFO 2025-07-05 14:17:21,321 basehttp 1168 6664 - Broken pipe from ('127.0.0.1', 7084)
+INFO 2025-07-05 14:19:48,359 basehttp 1168 8424 "GET /api/blog/tags/ HTTP/1.1" 200 505
+INFO 2025-07-05 14:19:48,578 basehttp 1168 14732 "GET /api/blog/?page=1&limit=6&sortBy=createdAt&sortOrder=desc HTTP/1.1" 200 2104
+INFO 2025-07-05 14:19:49,112 basehttp 1168 8424 "GET /api/blog/tags/ HTTP/1.1" 200 505
+INFO 2025-07-05 14:19:50,361 basehttp 1168 14732 "GET /api/blog/?page=1&limit=6&sortBy=createdAt&sortOrder=desc HTTP/1.1" 200 2104
+INFO 2025-07-05 14:22:02,167 basehttp 1168 6732 "GET /api/blog/tags/ HTTP/1.1" 200 505
+INFO 2025-07-05 14:22:02,212 basehttp 1168 6732 "GET /api/blog/tags/ HTTP/1.1" 200 505
+INFO 2025-07-05 14:22:02,249 basehttp 1168 11620 "GET /api/blog/?page=1&limit=6&sortBy=createdAt&sortOrder=desc HTTP/1.1" 200 2104
+INFO 2025-07-05 14:22:02,299 basehttp 1168 11620 "GET /api/blog/?page=1&limit=6&sortBy=createdAt&sortOrder=desc HTTP/1.1" 200 2104
+INFO 2025-07-05 14:23:32,506 basehttp 1168 14700 "GET /api/blog/tags/ HTTP/1.1" 200 505
+INFO 2025-07-05 14:23:32,544 basehttp 1168 14700 "GET /api/blog/tags/ HTTP/1.1" 200 505
+INFO 2025-07-05 14:23:32,587 basehttp 1168 11044 "GET /api/blog/?page=1&limit=6&sortBy=createdAt&sortOrder=desc HTTP/1.1" 200 2104
+INFO 2025-07-05 14:23:32,640 basehttp 1168 11044 "GET /api/blog/?page=1&limit=6&sortBy=createdAt&sortOrder=desc HTTP/1.1" 200 2104
+INFO 2025-07-05 14:43:55,238 basehttp 1168 13948 "OPTIONS /api/blog/?page=1&limit=6&sortBy=createdAt&sortOrder=desc HTTP/1.1" 200 0
+INFO 2025-07-05 14:43:55,269 basehttp 1168 9680 "OPTIONS /api/blog/tags/ HTTP/1.1" 200 0
+INFO 2025-07-05 14:43:55,357 basehttp 1168 13828 "OPTIONS /api/blog/tags/ HTTP/1.1" 200 0
+INFO 2025-07-05 14:43:55,390 basehttp 1168 11972 "OPTIONS /api/blog/?page=1&limit=6&sortBy=createdAt&sortOrder=desc HTTP/1.1" 200 0
+INFO 2025-07-05 14:43:56,470 basehttp 1168 9680 "GET /api/blog/tags/ HTTP/1.1" 200 505
+INFO 2025-07-05 14:43:56,736 basehttp 1168 13948 "GET /api/blog/?page=1&limit=6&sortBy=createdAt&sortOrder=desc HTTP/1.1" 200 2104
+INFO 2025-07-05 14:43:56,832 basehttp 1168 9680 "GET /api/blog/tags/ HTTP/1.1" 200 505
+INFO 2025-07-05 14:43:57,169 basehttp 1168 13948 "GET /api/blog/?page=1&limit=6&sortBy=createdAt&sortOrder=desc HTTP/1.1" 200 2104
+INFO 2025-07-05 14:54:25,261 basehttp 1168 15304 "GET /api/blog/tags/ HTTP/1.1" 200 505
+INFO 2025-07-05 14:54:25,343 basehttp 1168 12944 "GET /api/blog/?page=1&limit=6&sortBy=createdAt&sortOrder=desc HTTP/1.1" 200 2104
+INFO 2025-07-05 14:54:25,398 basehttp 1168 15304 "GET /api/blog/tags/ HTTP/1.1" 200 505
+INFO 2025-07-05 14:54:25,660 basehttp 1168 12944 "GET /api/blog/?page=1&limit=6&sortBy=createdAt&sortOrder=desc HTTP/1.1" 200 2104
+INFO 2025-07-05 15:03:08,865 basehttp 1168 14924 "GET /api/blog/tags/ HTTP/1.1" 200 505
+INFO 2025-07-05 15:03:09,011 basehttp 1168 12352 "GET /api/blog/?page=1&limit=6&sortBy=createdAt&sortOrder=desc HTTP/1.1" 200 2104
+INFO 2025-07-05 15:03:09,662 basehttp 1168 12352 "GET /api/blog/?page=1&limit=6&sortBy=createdAt&sortOrder=desc HTTP/1.1" 200 2104
+INFO 2025-07-05 15:03:09,696 basehttp 1168 14924 "GET /api/blog/tags/ HTTP/1.1" 200 505
+INFO 2025-07-05 15:21:11,455 basehttp 1168 15912 "OPTIONS /api/projects/ HTTP/1.1" 200 0
+INFO 2025-07-05 15:21:11,511 basehttp 1168 15912 "OPTIONS /api/testimonials/ HTTP/1.1" 200 0
+INFO 2025-07-05 15:21:11,517 basehttp 1168 15912 "OPTIONS /api/contact/info/ HTTP/1.1" 200 0
+INFO 2025-07-05 15:21:18,428 basehttp 1168 15824 "OPTIONS /api/skills/ HTTP/1.1" 200 0
+INFO 2025-07-05 15:21:20,495 basehttp 1168 15760 "OPTIONS /api/testimonials/ HTTP/1.1" 200 0
+INFO 2025-07-05 15:21:37,277 basehttp 1168 15544 "OPTIONS /api/contact/info/ HTTP/1.1" 200 0
+INFO 2025-07-05 15:21:37,529 basehttp 1168 15396 "OPTIONS /api/projects/ HTTP/1.1" 200 0
+INFO 2025-07-05 15:21:37,707 basehttp 1168 13648 "OPTIONS /api/skills/ HTTP/1.1" 200 0
+INFO 2025-07-05 15:21:38,860 basehttp 1168 15824 "GET /api/testimonials/ HTTP/1.1" 200 360
+INFO 2025-07-05 15:21:40,579 basehttp 1168 15760 "GET /api/contact/info/ HTTP/1.1" 200 629
+INFO 2025-07-05 15:21:41,159 basehttp 1168 15824 "GET /api/testimonials/ HTTP/1.1" 200 360
+INFO 2025-07-05 15:21:43,705 basehttp 1168 15544 "GET /api/skills/ HTTP/1.1" 200 8336
+INFO 2025-07-05 15:21:44,192 basehttp 1168 15760 "GET /api/contact/info/ HTTP/1.1" 200 629
+INFO 2025-07-05 15:21:44,286 basehttp 1168 15912 "GET /api/projects/ HTTP/1.1" 200 12131
+INFO 2025-07-05 15:21:45,156 basehttp 1168 15760 "GET /api/projects/ HTTP/1.1" 200 12131
+INFO 2025-07-05 15:21:45,503 basehttp 1168 15824 "GET /api/skills/ HTTP/1.1" 200 8336
+INFO 2025-07-05 15:45:04,231 basehttp 1168 17272 "GET /api/testimonials/ HTTP/1.1" 200 360
+INFO 2025-07-05 15:45:04,380 basehttp 1168 16600 "GET /api/contact/info/ HTTP/1.1" 200 629
+INFO 2025-07-05 15:45:04,944 basehttp 1168 17272 "GET /api/testimonials/ HTTP/1.1" 200 360
+INFO 2025-07-05 15:45:05,006 basehttp 1168 15964 "GET /api/contact/info/ HTTP/1.1" 200 629
+INFO 2025-07-05 15:45:06,460 basehttp 1168 12188 "GET /api/projects/ HTTP/1.1" 200 12131
+INFO 2025-07-05 15:45:07,124 basehttp 1168 12188 "GET /api/projects/ HTTP/1.1" 200 12131
+INFO 2025-07-05 15:45:07,141 basehttp 1168 5524 "GET /api/skills/ HTTP/1.1" 200 8336
+INFO 2025-07-05 15:45:07,270 basehttp 1168 12188 "GET /api/skills/ HTTP/1.1" 200 8336
+INFO 2025-07-05 15:46:07,014 basehttp 1168 2604 "GET /api/testimonials/ HTTP/1.1" 200 360
+INFO 2025-07-05 15:46:07,344 basehttp 1168 12360 "GET /api/contact/info/ HTTP/1.1" 200 629
+INFO 2025-07-05 15:46:07,485 basehttp 1168 2604 "GET /api/testimonials/ HTTP/1.1" 200 360
+INFO 2025-07-05 15:46:07,716 basehttp 1168 3528 "GET /api/projects/ HTTP/1.1" 200 12131
+INFO 2025-07-05 15:46:07,731 basehttp 1168 1304 "GET /api/contact/info/ HTTP/1.1" 200 629
+INFO 2025-07-05 15:46:08,062 basehttp 1168 2604 "GET /api/projects/ HTTP/1.1" 200 12131
+INFO 2025-07-05 15:46:08,231 basehttp 1168 10576 "GET /api/skills/ HTTP/1.1" 200 8336
+INFO 2025-07-05 15:46:08,834 basehttp 1168 2604 "GET /api/skills/ HTTP/1.1" 200 8336
+INFO 2025-07-05 21:43:38,600 basehttp 1168 4208 "OPTIONS /api/blog/?page=1&limit=6&sortBy=createdAt&sortOrder=desc HTTP/1.1" 200 0
+INFO 2025-07-05 21:43:38,614 basehttp 1168 12928 "OPTIONS /api/blog/?page=1&limit=6&sortBy=createdAt&sortOrder=desc HTTP/1.1" 200 0
+INFO 2025-07-05 21:43:38,616 basehttp 1168 14352 "OPTIONS /api/blog/tags/ HTTP/1.1" 200 0
+INFO 2025-07-05 21:43:38,627 basehttp 1168 8928 "OPTIONS /api/blog/tags/ HTTP/1.1" 200 0
+INFO 2025-07-05 21:43:40,166 basehttp 1168 14352 "GET /api/blog/tags/ HTTP/1.1" 200 505
+INFO 2025-07-05 21:43:40,546 basehttp 1168 12928 "GET /api/blog/?page=1&limit=6&sortBy=createdAt&sortOrder=desc HTTP/1.1" 200 2104
+INFO 2025-07-05 21:43:40,646 basehttp 1168 14352 "GET /api/blog/tags/ HTTP/1.1" 200 505
+INFO 2025-07-05 21:43:41,178 basehttp 1168 12928 "GET /api/blog/?page=1&limit=6&sortBy=createdAt&sortOrder=desc HTTP/1.1" 200 2104

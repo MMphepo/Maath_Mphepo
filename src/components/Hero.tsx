@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import { ArrowRight, Download } from 'lucide-react'
 import { useEffect, useState } from 'react'
+import Image from 'next/image'
 
 const Hero = () => {
   const [displayText, setDisplayText] = useState('')
@@ -146,19 +147,34 @@ const Hero = () => {
             className="relative"
           >
             <div className="relative">
-              {/* Placeholder for professional image */}
+              {/* Professional Profile Image */}
               <motion.div
                 animate={{ y: [0, -10, 0] }}
                 transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                className="w-80 h-80 mx-auto bg-gradient-to-br from-primary/20 to-secondary/20 rounded-full flex items-center justify-center glass border-2 border-primary/30"
+                className="relative w-80 h-80 mx-auto"
               >
-                <div className="text-center">
-                  <div className="w-32 h-32 bg-primary/30 rounded-full mx-auto mb-4 flex items-center justify-center">
-                    <span className="text-4xl font-bold text-white">MM</span>
+                {/* Glassmorphism Background */}
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-full glass border-2 border-primary/30 backdrop-blur-sm"></div>
+
+                {/* Profile Image Container */}
+                <div className="relative w-full h-full rounded-full overflow-hidden p-4">
+                  <div className="relative w-full h-full rounded-full overflow-hidden border-4 border-primary/40 shadow-2xl">
+                    <Image
+                      src="/images/hero-profile.png"
+                      alt="Maath Mphepo - Backend Developer"
+                      fill
+                      className="object-cover object-center hover:scale-105 transition-transform duration-500"
+                      priority
+                      sizes="(max-width: 768px) 280px, 320px"
+                    />
+
+                    {/* Overlay gradient for better integration */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-dark-100/20 via-transparent to-transparent"></div>
                   </div>
-                  <p className="text-white font-medium">Professional Photo</p>
-                  <p className="text-gray-400 text-sm">Coming Soon</p>
                 </div>
+
+                {/* Glowing ring effect */}
+                <div className="absolute inset-0 rounded-full border-2 border-primary/50 animate-pulse"></div>
               </motion.div>
 
               {/* Decorative Elements */}

@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Lock, User, Eye, EyeOff, LogIn } from 'lucide-react'
+import { api, TokenManager } from '@/lib/api-config'
 
 interface AdminLoginProps {
   onLoginSuccess: () => void
@@ -23,20 +24,14 @@ const AdminLogin = ({ onLoginSuccess }: AdminLoginProps) => {
     setError('')
 
     try {
-      const response = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      })
+      const response = await api.auth.login(formData)
 
-      const data = await response.json()
-
-      if (data.success) {
+      if (response.success && response.data) {
+        // Store tokens
+        TokenManager.setTokens(response.data.access, response.data.refresh)
         onLoginSuccess()
       } else {
-        setError(data.error || 'Login failed')
+        setError(response.error || 'Login failed')
       }
     } catch (error) {
       setError('Network error. Please try again.')

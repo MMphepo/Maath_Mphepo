@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import { ArrowRight, Mail, MessageCircle, Calendar } from 'lucide-react'
 import { useEffect, useState } from 'react'
+import api from '@/lib/api-config'
 
 const AboutCTAFooter = () => {
   const [isVisible, setIsVisible] = useState(false)
@@ -51,8 +52,19 @@ const AboutCTAFooter = () => {
     }
   }
 
-  const handleEmailClick = () => {
-    window.location.href = 'mailto:maathmphepo@gmail.com'
+  const handleEmailClick = async () => {
+    try {
+      // Try to get contact info from API first
+      const response = await api.contact.info()
+      const email = response.success && response.data?.email
+        ? response.data.email
+        : 'maathmphepo@gmail.com' // fallback
+
+      window.location.href = `mailto:${email}`
+    } catch (error) {
+      // Fallback to default email
+      window.location.href = 'mailto:maathmphepo@gmail.com'
+    }
   }
 
   const handleScheduleClick = () => {

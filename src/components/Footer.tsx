@@ -1,12 +1,31 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Github, Linkedin, Mail, ArrowUp, Heart } from 'lucide-react'
+import { Github, Linkedin, Mail, ArrowUp, Heart, Twitter } from 'lucide-react'
 import { useEffect, useState } from 'react'
+import api from '@/lib/api-config'
+
+interface ContactInfo {
+  email: string
+  phone?: string
+  location: string
+  socialLinks: Array<{
+    platform: string
+    url: string
+    is_active: boolean
+  }>
+  availability: {
+    status: string
+    responseTime: string
+    timezone: string
+  }
+}
 
 const Footer = () => {
   const [isVisible, setIsVisible] = useState(false)
   const [showScrollTop, setShowScrollTop] = useState(false)
+  const [contactInfo, setContactInfo] = useState<ContactInfo | null>(null)
+  const [loading, setLoading] = useState(true)
 
   const quickLinks = [
     { name: 'Home', href: '#home' },
@@ -16,26 +35,57 @@ const Footer = () => {
     { name: 'Contact', href: '#contact' },
   ]
 
-  const socialLinks = [
-    {
-      name: 'GitHub',
-      icon: Github,
-      href: 'https://github.com/maathmphepo',
-      color: 'hover:text-gray-300'
-    },
-    {
-      name: 'LinkedIn',
-      icon: Linkedin,
-      href: 'https://linkedin.com/in/maathmphepo',
-      color: 'hover:text-blue-400'
-    },
-    {
-      name: 'Email',
-      icon: Mail,
-      href: 'mailto:maath@example.com',
-      color: 'hover:text-primary'
+  // Fetch contact information from Django API
+  const fetchContactInfo = async () => {
+    try {
+      setLoading(true)
+      const response = await api.contact.info()
+
+      if (response.success && response.data) {
+        setContactInfo(response.data)
+      } else {
+        console.error('Error fetching contact info:', response.error)
+        // Fallback to default contact info
+        setContactInfo(getDefaultContactInfo())
+      }
+    } catch (error) {
+      console.error('Error fetching contact info:', error)
+      setContactInfo(getDefaultContactInfo())
+    } finally {
+      setLoading(false)
     }
-  ]
+  }
+
+  // Default contact info fallback
+  const getDefaultContactInfo = (): ContactInfo => ({
+    email: 'maathmphepo@gmail.com',
+    location: 'Malawi, Working Globally',
+    socialLinks: [
+      { platform: 'GitHub', url: 'https://github.com/maathmphepo', is_active: true },
+      { platform: 'LinkedIn', url: 'https://linkedin.com/in/maathmphepo', is_active: true },
+      { platform: 'Twitter', url: 'https://twitter.com/maathmphepo', is_active: true }
+    ],
+    availability: {
+      status: 'Available for projects',
+      responseTime: '24-48 hours',
+      timezone: 'UTC+2 (CAT)'
+    }
+  })
+
+  // Map platform names to icons and colors
+  const getSocialIcon = (platform: string) => {
+    const iconMap: Record<string, { icon: any, color: string }> = {
+      'GitHub': { icon: Github, color: 'hover:text-gray-300' },
+      'LinkedIn': { icon: Linkedin, color: 'hover:text-blue-400' },
+      'Twitter': { icon: Twitter, color: 'hover:text-blue-400' },
+      'Email': { icon: Mail, color: 'hover:text-primary' }
+    }
+    return iconMap[platform] || { icon: Mail, color: 'hover:text-primary' }
+  }
+
+  useEffect(() => {
+    fetchContactInfo()
+  }, [])
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -131,29 +181,38 @@ const Footer = () => {
                 and elegant backend systems that power real-world applications.
               </p>
               <div className="flex justify-center md:justify-start gap-4">
-                {socialLinks.map((social, index) => {
-                  const IconComponent = social.icon
-                  return (
-                    <motion.a
-                      key={social.name}
-                      href={social.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      initial={{ opacity: 0, scale: 0 }}
-                      animate={isVisible ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0 }}
-                      transition={{ duration: 0.5, delay: 0.4 + index * 0.1 }}
-                      whileHover={{ 
-                        scale: 1.2, 
-                        rotate: 360,
-                        transition: { duration: 0.3 }
-                      }}
-                      whileTap={{ scale: 0.9 }}
-                      className={`w-12 h-12 bg-dark-200 rounded-full flex items-center justify-center text-white transition-all duration-300 ${social.color} hover:shadow-lg`}
-                    >
-                      <IconComponent className="w-5 h-5" />
-                    </motion.a>
-                  )
-                })}
+                {loading ? (
+                  // Loading skeleton for social links
+                  [...Array(3)].map((_, i) => (
+                    <div key={i} className="w-10 h-10 bg-dark-300/50 rounded-full animate-pulse" />
+                  ))
+                ) : contactInfo?.socialLinks ? (
+                  contactInfo.socialLinks
+                    .filter(social => social.is_active)
+                    .map((social, index) => {
+                      const { icon: IconComponent, color } = getSocialIcon(social.platform)
+                      return (
+                        <motion.a
+                          key={social.platform}
+                          href={social.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          initial={{ opacity: 0, scale: 0 }}
+                          animate={isVisible ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0 }}
+                          transition={{ duration: 0.5, delay: 0.4 + index * 0.1 }}
+                          whileHover={{
+                            scale: 1.2,
+                            rotate: 360,
+                            transition: { duration: 0.3 }
+                          }}
+                          whileTap={{ scale: 0.9 }}
+                          className={`w-12 h-12 bg-dark-200 rounded-full flex items-center justify-center text-white transition-all duration-300 ${color} hover:shadow-lg`}
+                        >
+                          <IconComponent className="w-5 h-5" />
+                        </motion.a>
+                      )
+                    })
+                ) : null}
               </div>
             </motion.div>
 
@@ -193,37 +252,45 @@ const Footer = () => {
               className="text-center md:text-right"
             >
               <h4 className="text-lg font-semibold text-white mb-6">Get In Touch</h4>
-              <div className="space-y-4">
-                <motion.div
-                  whileHover={{ scale: 1.05 }}
-                  className="text-gray-400"
-                >
-                  <p className="font-medium text-white mb-1">Email</p>
-                  <a 
-                    href="mailto:maath@example.com" 
-                    className="hover:text-primary transition-colors duration-300"
+              {loading ? (
+                <div className="space-y-4 animate-pulse">
+                  <div className="h-12 bg-dark-300/50 rounded" />
+                  <div className="h-12 bg-dark-300/50 rounded" />
+                  <div className="h-12 bg-dark-300/50 rounded" />
+                </div>
+              ) : contactInfo ? (
+                <div className="space-y-4">
+                  <motion.div
+                    whileHover={{ scale: 1.05 }}
+                    className="text-gray-400"
                   >
-                    maath@example.com
-                  </a>
-                </motion.div>
-                <motion.div
-                  whileHover={{ scale: 1.05 }}
-                  className="text-gray-400"
-                >
-                  <p className="font-medium text-white mb-1">Location</p>
-                  <p>Malawi, Working Globally</p>
-                </motion.div>
-                <motion.div
-                  whileHover={{ scale: 1.05 }}
-                  className="text-gray-400"
-                >
-                  <p className="font-medium text-white mb-1">Availability</p>
-                  <div className="flex items-center justify-center md:justify-end gap-2">
-                    <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
-                    <span className="text-green-400">Available for projects</span>
-                  </div>
-                </motion.div>
-              </div>
+                    <p className="font-medium text-white mb-1">Email</p>
+                    <a
+                      href={`mailto:${contactInfo.email}`}
+                      className="hover:text-primary transition-colors duration-300"
+                    >
+                      {contactInfo.email}
+                    </a>
+                  </motion.div>
+                  <motion.div
+                    whileHover={{ scale: 1.05 }}
+                    className="text-gray-400"
+                  >
+                    <p className="font-medium text-white mb-1">Location</p>
+                    <p>{contactInfo.location}</p>
+                  </motion.div>
+                  <motion.div
+                    whileHover={{ scale: 1.05 }}
+                    className="text-gray-400"
+                  >
+                    <p className="font-medium text-white mb-1">Availability</p>
+                    <div className="flex items-center justify-center md:justify-end gap-2">
+                      <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
+                      <span className="text-green-400">{contactInfo.availability.status}</span>
+                    </div>
+                  </motion.div>
+                </div>
+              ) : null}
             </motion.div>
           </div>
         </motion.div>

@@ -2,20 +2,21 @@
 
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { 
-  BarChart3, 
-  FileText, 
-  MessageCircle, 
-  Heart, 
-  Eye, 
-  Plus, 
-  Settings, 
+import {
+  BarChart3,
+  FileText,
+  MessageCircle,
+  Heart,
+  Eye,
+  Plus,
+  Settings,
   LogOut,
   Edit,
   Trash2,
   Calendar
 } from 'lucide-react'
 import { BlogPost } from '@/types/blog'
+import { api } from '@/lib/api-config'
 import { formatDate } from '@/lib/blog-utils'
 
 interface AdminDashboardProps {
@@ -36,22 +37,23 @@ const AdminDashboard = ({ onLogout }: AdminDashboardProps) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('/api/blog?limit=100')
-        const data = await response.json()
-        
-        if (data.success) {
-          setPosts(data.data.posts)
-          
+        const response = await api.blog.list({ limit: '100' })
+
+        if (response.success && response.data) {
+          setPosts(response.data.posts)
+
           // Calculate stats
-          const totalViews = data.data.posts.reduce((sum: number, post: BlogPost) => sum + post.views, 0)
-          const totalLikes = data.data.posts.reduce((sum: number, post: BlogPost) => sum + post.likes, 0)
-          
+          const totalViews = response.data.posts.reduce((sum: number, post: BlogPost) => sum + post.views, 0)
+          const totalLikes = response.data.posts.reduce((sum: number, post: BlogPost) => sum + post.likes, 0)
+
           setStats({
-            totalPosts: data.data.posts.length,
+            totalPosts: response.data.posts.length,
             totalViews,
             totalLikes,
             totalComments: 0 // Would be calculated from comments API
           })
+        } else {
+          console.error('Error fetching dashboard data:', response.error)
         }
       } catch (error) {
         console.error('Error fetching dashboard data:', error)
