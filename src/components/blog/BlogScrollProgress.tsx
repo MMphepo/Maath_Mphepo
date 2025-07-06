@@ -27,14 +27,17 @@ const BlogScrollProgress = () => {
     >
       <motion.div
         className="h-full bg-gradient-to-r from-primary to-secondary"
-        style={{ scaleX: scrollProgress }}
+        style={{
+          scaleX: scrollProgress,
+          transformOrigin: 'left'
+        }}
         initial={{ scaleX: 0 }}
         animate={{ scaleX: scrollProgress }}
         transition={{ duration: 0.1 }}
-        transformOrigin="left"
       />
     </motion.div>
   )
+  
 }
 
 export default BlogScrollProgress
