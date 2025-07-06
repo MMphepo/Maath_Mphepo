@@ -7,11 +7,6 @@
   "env": {
     "NEXT_PUBLIC_API_URL": "https://maath-mphepo.onrender.com/"
   },
-  "functions": {
-    "app/**/*.js": {
-      "runtime": "vercel-node@18"
-    }
-  },
   "headers": [
     {
       "source": "/(.*)",
