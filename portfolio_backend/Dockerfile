@@ -59,8 +59,8 @@ COPY --chown=appuser:appuser . .
 # Switch to non-root user
 USER appuser
 
-# Collect static files
-RUN python manage.py collectstatic --noinput --settings=portfolio_backend.settings_production
+# Collect static files (with build mode enabled)
+RUN DJANGO_BUILD_MODE=true python manage.py collectstatic --noinput --settings=portfolio_backend.settings_production
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \

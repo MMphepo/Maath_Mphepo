@@ -11,13 +11,22 @@ from .settings import *
 DEBUG = os.getenv('DEBUG', 'False').lower() == 'true'
 SECRET_KEY = os.getenv('SECRET_KEY')
 
+# Allow build-time execution without SECRET_KEY for collectstatic
 if not SECRET_KEY:
-    raise ValueError("SECRET_KEY environment variable is required in production")
+    if os.getenv('DJANGO_BUILD_MODE') == 'true':
+        # Use a temporary secret key for build-time operations
+        SECRET_KEY = 'build-time-secret-key-not-for-production-use-only'
+    else:
+        raise ValueError("SECRET_KEY environment variable is required in production")
 
 # Allowed Hosts
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '').split(',')
 if not ALLOWED_HOSTS or ALLOWED_HOSTS == ['']:
-    raise ValueError("ALLOWED_HOSTS environment variable is required in production")
+    if os.getenv('DJANGO_BUILD_MODE') == 'true':
+        # Use localhost for build-time operations
+        ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+    else:
+        raise ValueError("ALLOWED_HOSTS environment variable is required in production")
 
 # Database Configuration
 if os.getenv('DATABASE_URL'):
