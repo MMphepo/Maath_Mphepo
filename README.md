@@ -76,6 +76,7 @@ This project is designed for simple deployment using:
    - Replace `your-backend-name` with your actual Render service name
 
 3. **Deploy:**
+    deployment
    - Click "Deploy"
    - Vercel will automatically build and deploy your frontend
    - Your site will be available at `https://your-project-name.vercel.app`
