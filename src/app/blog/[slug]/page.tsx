@@ -50,7 +50,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
       publishedTime: post.createdAt,
       modifiedTime: post.updatedAt,
       authors: [post.author.name],
-      tags: post.tags,
+      tags: tagStrings,
     },
     twitter: {
       card: 'summary_large_image',
