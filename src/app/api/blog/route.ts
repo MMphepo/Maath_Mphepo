@@ -8,13 +8,26 @@ export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url)
     
-    const params: BlogSearchParams = {
+    // Helper function to validate sortBy parameter
+    const validateSortBy = (value: string | null): 'createdAt' | 'views' | 'likes' => {
+      if (value === 'views' || value === 'likes') {
+        return value
+      }
+      return 'createdAt' // default
+    }
+
+    // Helper function to validate sortOrder parameter
+    const validateSortOrder = (value: string | null): 'asc' | 'desc' => {
+      return value === 'asc' ? 'asc' : 'desc' // default to desc
+    }
+
+    const params = {
       page: parseInt(searchParams.get('page') || '1'),
       limit: parseInt(searchParams.get('limit') || '10'),
       tag: searchParams.get('tag') || undefined,
       search: searchParams.get('search') || undefined,
-      sortBy: (searchParams.get('sortBy') as 'createdAt' | 'views' | 'likes') || 'createdAt',
-      sortOrder: (searchParams.get('sortOrder') as 'asc' | 'desc') || 'desc'
+      sortBy: validateSortBy(searchParams.get('sortBy')),
+      sortOrder: validateSortOrder(searchParams.get('sortOrder'))
     }
 
     // Start with published posts only
@@ -34,7 +47,7 @@ export async function GET(request: NextRequest) {
     posts = sortBlogPosts(posts, params.sortBy, params.sortOrder)
 
     // Apply pagination
-    const paginatedResult = paginateArray(posts, params.page!, params.limit!)
+    const paginatedResult = paginateArray(posts, params.page, params.limit)
 
     return NextResponse.json({
       success: true,

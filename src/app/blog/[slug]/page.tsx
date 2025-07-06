@@ -20,10 +20,15 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
     }
   }
 
+  // Convert tags to strings for metadata
+  const tagStrings = post.tags.map(tag =>
+    typeof tag === 'string' ? tag : tag.name
+  )
+
   return {
     title: `${post.title} - Maath Mphepo Blog`,
     description: post.description,
-    keywords: post.tags,
+    keywords: tagStrings,
     authors: [{ name: post.author.name }],
     creator: post.author.name,
     publisher: 'Maath Mphepo',
