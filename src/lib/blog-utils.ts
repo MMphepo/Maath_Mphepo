@@ -198,18 +198,24 @@ export function searchBlogPosts(posts: BlogPost[], query: string): BlogPost[] {
 
   const searchTerm = query.toLowerCase()
   
-  return posts.filter(post => 
+  return posts.filter(post =>
     post.title.toLowerCase().includes(searchTerm) ||
     post.description.toLowerCase().includes(searchTerm) ||
-    post.tags.some(tag => tag.toLowerCase().includes(searchTerm)) ||
+    post.tags.some(tag => {
+      const tagName = typeof tag === 'string' ? tag : tag.name
+      return tagName.toLowerCase().includes(searchTerm)
+    }) ||
     post.content.toLowerCase().includes(searchTerm)
   )
 }
 
 export function filterBlogPostsByTag(posts: BlogPost[], tag: string): BlogPost[] {
   if (!tag) return posts
-  return posts.filter(post => 
-    post.tags.some(postTag => postTag.toLowerCase() === tag.toLowerCase())
+  return posts.filter(post =>
+    post.tags.some(postTag => {
+      const tagName = typeof postTag === 'string' ? postTag : postTag.name
+      return tagName.toLowerCase() === tag.toLowerCase()
+    })
   )
 }
 

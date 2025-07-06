@@ -75,7 +75,7 @@ const BlogSocialShare = ({ title, url }: BlogSocialShareProps) => {
                 <div className="grid grid-cols-1 gap-2">
                   {socialShareButtons.map((button) => {
                     const Icon = getIcon(button.icon)
-                    const shareUrl = button.shareUrl({ text: title, url })
+                    const shareUrl = button.shareUrl({ title, text: title, url })
                     
                     return (
                       <motion.button
@@ -106,7 +106,7 @@ const BlogSocialShare = ({ title, url }: BlogSocialShareProps) => {
         <span className="text-gray-400 text-sm">Quick share:</span>
         {socialShareButtons.slice(0, 4).map((button) => {
           const Icon = getIcon(button.icon)
-          const shareUrl = button.shareUrl({ text: title, url })
+          const shareUrl = button.shareUrl({ title, text: title, url })
           
           return (
             <motion.button

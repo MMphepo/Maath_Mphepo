@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion'
 import { ArrowRight, Mail, MessageCircle, Calendar } from 'lucide-react'
 import { useEffect, useState } from 'react'
-import api from '@/lib/api-config'
+import { api } from '@/lib/api-config'
 
 const AboutCTAFooter = () => {
   const [isVisible, setIsVisible] = useState(false)

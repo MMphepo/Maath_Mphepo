@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion'
 import { Quote, Star } from 'lucide-react'
 import { useEffect, useState } from 'react'
-import api from '@/lib/api-config'
+import { api } from '@/lib/api-config'
 
 interface TestimonialData {
   id: string

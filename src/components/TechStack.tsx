@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
-import api from '@/lib/api-config'
+import { api } from '@/lib/api-config'
 
 interface Technology {
   name: string

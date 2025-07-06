@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion'
 import { Github, Linkedin, Mail, ArrowUp, Heart, Twitter } from 'lucide-react'
 import { useEffect, useState } from 'react'
-import api from '@/lib/api-config'
+import { api } from '@/lib/api-config'
 
 interface ContactInfo {
   email: string

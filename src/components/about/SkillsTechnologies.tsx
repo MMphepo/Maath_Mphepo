@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion'
 import { Filter, SortAsc } from 'lucide-react'
 import { useEffect, useState } from 'react'
-import api from '@/lib/api-config'
+import { api } from '@/lib/api-config'
 
 interface Skill {
   name: string

@@ -5,7 +5,7 @@ import { motion } from 'framer-motion'
 import { useRouter } from 'next/navigation'
 import AdminLogin from '@/components/admin/AdminLogin'
 import AdminDashboard from '@/components/admin/AdminDashboard'
-import api, { TokenManager } from '@/lib/api-config'
+import { api, TokenManager } from '@/lib/api-config'
 
 const AdminPage = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
