@@ -94,7 +94,7 @@ const FeaturedProjects = () => {
             Project <span className="text-primary">Portfolio</span>
           </h2>
           <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-            A comprehensive showcase of backend systems, web applications, and IoT projects I've built
+            Some of the backend systems, web applications, and IoT projects I've built
           </p>
         </motion.div>
 

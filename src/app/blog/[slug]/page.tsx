@@ -3,7 +3,8 @@ import { notFound } from 'next/navigation'
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
 import BlogPostContent from '@/components/blog/BlogPostContent'
-import { mockBlogPosts } from '@/lib/blog-data'
+import { API_BASE_URL, API_ENDPOINTS } from '@/lib/api-config'
+import { BlogPost } from '@/types/blog'
 
 interface BlogPostPageProps {
   params: {
@@ -11,10 +12,66 @@ interface BlogPostPageProps {
   }
 }
 
+// Fetch blog post from Django backend (server-side)
+async function getBlogPost(slug: string): Promise<BlogPost | null> {
+  try {
+    const url = `${API_BASE_URL}${API_ENDPOINTS.BLOG.DETAIL(slug)}`
+    const response = await fetch(url, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+      // Add cache revalidation for production
+      next: { revalidate: 3600 } // Revalidate every hour
+    })
+
+    if (!response.ok) {
+      return null
+    }
+
+    const data = await response.json()
+    if (data.success && data.data) {
+      return data.data
+    }
+    return null
+  } catch (error) {
+    console.error('Error fetching blog post:', error)
+    return null
+  }
+}
+
+// Fetch blog posts list from Django backend (server-side)
+async function getBlogPosts(): Promise<BlogPost[]> {
+  try {
+    const url = `${API_BASE_URL}${API_ENDPOINTS.BLOG.LIST}`
+    const response = await fetch(url, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+      // Add cache revalidation for production
+      next: { revalidate: 3600 } // Revalidate every hour
+    })
+
+    if (!response.ok) {
+      return []
+    }
+
+    const data = await response.json()
+    if (data.success && data.data && data.data.posts) {
+      return data.data.posts
+    }
+    return []
+  } catch (error) {
+    console.error('Error fetching blog posts:', error)
+    return []
+  }
+}
+
 // Generate metadata for SEO
 export async function generateMetadata({ params }: BlogPostPageProps): Promise<Metadata> {
-  const post = mockBlogPosts.find(p => p.slug === params.slug && p.isPublished)
-  
+  const post = await getBlogPost(params.slug)
+
   if (!post) {
     return {
       title: 'Post Not Found - Maath Mphepo',
@@ -80,15 +137,21 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
 
 // Generate static params for static generation
 export async function generateStaticParams() {
-  const publishedPosts = mockBlogPosts.filter(post => post.isPublished)
-  
-  return publishedPosts.map((post) => ({
-    slug: post.slug,
-  }))
+  try {
+    const posts = await getBlogPosts()
+    return posts.map((post: BlogPost) => ({
+      slug: post.slug,
+    }))
+  } catch (error) {
+    console.error('Error generating static params:', error)
+  }
+
+  // Return empty array if API fails
+  return []
 }
 
-export default function BlogPostPage({ params }: BlogPostPageProps) {
-  const post = mockBlogPosts.find(p => p.slug === params.slug && p.isPublished)
+export default async function BlogPostPage({ params }: BlogPostPageProps) {
+  const post = await getBlogPost(params.slug)
 
   if (!post) {
     notFound()

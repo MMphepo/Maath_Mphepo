@@ -76,7 +76,6 @@ const AdminPage = () => {
 
   return (
     <div className="min-h-screen bg-dark-100">
-      <Navigation />
       {isAuthenticated ? (
         <AdminDashboard onLogout={handleLogout} />
       ) : (

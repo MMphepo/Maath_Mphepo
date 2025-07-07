@@ -43,10 +43,10 @@ const Footer = () => {
 
   // Default contact info fallback
   const getDefaultContactInfo = (): ContactInfo => ({
-    email: 'maathmphepo@gmail.com',
-    location: 'Malawi, Working Globally',
+    email: 'maathmphepo80@gmail.com',
+    location: 'Malawi, Lilongwe, Working Globally',
     socialLinks: [
-      { platform: 'GitHub', url: 'https://github.com/maathmphepo', is_active: true },
+      { platform: 'GitHub', url: 'https://github.com/Mmphepo', is_active: true },
       { platform: 'LinkedIn', url: 'https://linkedin.com/in/maathmphepo', is_active: true },
       { platform: 'Twitter', url: 'https://twitter.com/maathmphepo', is_active: true }
     ],
