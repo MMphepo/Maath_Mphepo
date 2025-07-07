@@ -335,7 +335,7 @@ const TechStack = () => {
                           <div className="text-white text-sm font-medium mb-1">
                             {skill.name}
                           </div>
-                          <div className="text-gray-300 text-xs leading-relaxed break-words">
+                          <div className="text-gray-300 text-xs leading-relaxed break-words z-10">
                             {skill.description}
                           </div>
                           <div className="text-xs mt-2 font-semibold" style={{ color: category.color }}>
