@@ -516,3 +516,5 @@ INFO 2025-07-05 21:43:40,166 basehttp 1168 14352 "GET /api/blog/tags/ HTTP/1.1" 
 INFO 2025-07-05 21:43:40,546 basehttp 1168 12928 "GET /api/blog/?page=1&limit=6&sortBy=createdAt&sortOrder=desc HTTP/1.1" 200 2104
 INFO 2025-07-05 21:43:40,646 basehttp 1168 14352 "GET /api/blog/tags/ HTTP/1.1" 200 505
 INFO 2025-07-05 21:43:41,178 basehttp 1168 12928 "GET /api/blog/?page=1&limit=6&sortBy=createdAt&sortOrder=desc HTTP/1.1" 200 2104
+INFO 2025-07-07 10:37:41,448 autoreload 652 18252 Watching for file changes with StatReloader
+INFO 2025-07-07 10:39:29,443 basehttp 652 7636 "GET /api/blog/ HTTP/1.1" 200 2104
