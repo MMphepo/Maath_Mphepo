@@ -34,7 +34,8 @@ const TechStack = () => {
   const fetchSkills = async () => {
     try {
       setLoading(true)
-      const response = await api.skills.list()
+      const response = await api.skills.list();
+
 
       if (response.success && response.data) {
         // Transform Django skills data to match component interface

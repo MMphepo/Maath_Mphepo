@@ -83,10 +83,25 @@ export class TokenManager {
     localStorage.removeItem(this.ACCESS_TOKEN_KEY)
     localStorage.removeItem(this.REFRESH_TOKEN_KEY)
   }
+
+  static clearInvalidTokens(): void {
+    // Clear tokens if they exist but are invalid
+    const accessToken = this.getAccessToken()
+    const refreshToken = this.getRefreshToken()
+
+    if (accessToken || refreshToken) {
+      console.log('Clearing potentially invalid tokens')
+      this.clearTokens()
+    }
+  }
   
   static getAuthHeaders(): Record<string, string> {
     const token = this.getAccessToken()
     return token ? { 'Authorization': `Bearer ${token}` } : {}
+  }
+
+  static hasValidTokens(): boolean {
+    return !!(this.getAccessToken() && this.getRefreshToken())
   }
 }
 
@@ -126,15 +141,17 @@ export class ApiClient {
   
   static async request<T = any>(
     endpoint: string,
-    options: RequestInit = {}
+    options: RequestInit = {},
+    requireAuth: boolean = false
   ): Promise<ApiResponse<T>> {
     const url = endpoint.startsWith('http') ? endpoint : `${API_BASE_URL}${endpoint}`
-    
+
     const config: RequestInit = {
       ...options,
       headers: {
         ...DEFAULT_HEADERS,
-        ...TokenManager.getAuthHeaders(),
+        // Only add auth headers if explicitly required or if we have valid tokens
+        ...(requireAuth || TokenManager.hasValidTokens() ? TokenManager.getAuthHeaders() : {}),
         ...options.headers,
       },
     }
@@ -142,8 +159,8 @@ export class ApiClient {
     try {
       let response = await fetch(url, config)
       
-      // Handle token refresh for 401 responses
-      if (response.status === 401 && TokenManager.getRefreshToken()) {
+      // Handle token refresh for 401 responses only if auth was required
+      if (response.status === 401 && requireAuth && TokenManager.getRefreshToken()) {
         const refreshed = await this.refreshToken()
         if (refreshed) {
           // Retry request with new token
@@ -153,6 +170,9 @@ export class ApiClient {
           }
           response = await fetch(url, config)
         }
+      } else if (response.status === 401 && !requireAuth) {
+        // Clear invalid tokens for public endpoints
+        TokenManager.clearTokens()
       }
       
       const data = await response.json()
@@ -174,32 +194,34 @@ export class ApiClient {
     }
   }
   
-  static async get<T = any>(endpoint: string): Promise<ApiResponse<T>> {
-    return this.request<T>(endpoint, { method: 'GET' })
+  static async get<T = any>(endpoint: string, requireAuth: boolean = false): Promise<ApiResponse<T>> {
+    return this.request<T>(endpoint, { method: 'GET' }, requireAuth)
   }
-  
+
   static async post<T = any>(
     endpoint: string,
-    data?: any
+    data?: any,
+    requireAuth: boolean = true
   ): Promise<ApiResponse<T>> {
     return this.request<T>(endpoint, {
       method: 'POST',
       body: data ? JSON.stringify(data) : undefined,
-    })
+    }, requireAuth)
   }
-  
+
   static async put<T = any>(
     endpoint: string,
-    data?: any
+    data?: any,
+    requireAuth: boolean = true
   ): Promise<ApiResponse<T>> {
     return this.request<T>(endpoint, {
       method: 'PUT',
       body: data ? JSON.stringify(data) : undefined,
-    })
+    }, requireAuth)
   }
-  
-  static async delete<T = any>(endpoint: string): Promise<ApiResponse<T>> {
-    return this.request<T>(endpoint, { method: 'DELETE' })
+
+  static async delete<T = any>(endpoint: string, requireAuth: boolean = true): Promise<ApiResponse<T>> {
+    return this.request<T>(endpoint, { method: 'DELETE' }, requireAuth)
   }
 }
 
@@ -220,39 +242,53 @@ export const api = {
   blog: {
     list: (params?: Record<string, string>) => {
       const query = params ? `?${new URLSearchParams(params).toString()}` : ''
-      return ApiClient.get(`${API_ENDPOINTS.BLOG.LIST}${query}`)
+      return ApiClient.get(`${API_ENDPOINTS.BLOG.LIST}${query}`, false) // Public endpoint
     },
-    get: (slug: string) => ApiClient.get(API_ENDPOINTS.BLOG.DETAIL(slug)),
-    tags: () => ApiClient.get(API_ENDPOINTS.BLOG.TAGS),
-    comments: (slug: string) => ApiClient.get(API_ENDPOINTS.BLOG.COMMENTS(slug)),
-    like: (slug: string) => ApiClient.post(API_ENDPOINTS.BLOG.LIKE(slug)),
+    get: (slug: string) => ApiClient.get(API_ENDPOINTS.BLOG.DETAIL(slug), false), // Public endpoint
+    tags: () => ApiClient.get(API_ENDPOINTS.BLOG.TAGS, false), // Public endpoint
+    comments: (slug: string) => ApiClient.get(API_ENDPOINTS.BLOG.COMMENTS(slug), false), // Public endpoint
+    like: (slug: string) => ApiClient.post(API_ENDPOINTS.BLOG.LIKE(slug), {}, false), // Public endpoint
     addComment: (slug: string, comment: any) =>
-      ApiClient.post(API_ENDPOINTS.BLOG.COMMENTS(slug), comment),
+      ApiClient.post(API_ENDPOINTS.BLOG.COMMENTS(slug), comment, false), // Public endpoint
   },
-  
+
   // Portfolio
   projects: {
-    list: () => ApiClient.get(API_ENDPOINTS.PROJECTS.LIST),
-    get: (id: string) => ApiClient.get(API_ENDPOINTS.PROJECTS.DETAIL(id)),
+    list: () => ApiClient.get(API_ENDPOINTS.PROJECTS.LIST, false), // Public endpoint
+    get: (id: string) => ApiClient.get(API_ENDPOINTS.PROJECTS.DETAIL(id), false), // Public endpoint
   },
-  
+
   skills: {
-    list: () => ApiClient.get(API_ENDPOINTS.SKILLS.LIST),
-    categories: () => ApiClient.get(API_ENDPOINTS.SKILLS.CATEGORIES),
+    list: () => ApiClient.get(API_ENDPOINTS.SKILLS.LIST, false), // Public endpoint
+    categories: () => ApiClient.get(API_ENDPOINTS.SKILLS.CATEGORIES, false), // Public endpoint
   },
-  
+
   // Contact
   contact: {
-    info: () => ApiClient.get(API_ENDPOINTS.CONTACT.INFO),
-    submit: (data: any) => ApiClient.post(API_ENDPOINTS.CONTACT.SUBMIT, data),
+    info: () => ApiClient.get(API_ENDPOINTS.CONTACT.INFO, false), // Public endpoint
+    submit: (data: any) => ApiClient.post(API_ENDPOINTS.CONTACT.SUBMIT, data, false), // Public endpoint
     newsletter: (email: string) =>
-      ApiClient.post(API_ENDPOINTS.CONTACT.NEWSLETTER, { email }),
+      ApiClient.post(API_ENDPOINTS.CONTACT.NEWSLETTER, { email }, false), // Public endpoint
   },
-  
+
   // Site data
-  testimonials: () => ApiClient.get(API_ENDPOINTS.TESTIMONIALS),
-  achievements: () => ApiClient.get(API_ENDPOINTS.ACHIEVEMENTS),
-  config: () => ApiClient.get(API_ENDPOINTS.CONFIG),
+  testimonials: () => ApiClient.get(API_ENDPOINTS.TESTIMONIALS, false), // Public endpoint
+  achievements: () => ApiClient.get(API_ENDPOINTS.ACHIEVEMENTS, false), // Public endpoint
+  config: () => ApiClient.get(API_ENDPOINTS.CONFIG, false), // Public endpoint
 }
 
 export default api
+
+// Initialize API client - clear invalid tokens on startup
+if (typeof window !== 'undefined') {
+  // Check if we have tokens but they might be invalid
+  const hasTokens = TokenManager.getAccessToken() || TokenManager.getRefreshToken()
+  if (hasTokens) {
+    // Try a simple API call to verify tokens are valid
+    api.config().catch(() => {
+      // If config call fails, clear tokens
+      console.log('Clearing invalid tokens on startup')
+      TokenManager.clearTokens()
+    })
+  }
+}

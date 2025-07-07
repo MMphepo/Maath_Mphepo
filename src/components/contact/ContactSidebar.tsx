@@ -32,15 +32,15 @@ const ContactSidebar = () => {
   }, [])
 
   const getDefaultContactInfo = (): ContactInfo => ({
-    email: 'maathmphepo@gmail.com',
-    location: 'Malawi, Working Globally',
+    email: 'maathmphepo80@gmail.com',
+    location: 'Malawi, Lilongwe, Working Globally',
     socialLinks: [
-      { platform: 'GitHub', url: 'https://github.com/maathmphepo', is_active: true },
+      { platform: 'GitHub', url: 'https://github.com/Mmphepo', is_active: true },
       { platform: 'LinkedIn', url: 'https://linkedin.com/in/maathmphepo', is_active: true },
-      { platform: 'Twitter', url: 'https://twitter.com/maathmphepo', is_active: true }
+      { platform: 'Twitter', url: 'https://x.com/MMphepo32688', is_active: true }
     ],
     availability: {
-      status: 'Available for new projects',
+      status: 'Available for projects',
       responseTime: '24 hours',
       timezone: 'UTC+2 (CAT)'
     }
@@ -59,10 +59,7 @@ const ContactSidebar = () => {
     }
   }
 
-  const formatEmail = (email: string) => {
-    // Anti-spam formatting
-    return email.replace('@', ' [at] ').replace('.', ' [dot] ')
-  }
+
 
   if (loading) {
     return (
@@ -106,7 +103,7 @@ const ContactSidebar = () => {
             <div>
               <p className="text-gray-400 text-sm">Email</p>
               <p className="text-white font-medium group-hover:text-primary-400 transition-colors">
-                {formatEmail(contactInfo.email)}
+                maathmphepo80@gmail.com
               </p>
             </div>
           </motion.div>
