@@ -78,7 +78,7 @@ const Navigation = () => {
           {/* Logo */}
           <motion.div
             whileHover={{ scale: 1.05 }}
-            className="text-2xl font-bold text-white"
+            className="text-2xl font-bold text-white hidden sm:block"
           >
             <span className="text-primary">Maath</span> Mphepo
           </motion.div>

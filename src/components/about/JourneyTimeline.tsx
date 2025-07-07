@@ -47,7 +47,7 @@ const JourneyTimeline = () => {
   }
 
   return (
-    <section id="timeline" className="py-20 bg-dark-100">
+    <section id="timeline" className="py-12 sm:py-20 bg-dark-100">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -69,11 +69,11 @@ const JourneyTimeline = () => {
             initial={{ height: 0 }}
             animate={isVisible ? { height: '100%' } : { height: 0 }}
             transition={{ duration: 2, delay: 0.5 }}
-            className="absolute left-8 md:left-1/2 transform md:-translate-x-0.5 w-1 bg-gradient-to-b from-primary to-secondary"
+            className="absolute left-4 sm:left-8 md:left-1/2 transform md:-translate-x-0.5 w-1 bg-gradient-to-b from-primary to-secondary"
           />
 
           {/* Timeline Items */}
-          <div className="space-y-12">
+          <div className="space-y-8 sm:space-y-12">
             {timeline.map((item, index) => {
               const isExpanded = expandedItem === index
               const isLeft = index % 2 === 0
@@ -84,7 +84,7 @@ const JourneyTimeline = () => {
                   initial={{ opacity: 0, x: isLeft ? -50 : 50 }}
                   animate={isVisible ? { opacity: 1, x: 0 } : { opacity: 0, x: isLeft ? -50 : 50 }}
                   transition={{ duration: 0.6, delay: index * 0.2 }}
-                  className={`relative flex items-center ${
+                  className={`relative flex items-start ${
                     isLeft ? 'md:flex-row' : 'md:flex-row-reverse'
                   } flex-col md:gap-8`}
                 >
@@ -97,7 +97,7 @@ const JourneyTimeline = () => {
                     transition={{ 
                       scale: { duration: 0.5, delay: index * 0.2 + 0.8 }
                     }}
-                    className="absolute left-8 md:left-1/2 transform -translate-x-1/2 w-16 h-16 bg-gradient-to-r from-primary to-secondary rounded-full flex items-center justify-center text-2xl z-10 cursor-pointer"
+                    className="absolute left-4 sm:left-8 md:left-1/2 transform -translate-x-1/2 w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-r from-primary to-secondary rounded-full flex items-center justify-center text-lg sm:text-2xl z-10 cursor-pointer"
                     onClick={() => toggleExpanded(index)}
                   >
                     <motion.span
@@ -123,18 +123,18 @@ const JourneyTimeline = () => {
                   </motion.div>
 
                   {/* Content Card */}
-                  <div className={`w-full md:w-5/12 ml-24 md:ml-0 ${
+                  <div className={`w-full md:w-5/12 ml-16 sm:ml-24 md:ml-0 ${
                     isLeft ? 'md:text-right' : 'md:text-left'
                   }`}>
                     <motion.div
                       whileHover={{ scale: 1.02 }}
-                      className="glass rounded-xl p-6 cursor-pointer"
+                      className="glass rounded-xl p-4 sm:p-6 cursor-pointer"
                       onClick={() => toggleExpanded(index)}
                     >
                       {/* Year Badge */}
                       <motion.div
                         whileHover={{ scale: 1.1 }}
-                        className={`inline-block bg-primary text-white px-4 py-2 rounded-full text-sm font-bold mb-4 ${
+                        className={`inline-block bg-primary text-white px-3 py-1 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-bold mb-4 ${
                           isLeft ? 'md:float-right md:ml-4' : 'md:float-left md:mr-4'
                         }`}
                       >
@@ -142,25 +142,25 @@ const JourneyTimeline = () => {
                       </motion.div>
 
                       {/* Title & Subtitle */}
-                      <h3 className="text-xl font-bold text-white mb-2 clear-both">
+                      <h3 className="text-lg sm:text-xl font-bold text-white mb-2 clear-both">
                         {item.title}
                       </h3>
-                      <p className="text-primary font-medium mb-4">
+                      <p className="text-primary font-medium mb-4 text-sm sm:text-base">
                         {item.subtitle}
                       </p>
 
                       {/* Description */}
-                      <p className="text-gray-400 leading-relaxed mb-4">
+                      <p className="text-gray-400 leading-relaxed mb-4 text-sm sm:text-base">
                         {item.description}
                       </p>
 
                       {/* Technologies */}
-                      <div className="flex flex-wrap gap-2 mb-4">
+                      <div className="flex flex-wrap gap-1 sm:gap-2 mb-4">
                         {item.technologies.map((tech, techIndex) => (
                           <motion.span
                             key={techIndex}
                             whileHover={{ scale: 1.1 }}
-                            className="px-3 py-1 bg-secondary/20 text-secondary text-xs rounded-full border border-secondary/30"
+                            className="px-2 py-1 sm:px-3 bg-secondary/20 text-secondary text-xs rounded-full border border-secondary/30"
                           >
                             {tech}
                           </motion.span>
@@ -171,7 +171,7 @@ const JourneyTimeline = () => {
                       <motion.button
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
-                        className="flex items-center gap-2 text-primary hover:text-primary/80 transition-colors duration-300 font-medium"
+                        className="flex items-center gap-2 text-primary hover:text-primary/80 transition-colors duration-300 font-medium text-sm sm:text-base"
                       >
                         {isExpanded ? 'Show Less' : 'Show Details'}
                         {isExpanded ? (
@@ -192,7 +192,7 @@ const JourneyTimeline = () => {
                         className="overflow-hidden"
                       >
                         <div className="border-t border-gray-600 mt-4 pt-4">
-                          <h4 className="text-white font-semibold mb-3">Key Achievements:</h4>
+                          <h4 className="text-white font-semibold mb-3 text-sm sm:text-base">Key Achievements:</h4>
                           <ul className="space-y-2">
                             {item.achievements.map((achievement, achIndex) => (
                               <motion.li
@@ -203,9 +203,9 @@ const JourneyTimeline = () => {
                                   x: isExpanded ? 0 : -20
                                 }}
                                 transition={{ duration: 0.3, delay: achIndex * 0.1 }}
-                                className="flex items-start gap-3 text-gray-300 text-sm"
+                                className="flex items-start gap-2 sm:gap-3 text-gray-300 text-xs sm:text-sm"
                               >
-                                <span className="text-primary mt-1">•</span>
+                                <span className="text-primary mt-1 text-sm">•</span>
                                 {achievement}
                               </motion.li>
                             ))}
@@ -227,13 +227,13 @@ const JourneyTimeline = () => {
           transition={{ duration: 0.8, delay: 1.5 }}
           className="text-center mt-16"
         >
-          <div className="glass rounded-xl p-8 max-w-2xl mx-auto">
-            <h3 className="text-2xl font-bold text-white mb-4">
+          <div className="glass rounded-xl p-6 sm:p-8 max-w-2xl mx-auto">
+            <h3 className="text-xl sm:text-2xl font-bold text-white mb-4">
               🚀 What's Next?
             </h3>
-            <p className="text-gray-400 leading-relaxed">
-              Currently focused on building more scalable backend architectures and exploring 
-              cloud-native solutions. Always excited to take on new challenges that push the 
+            <p className="text-gray-400 leading-relaxed text-sm sm:text-base">
+              Currently focused on building more scalable backend architectures and exploring
+              cloud-native solutions. Always excited to take on new challenges that push the
               boundaries of what's possible with modern backend technologies.
             </p>
           </div>
