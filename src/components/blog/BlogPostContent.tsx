@@ -5,6 +5,10 @@ import { motion } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowLeft, Calendar, Clock, Eye, Heart, Share2, Tag } from 'lucide-react'
+import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
+import rehypeHighlight from 'rehype-highlight'
+import rehypeRaw from 'rehype-raw'
 import { BlogPost } from '@/types/blog'
 import { formatDate } from '@/lib/blog-utils'
 import { api } from '@/lib/api-config'
@@ -13,6 +17,19 @@ import BlogSocialShare from './BlogSocialShare'
 import BlogComments from './BlogComments'
 import BlogReactions from './BlogReactions'
 import BlogScrollProgress from './BlogScrollProgress'
+
+// Import highlight.js styles and custom markdown styles
+import 'highlight.js/styles/github-dark.css'
+import '@/styles/markdown.css'
+
+// Helper function to generate slug from text
+const generateSlug = (text: string): string => {
+  return text
+    .toLowerCase()
+    .replace(/[^\w\s-]/g, '')
+    .replace(/\s+/g, '-')
+    .trim()
+}
 
 interface BlogPostContentProps {
   post: BlogPost
@@ -176,12 +193,150 @@ const BlogPostContent = ({ post }: BlogPostContentProps) => {
             className="lg:col-span-3"
           >
             {/* Article Body */}
-            <div className="prose prose-invert prose-lg max-w-none mb-12">
-              {/* This would be rendered markdown in a real app */}
-              <div 
-                className="text-gray-300 leading-relaxed"
-                dangerouslySetInnerHTML={{ __html: post.content.replace(/\n/g, '<br />') }}
-              />
+            <div className="prose prose-invert prose-lg max-w-none mb-12 markdown-content">
+              <ReactMarkdown
+                remarkPlugins={[remarkGfm]}
+                rehypePlugins={[rehypeHighlight, rehypeRaw]}
+                components={{
+                  // Custom styling for different elements
+                  h1: ({ children }) => {
+                    const text = typeof children === 'string' ? children : children?.toString() || ''
+                    const id = generateSlug(text)
+                    return (
+                      <h1 id={id} className="text-4xl font-bold text-white mb-6 mt-8 border-b border-dark-300 pb-4">
+                        {children}
+                      </h1>
+                    )
+                  },
+                  h2: ({ children }) => {
+                    const text = typeof children === 'string' ? children : children?.toString() || ''
+                    const id = generateSlug(text)
+                    return (
+                      <h2 id={id} className="text-3xl font-semibold text-white mb-4 mt-8">
+                        {children}
+                      </h2>
+                    )
+                  },
+                  h3: ({ children }) => {
+                    const text = typeof children === 'string' ? children : children?.toString() || ''
+                    const id = generateSlug(text)
+                    return (
+                      <h3 id={id} className="text-2xl font-semibold text-gray-200 mb-3 mt-6">
+                        {children}
+                      </h3>
+                    )
+                  },
+                  h4: ({ children }) => {
+                    const text = typeof children === 'string' ? children : children?.toString() || ''
+                    const id = generateSlug(text)
+                    return (
+                      <h4 id={id} className="text-xl font-semibold text-gray-200 mb-2 mt-4">
+                        {children}
+                      </h4>
+                    )
+                  },
+                  p: ({ children }) => (
+                    <p className="text-gray-300 leading-relaxed mb-4">
+                      {children}
+                    </p>
+                  ),
+                  ul: ({ children }) => (
+                    <ul className="list-disc list-inside text-gray-300 mb-4 space-y-2 ml-4">
+                      {children}
+                    </ul>
+                  ),
+                  ol: ({ children }) => (
+                    <ol className="list-decimal list-inside text-gray-300 mb-4 space-y-2 ml-4">
+                      {children}
+                    </ol>
+                  ),
+                  li: ({ children }) => (
+                    <li className="text-gray-300">
+                      {children}
+                    </li>
+                  ),
+                  blockquote: ({ children }) => (
+                    <blockquote className="border-l-4 border-primary pl-4 italic text-gray-400 my-6 bg-dark-200/30 py-4 rounded-r-lg">
+                      {children}
+                    </blockquote>
+                  ),
+                  code: ({ children, ...props }) => {
+                    const { className } = props as any
+                    const isInline = !className
+                    return isInline ? (
+                      <code className="bg-dark-200 text-primary px-2 py-1 rounded text-sm font-mono" {...props}>
+                        {children}
+                      </code>
+                    ) : (
+                      <code className="block bg-dark-200 text-gray-300 p-4 rounded-lg overflow-x-auto font-mono text-sm" {...props}>
+                        {children}
+                      </code>
+                    )
+                  },
+                  pre: ({ children }) => (
+                    <pre className="bg-dark-200 rounded-lg overflow-x-auto mb-6 border border-dark-300">
+                      {children}
+                    </pre>
+                  ),
+                  a: ({ href, children }) => (
+                    <a
+                      href={href}
+                      className="text-primary hover:text-primary/80 underline transition-colors duration-300"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {children}
+                    </a>
+                  ),
+                  strong: ({ children }) => (
+                    <strong className="font-semibold text-white">
+                      {children}
+                    </strong>
+                  ),
+                  em: ({ children }) => (
+                    <em className="italic text-gray-200">
+                      {children}
+                    </em>
+                  ),
+                  table: ({ children }) => (
+                    <div className="overflow-x-auto mb-6">
+                      <table className="min-w-full border border-dark-300 rounded-lg">
+                        {children}
+                      </table>
+                    </div>
+                  ),
+                  thead: ({ children }) => (
+                    <thead className="bg-dark-200">
+                      {children}
+                    </thead>
+                  ),
+                  tbody: ({ children }) => (
+                    <tbody className="bg-dark-100">
+                      {children}
+                    </tbody>
+                  ),
+                  tr: ({ children }) => (
+                    <tr className="border-b border-dark-300">
+                      {children}
+                    </tr>
+                  ),
+                  th: ({ children }) => (
+                    <th className="px-4 py-3 text-left text-white font-semibold">
+                      {children}
+                    </th>
+                  ),
+                  td: ({ children }) => (
+                    <td className="px-4 py-3 text-gray-300">
+                      {children}
+                    </td>
+                  ),
+                  hr: () => (
+                    <hr className="border-dark-300 my-8" />
+                  ),
+                }}
+              >
+                {post.content}
+              </ReactMarkdown>
             </div>
 
             {/* Reactions */}
