@@ -9,7 +9,7 @@ class SiteConfiguration(models.Model):
     site_author = models.CharField(max_length=100, default="Maath Mphepo")
     
     # Contact info
-    email = models.EmailField(default="maath@example.com")
+    email = models.EmailField(default="maathmphepo80@gmail.com")
     phone = models.CharField(max_length=20, blank=True)
     location = models.CharField(max_length=100, blank=True)
     

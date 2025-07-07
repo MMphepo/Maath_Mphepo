@@ -233,7 +233,7 @@ CORS_ALLOWED_ORIGINS=https://your-frontend.vercel.app
 # Optional
 EMAIL_HOST=smtp.gmail.com
 EMAIL_PORT=587
-EMAIL_HOST_USER=your-email@gmail.com
+EMAIL_HOST_USER=maathmphepo80@gmail.com
 EMAIL_HOST_PASSWORD=your-app-password
 ```
 

@@ -50,7 +50,7 @@ Submitted at: {submission.created_at}
 IP Address: {submission.ip_address}
                 '''.strip(),
                 from_email=settings.DEFAULT_FROM_EMAIL,
-                recipient_list=[settings.EMAIL_HOST_USER or 'admin@example.com'],
+                recipient_list=[settings.EMAIL_HOST_USER or 'maathmphepo80@gmail.com'],
                 fail_silently=True,
             )
         except Exception as e:

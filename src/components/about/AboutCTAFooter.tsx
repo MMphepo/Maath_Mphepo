@@ -52,12 +52,12 @@ const AboutCTAFooter = () => {
       const response = await api.contact.info()
       const email = response.success && response.data?.email
         ? response.data.email
-        : 'maathmphepo@gmail.com' // fallback
+        : 'maathmphepo80@gmail.com' // fallback
 
       window.location.href = `mailto:${email}`
     } catch (error) {
       // Fallback to default email
-      window.location.href = 'mailto:maathmphepo@gmail.com'
+      window.location.href = 'mailto:maathmphepo80@gmail.com'
     }
   }
 
