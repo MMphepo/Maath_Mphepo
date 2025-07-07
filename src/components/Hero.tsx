@@ -130,7 +130,7 @@ const Hero = () => {
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                onClick={() => scrollToSection('#contact')}
+                onClick={() => window.location.href = '/contact'}
                 className="border-2 border-white text-white px-8 py-4 rounded-full font-semibold flex items-center justify-center gap-2 hover:bg-white hover:text-dark-100 transition-all duration-300 group"
               >
                 Hire Me

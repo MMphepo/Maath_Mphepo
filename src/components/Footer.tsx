@@ -4,22 +4,7 @@ import { motion } from 'framer-motion'
 import { Github, Linkedin, Mail, ArrowUp, Heart, Twitter } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { api } from '@/lib/api-config'
-
-interface ContactInfo {
-  email: string
-  phone?: string
-  location: string
-  socialLinks: Array<{
-    platform: string
-    url: string
-    is_active: boolean
-  }>
-  availability: {
-    status: string
-    responseTime: string
-    timezone: string
-  }
-}
+import { ContactInfo } from '@/types/contact'
 
 const Footer = () => {
   const [isVisible, setIsVisible] = useState(false)
@@ -30,9 +15,9 @@ const Footer = () => {
   const quickLinks = [
     { name: 'Home', href: '#home' },
     { name: 'Projects', href: '#projects' },
-    { name: 'About', href: '#about' },
+    { name: 'About', href: '/about' },
     { name: 'Skills', href: '#skills' },
-    { name: 'Contact', href: '#contact' },
+    { name: 'Contact', href: '/contact' },
   ]
 
   // Fetch contact information from Django API
@@ -116,10 +101,16 @@ const Footer = () => {
     }
   }, [])
 
-  const scrollToSection = (href: string) => {
-    const element = document.querySelector(href)
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' })
+  const handleNavigation = (href: string) => {
+    if (href.startsWith('#')) {
+      // Internal section navigation
+      const element = document.querySelector(href)
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' })
+      }
+    } else {
+      // Page navigation
+      window.location.href = href
     }
   }
 
@@ -233,7 +224,7 @@ const Footer = () => {
                     transition={{ duration: 0.5, delay: 0.6 + index * 0.1 }}
                   >
                     <motion.button
-                      onClick={() => scrollToSection(link.href)}
+                      onClick={() => handleNavigation(link.href)}
                       whileHover={{ x: 5 }}
                       className="text-gray-400 hover:text-primary transition-colors duration-300 font-medium"
                     >

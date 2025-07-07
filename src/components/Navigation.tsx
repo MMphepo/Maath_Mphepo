@@ -15,7 +15,7 @@ const Navigation = () => {
     { name: 'About', href: '/about' },
     { name: 'Blog', href: '/blog' },
     { name: 'Skills', href: '#skills' },
-    { name: 'Contact', href: '#contact' },
+    { name: 'Contact', href: '/contact' },
   ]
 
   useEffect(() => {
@@ -110,7 +110,7 @@ const Navigation = () => {
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              onClick={() => handleNavigation('#contact')}
+              onClick={() => handleNavigation('/contact')}
               className="bg-primary text-white px-6 py-2 rounded-full font-medium hover:bg-primary/90 transition-colors duration-300"
             >
               Hire Me
@@ -153,7 +153,7 @@ const Navigation = () => {
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                onClick={() => handleNavigation('#contact')}
+                onClick={() => handleNavigation('/contact')}
                 className="bg-primary text-white px-6 py-2 rounded-full font-medium hover:bg-primary/90 transition-colors duration-300 mt-4"
               >
                 Hire Me

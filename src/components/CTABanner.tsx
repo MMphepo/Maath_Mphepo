@@ -29,11 +29,8 @@ const CTABanner = () => {
     }
   }, [])
 
-  const scrollToSection = (href: string) => {
-    const element = document.querySelector(href)
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' })
-    }
+  const navigateToContact = () => {
+    window.location.href = '/contact'
   }
 
   return (
@@ -145,7 +142,7 @@ const CTABanner = () => {
                 boxShadow: "0 20px 40px rgba(0,0,0,0.3)"
               }}
               whileTap={{ scale: 0.95 }}
-              onClick={() => scrollToSection('#contact')}
+              onClick={navigateToContact}
               className="bg-white text-primary px-10 py-4 rounded-full font-bold text-lg flex items-center gap-3 mx-auto hover:bg-gray-100 transition-all duration-300 group shadow-2xl"
               animate={{
                 y: [0, -5, 0],

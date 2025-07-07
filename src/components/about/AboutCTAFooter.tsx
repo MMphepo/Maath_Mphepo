@@ -42,14 +42,8 @@ const AboutCTAFooter = () => {
   }, [])
 
   const handleContactClick = () => {
-    // Navigate to contact section or open contact modal
-    const contactElement = document.querySelector('#contact')
-    if (contactElement) {
-      contactElement.scrollIntoView({ behavior: 'smooth' })
-    } else {
-      // Navigate to home page contact section
-      window.location.href = '/#contact'
-    }
+    // Navigate to dedicated contact page
+    window.location.href = '/contact'
   }
 
   const handleEmailClick = async () => {
