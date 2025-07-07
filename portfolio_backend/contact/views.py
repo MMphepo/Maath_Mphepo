@@ -1,5 +1,6 @@
 from rest_framework import generics, status
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from django_ratelimit.decorators import ratelimit
 from django.utils.decorators import method_decorator
@@ -15,6 +16,7 @@ from .serializers import (
 
 
 @api_view(['POST'])
+@permission_classes([AllowAny])
 @csrf_exempt
 @ratelimit(key='ip', rate='3/h', method='POST')
 def contact_submit(request):
@@ -76,6 +78,7 @@ IP Address: {submission.ip_address}
 
 
 @api_view(['POST'])
+@permission_classes([AllowAny])
 @csrf_exempt
 @ratelimit(key='ip', rate='5/h', method='POST')
 def newsletter_subscribe(request):

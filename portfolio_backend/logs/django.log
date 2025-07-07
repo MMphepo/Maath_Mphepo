@@ -518,3 +518,15 @@ INFO 2025-07-05 21:43:40,646 basehttp 1168 14352 "GET /api/blog/tags/ HTTP/1.1" 
 INFO 2025-07-05 21:43:41,178 basehttp 1168 12928 "GET /api/blog/?page=1&limit=6&sortBy=createdAt&sortOrder=desc HTTP/1.1" 200 2104
 INFO 2025-07-07 10:37:41,448 autoreload 652 18252 Watching for file changes with StatReloader
 INFO 2025-07-07 10:39:29,443 basehttp 652 7636 "GET /api/blog/ HTTP/1.1" 200 2104
+INFO 2025-07-07 16:05:12,024 autoreload 9160 7756 Watching for file changes with StatReloader
+WARNING 2025-07-07 16:05:56,789 log 9160 16336 Unauthorized: /api/contact/submit/
+WARNING 2025-07-07 16:05:56,789 basehttp 9160 16336 "POST /api/contact/submit/ HTTP/1.1" 401 58
+INFO 2025-07-07 16:06:28,762 autoreload 9160 7756 D:\PROJ\Maath_Mphepo\portfolio_backend\contact\views.py changed, reloading.
+INFO 2025-07-07 16:06:34,996 autoreload 17224 9504 Watching for file changes with StatReloader
+INFO 2025-07-07 16:06:41,430 autoreload 17224 9504 D:\PROJ\Maath_Mphepo\portfolio_backend\contact\views.py changed, reloading.
+INFO 2025-07-07 16:06:44,129 autoreload 5948 1516 Watching for file changes with StatReloader
+INFO 2025-07-07 16:06:53,036 autoreload 5948 1516 D:\PROJ\Maath_Mphepo\portfolio_backend\contact\views.py changed, reloading.
+INFO 2025-07-07 16:06:55,820 autoreload 17768 16440 Watching for file changes with StatReloader
+INFO 2025-07-07 16:07:21,676 autoreload 5748 16884 Watching for file changes with StatReloader
+INFO 2025-07-07 16:07:45,324 basehttp 5748 11148 "POST /api/contact/submit/ HTTP/1.1" 201 186
+INFO 2025-07-07 16:07:56,643 basehttp 5748 11148 - Broken pipe from ('127.0.0.1', 4474)
