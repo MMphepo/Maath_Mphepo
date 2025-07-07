@@ -4,7 +4,7 @@
  */
 
 // API Base URL - Django backend
-export const API_BASE_URL = 'https://maath-mphepo.onrender.com/' 
+export const API_BASE_URL = 'https://maath-mphepo.onrender.com' 
 
 // API Endpoints mapping
 export const API_ENDPOINTS = {
