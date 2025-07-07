@@ -1,4 +1,6 @@
 import { Metadata } from 'next'
+import Navigation from '@/components/Navigation'
+import Footer from '@/components/Footer'
 import AboutHero from '@/components/about/AboutHero'
 import MissionPhilosophy from '@/components/about/MissionPhilosophy'
 import JourneyTimeline from '@/components/about/JourneyTimeline'
@@ -28,6 +30,7 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <main className="min-h-screen bg-dark-100 overflow-x-hidden">
+      <Navigation />
       <AboutHero />
       <MissionPhilosophy />
       <JourneyTimeline />
@@ -36,6 +39,7 @@ export default function AboutPage() {
       <QuotesCarousel />
       <HobbiesInterests />
       <AboutCTAFooter />
+      <Footer />
     </main>
   )
 }

@@ -3,6 +3,8 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { useRouter } from 'next/navigation'
+import Navigation from '@/components/Navigation'
+import Footer from '@/components/Footer'
 import AdminLogin from '@/components/admin/AdminLogin'
 import AdminDashboard from '@/components/admin/AdminDashboard'
 import { api, TokenManager } from '@/lib/api-config'
@@ -74,11 +76,13 @@ const AdminPage = () => {
 
   return (
     <div className="min-h-screen bg-dark-100">
+      <Navigation />
       {isAuthenticated ? (
         <AdminDashboard onLogout={handleLogout} />
       ) : (
         <AdminLogin onLoginSuccess={handleLoginSuccess} />
       )}
+      <Footer />
     </div>
   )
 }

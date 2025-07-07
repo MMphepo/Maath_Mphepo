@@ -1,5 +1,7 @@
 import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
+import Navigation from '@/components/Navigation'
+import Footer from '@/components/Footer'
 import BlogPostContent from '@/components/blog/BlogPostContent'
 import { mockBlogPosts } from '@/lib/blog-data'
 
@@ -94,7 +96,9 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
 
   return (
     <main className="min-h-screen bg-dark-100">
+      <Navigation />
       <BlogPostContent post={post} />
+      <Footer />
     </main>
   )
 }

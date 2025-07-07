@@ -1,4 +1,6 @@
 import { Metadata } from 'next'
+import Navigation from '@/components/Navigation'
+import Footer from '@/components/Footer'
 import BlogList from '@/components/blog/BlogList'
 import BlogHero from '@/components/blog/BlogHero'
 
@@ -70,8 +72,10 @@ export const metadata: Metadata = {
 export default function BlogPage() {
   return (
     <main className="min-h-screen bg-dark-100">
+      <Navigation />
       <BlogHero />
       <BlogList />
+      <Footer />
     </main>
   )
 }
