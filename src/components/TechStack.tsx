@@ -37,7 +37,7 @@ const TechStack = () => {
       const response = await api.skills.list();
 
 
-      if (response.success && response.data) {
+      if (!response.success && !response.data) {
         // Transform Django skills data to match component interface
         let transformedCategories: SkillCategory[] = []
 
