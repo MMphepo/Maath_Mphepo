@@ -95,6 +95,109 @@ class BlogPostDetailSerializer(BlogPostListSerializer):
         return extract_content_metadata(obj.content)
 
 
+class BlogPostCreateSerializer(serializers.ModelSerializer):
+    """Serializer for creating blog posts"""
+    tags = serializers.ListField(
+        child=serializers.CharField(max_length=50),
+        required=False,
+        allow_empty=True
+    )
+
+    class Meta:
+        model = BlogPost
+        fields = [
+            'title', 'slug', 'description', 'content', 'banner_image',
+            'banner_image_alt', 'meta_description', 'meta_keywords',
+            'tags', 'is_published', 'is_featured', 'author_name',
+            'author_bio', 'author_avatar'
+        ]
+        extra_kwargs = {
+            'slug': {'required': False},
+            'meta_description': {'required': False},
+            'meta_keywords': {'required': False},
+            'banner_image_alt': {'required': False},
+            'author_name': {'required': False},
+            'author_bio': {'required': False},
+            'author_avatar': {'required': False},
+        }
+
+    def create(self, validated_data):
+        tags_data = validated_data.pop('tags', [])
+
+        # Create the blog post
+        blog_post = BlogPost.objects.create(**validated_data)
+
+        # Handle tags
+        if tags_data:
+            tag_objects = []
+            for tag_name in tags_data:
+                tag, created = Tag.objects.get_or_create(
+                    name=tag_name.strip(),
+                    defaults={'slug': tag_name.strip().lower().replace(' ', '-')}
+                )
+                tag_objects.append(tag)
+            blog_post.tags.set(tag_objects)
+
+        return blog_post
+
+    def validate_content(self, value):
+        """Validate content length and format"""
+        if not value or len(value.strip()) < 100:
+            raise serializers.ValidationError("Content must be at least 100 characters long")
+        return value
+
+    def validate_title(self, value):
+        """Validate title length"""
+        if not value or len(value.strip()) < 5:
+            raise serializers.ValidationError("Title must be at least 5 characters long")
+        return value
+
+
+class BlogPostUpdateSerializer(BlogPostCreateSerializer):
+    """Serializer for updating blog posts"""
+
+    class Meta(BlogPostCreateSerializer.Meta):
+        fields = BlogPostCreateSerializer.Meta.fields + ['id']
+        extra_kwargs = {
+            **BlogPostCreateSerializer.Meta.extra_kwargs,
+            'title': {'required': False},
+            'description': {'required': False},
+            'content': {'required': False},
+        }
+
+    def update(self, instance, validated_data):
+        tags_data = validated_data.pop('tags', None)
+
+        # Update the blog post fields
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
+
+        instance.save()
+
+        # Handle tags if provided
+        if tags_data is not None:
+            tag_objects = []
+            for tag_name in tags_data:
+                tag, created = Tag.objects.get_or_create(
+                    name=tag_name.strip(),
+                    defaults={'slug': tag_name.strip().lower().replace(' ', '-')}
+                )
+                tag_objects.append(tag)
+            instance.tags.set(tag_objects)
+
+        return instance
+
+
+class BlogPostAdminSerializer(BlogPostDetailSerializer):
+    """Serializer for admin with additional fields"""
+
+    class Meta(BlogPostDetailSerializer.Meta):
+        fields = BlogPostDetailSerializer.Meta.fields + [
+            'is_published', 'is_featured', 'meta_description', 'meta_keywords',
+            'banner_image_alt', 'published_at'
+        ]
+
+
 class CommentCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment

@@ -953,3 +953,13 @@ WARNING 2025-07-15 14:44:08,073 log 17732 6660 Not Found: /api
 WARNING 2025-07-15 14:44:08,088 basehttp 17732 6660 "GET /api HTTP/1.1" 404 3701
 WARNING 2025-07-15 14:44:17,245 log 17732 20228 Not Found: /api/
 WARNING 2025-07-15 14:44:17,251 basehttp 17732 20228 "GET /api/ HTTP/1.1" 404 4158
+INFO 2025-07-15 21:11:51,955 autoreload 17732 12388 D:\PROJ\Maath_Mphepo\portfolio_backend\blog\views.py changed, reloading.
+INFO 2025-07-15 21:12:13,565 autoreload 22684 22296 Watching for file changes with StatReloader
+INFO 2025-07-15 21:12:45,150 autoreload 22684 22296 D:\PROJ\Maath_Mphepo\portfolio_backend\blog\serializers.py changed, reloading.
+INFO 2025-07-15 21:12:51,455 autoreload 19060 10108 Watching for file changes with StatReloader
+INFO 2025-07-15 21:13:31,141 autoreload 19060 10108 D:\PROJ\Maath_Mphepo\portfolio_backend\blog\views.py changed, reloading.
+INFO 2025-07-15 21:13:42,344 autoreload 11524 23356 Watching for file changes with StatReloader
+INFO 2025-07-15 21:14:16,913 autoreload 11524 23356 D:\PROJ\Maath_Mphepo\portfolio_backend\blog\views.py changed, reloading.
+INFO 2025-07-15 21:14:30,600 autoreload 20708 13788 Watching for file changes with StatReloader
+INFO 2025-07-15 21:15:06,807 autoreload 20708 13788 D:\PROJ\Maath_Mphepo\portfolio_backend\blog\urls.py changed, reloading.
+INFO 2025-07-15 21:15:13,522 autoreload 17496 11740 Watching for file changes with StatReloader
