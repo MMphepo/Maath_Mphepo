@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Rich Text Editor Styles */
+@import '../styles/rich-text-editor.css';
+
+/* Blog Content Renderer Styles */
+@import '../styles/blog-content-renderer.css';
+
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 @import '../styles/markdown.css';
 
