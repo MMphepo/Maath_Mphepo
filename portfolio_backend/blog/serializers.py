@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import Tag, BlogPost, Comment, BlogReaction
+from .content_processors import process_blog_content, generate_table_of_contents, extract_content_metadata
 
 
 class TagSerializer(serializers.ModelSerializer):
@@ -55,13 +56,43 @@ class BlogPostListSerializer(serializers.ModelSerializer):
 
 class BlogPostDetailSerializer(BlogPostListSerializer):
     comments = serializers.SerializerMethodField()
-    
+    processed_content = serializers.SerializerMethodField()
+    table_of_contents = serializers.SerializerMethodField()
+    content_metadata = serializers.SerializerMethodField()
+
     class Meta(BlogPostListSerializer.Meta):
-        fields = BlogPostListSerializer.Meta.fields + ['content', 'comments']
-    
+        fields = BlogPostListSerializer.Meta.fields + [
+            'content', 'processed_content', 'table_of_contents',
+            'content_metadata', 'comments'
+        ]
+
     def get_comments(self, obj):
         top_level_comments = obj.get_top_level_comments()
         return CommentSerializer(top_level_comments, many=True, context=self.context).data
+
+    def get_processed_content(self, obj):
+        """Return content processed for frontend compatibility"""
+        if not obj.content:
+            return ""
+
+        # Check if frontend expects markdown or HTML
+        output_format = self.context.get('output_format', 'html')
+        return process_blog_content(obj.content, output_format=output_format)
+
+    def get_table_of_contents(self, obj):
+        """Generate table of contents from processed content"""
+        if not obj.content:
+            return []
+
+        processed_content = process_blog_content(obj.content, output_format='html')
+        return generate_table_of_contents(processed_content)
+
+    def get_content_metadata(self, obj):
+        """Get content metadata and statistics"""
+        if not obj.content:
+            return {}
+
+        return extract_content_metadata(obj.content)
 
 
 class CommentCreateSerializer(serializers.ModelSerializer):
