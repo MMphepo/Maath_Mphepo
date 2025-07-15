@@ -1,0 +1,269 @@
+/* Enhanced Blog Admin Styles */
+
+/* Admin List View Enhancements */
+.admin-blog-post .field-title_with_status {
+    min-width: 300px;
+}
+
+.admin-blog-post .field-status_badge,
+.admin-blog-post .field-featured_badge {
+    text-align: center;
+    min-width: 80px;
+}
+
+/* Fieldset Styling */
+.module h2 {
+    background: linear-gradient(135deg, #007cba 0%, #0056b3 100%);
+    color: white;
+    padding: 12px 15px;
+    margin: 0;
+    border-radius: 4px 4px 0 0;
+    font-weight: 600;
+}
+
+.module .description {
+    background: #f8f9fa;
+    padding: 10px 15px;
+    border-left: 3px solid #007cba;
+    margin: 0 0 15px 0;
+    font-style: italic;
+    color: #6c757d;
+}
+
+/* CKEditor Enhancements */
+.django-ckeditor-widget {
+    border: 2px solid #ddd;
+    border-radius: 6px;
+    overflow: hidden;
+    transition: border-color 0.3s ease;
+}
+
+.django-ckeditor-widget:focus-within {
+    border-color: #007cba;
+    box-shadow: 0 0 0 3px rgba(0, 124, 186, 0.1);
+}
+
+/* Preview Boxes */
+.content-preview,
+.banner-preview {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 10px;
+    background: #f8f9fa;
+    margin-top: 5px;
+}
+
+.banner-preview img {
+    display: block;
+    margin: 0 auto;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* Word Count Display */
+.word-count-display {
+    background: #e9ecef;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-family: monospace;
+    font-size: 14px;
+    color: #495057;
+    border: 1px solid #ced4da;
+}
+
+/* Status Badges */
+.status-badge {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.status-published {
+    background-color: #28a745;
+    color: white;
+}
+
+.status-draft {
+    background-color: #6c757d;
+    color: white;
+}
+
+.status-featured {
+    background-color: #ffc107;
+    color: #212529;
+}
+
+/* Form Field Enhancements */
+.form-row .field-box {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 15px;
+    margin-bottom: 15px;
+}
+
+.form-row .field-box label {
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.form-row .help {
+    color: #6c757d;
+    font-size: 12px;
+    margin-top: 5px;
+    font-style: italic;
+}
+
+/* SEO Fields Styling */
+.seo-fields {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+    padding: 15px;
+}
+
+.seo-fields .form-row {
+    margin-bottom: 10px;
+}
+
+/* Meta Description Counter */
+.meta-description-counter {
+    float: right;
+    font-size: 11px;
+    color: #6c757d;
+    margin-top: 2px;
+}
+
+.meta-description-counter.warning {
+    color: #ffc107;
+}
+
+.meta-description-counter.error {
+    color: #dc3545;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .admin-blog-post .field-title_with_status {
+        min-width: auto;
+    }
+    
+    .content-preview,
+    .banner-preview {
+        padding: 8px;
+    }
+    
+    .banner-preview img {
+        max-width: 100%;
+        height: auto;
+    }
+}
+
+/* Action Buttons */
+.blog-admin-actions {
+    margin: 15px 0;
+    padding: 10px;
+    background: #f8f9fa;
+    border-radius: 4px;
+    border: 1px solid #dee2e6;
+}
+
+.blog-admin-actions .button {
+    margin-right: 10px;
+    margin-bottom: 5px;
+}
+
+/* Loading States */
+.loading-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.loading-spinner {
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid #007cba;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Enhanced Table Styling */
+.results table {
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.results th {
+    background: linear-gradient(135deg, #007cba 0%, #0056b3 100%);
+    color: white;
+    font-weight: 600;
+    padding: 12px 8px;
+    border: none;
+}
+
+.results td {
+    padding: 10px 8px;
+    border-bottom: 1px solid #dee2e6;
+    vertical-align: middle;
+}
+
+.results tr:hover td {
+    background-color: #f8f9fa;
+}
+
+/* Inline Form Styling */
+.inline-group .tabular tr.has_original td {
+    padding: 8px;
+}
+
+.inline-group .tabular .original {
+    background: #f8f9fa;
+}
+
+/* Custom Button Styles */
+.btn-preview {
+    background: #17a2b8;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    text-decoration: none;
+    display: inline-block;
+    margin-right: 10px;
+    font-size: 13px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-preview:hover {
+    background: #138496;
+    color: white;
+    text-decoration: none;
+}
+
+.btn-preview:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(23, 162, 184, 0.25);
+}

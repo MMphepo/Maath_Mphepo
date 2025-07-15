@@ -30,6 +30,13 @@ bleach==6.1.0
 python-slugify==8.0.1
 django-filter==23.5
 
+# Rich Text Editor and Admin Enhancements
+django-ckeditor==6.7.0
+django-summernote==0.8.20.0
+django-tinymce==3.6.1
+django-admin-interface==0.26.1
+django-colorfield==0.10.1
+
 # HTTP and Utilities
 requests==2.31.0
 python-dateutil==2.8.2

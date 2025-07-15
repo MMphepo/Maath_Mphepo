@@ -530,3 +530,420 @@ INFO 2025-07-07 16:06:55,820 autoreload 17768 16440 Watching for file changes wi
 INFO 2025-07-07 16:07:21,676 autoreload 5748 16884 Watching for file changes with StatReloader
 INFO 2025-07-07 16:07:45,324 basehttp 5748 11148 "POST /api/contact/submit/ HTTP/1.1" 201 186
 INFO 2025-07-07 16:07:56,643 basehttp 5748 11148 - Broken pipe from ('127.0.0.1', 4474)
+INFO 2025-07-15 13:15:30,110 autoreload 13544 18044 Watching for file changes with StatReloader
+INFO 2025-07-15 13:15:57,110 autoreload 13544 18044 D:\PROJ\Maath_Mphepo\portfolio_backend\blog\admin_views.py changed, reloading.
+INFO 2025-07-15 13:16:03,890 autoreload 1668 19624 Watching for file changes with StatReloader
+INFO 2025-07-15 13:16:38,436 autoreload 1668 19624 D:\PROJ\Maath_Mphepo\portfolio_backend\blog\admin_views.py changed, reloading.
+INFO 2025-07-15 13:16:40,896 autoreload 12920 22052 Watching for file changes with StatReloader
+INFO 2025-07-15 13:17:05,626 autoreload 12920 22052 D:\PROJ\Maath_Mphepo\portfolio_backend\blog\admin_views.py changed, reloading.
+INFO 2025-07-15 13:17:12,415 autoreload 17280 13424 Watching for file changes with StatReloader
+INFO 2025-07-15 13:18:34,846 autoreload 17280 13424 D:\PROJ\Maath_Mphepo\portfolio_backend\blog\admin.py changed, reloading.
+INFO 2025-07-15 13:18:36,982 autoreload 8000 3732 Watching for file changes with StatReloader
+INFO 2025-07-15 13:19:01,459 autoreload 8000 3732 D:\PROJ\Maath_Mphepo\portfolio_backend\blog\admin.py changed, reloading.
+INFO 2025-07-15 13:19:04,862 autoreload 19664 22416 Watching for file changes with StatReloader
+WARNING 2025-07-15 13:20:32,871 log 19664 21408 Not Found: /
+WARNING 2025-07-15 13:20:32,924 basehttp 19664 21408 "GET / HTTP/1.1" 404 3674
+WARNING 2025-07-15 13:20:33,561 log 19664 21408 Not Found: /favicon.ico
+WARNING 2025-07-15 13:20:33,575 basehttp 19664 21408 "GET /favicon.ico HTTP/1.1" 404 3725
+INFO 2025-07-15 13:20:40,188 basehttp 19664 11464 "GET /admin HTTP/1.1" 301 0
+INFO 2025-07-15 13:20:40,469 basehttp 19664 1788 "GET /admin/ HTTP/1.1" 302 0
+INFO 2025-07-15 13:20:40,974 basehttp 19664 1788 "GET /admin/login/?next=/admin/ HTTP/1.1" 200 4181
+INFO 2025-07-15 13:20:41,905 basehttp 19664 1788 "GET /static/admin/css/base.css HTTP/1.1" 200 21207
+INFO 2025-07-15 13:20:41,907 basehttp 19664 22052 "GET /static/admin/css/responsive.css HTTP/1.1" 200 18533
+INFO 2025-07-15 13:20:41,916 basehttp 19664 14568 "GET /static/admin/css/login.css HTTP/1.1" 200 958
+INFO 2025-07-15 13:20:41,916 basehttp 19664 21840 "GET /static/admin/js/theme.js HTTP/1.1" 200 1943
+INFO 2025-07-15 13:20:41,932 basehttp 19664 12516 "GET /static/admin/css/nav_sidebar.css HTTP/1.1" 200 2694
+INFO 2025-07-15 13:20:41,981 basehttp 19664 4396 "GET /static/admin/css/dark_mode.css HTTP/1.1" 200 2929
+INFO 2025-07-15 13:20:41,999 basehttp 19664 1788 "GET /static/admin/js/nav_sidebar.js HTTP/1.1" 200 3063
+INFO 2025-07-15 13:22:28,800 basehttp 19664 12976 "POST /admin/login/?next=/admin/ HTTP/1.1" 302 0
+INFO 2025-07-15 13:22:31,634 basehttp 19664 12976 "GET /admin/ HTTP/1.1" 200 14950
+INFO 2025-07-15 13:22:31,863 basehttp 19664 12976 "GET /static/admin/css/dashboard.css HTTP/1.1" 200 441
+INFO 2025-07-15 13:22:31,934 basehttp 19664 4800 "GET /static/admin/img/icon-addlink.svg HTTP/1.1" 200 331
+INFO 2025-07-15 13:22:32,244 basehttp 19664 20068 "GET /static/admin/img/icon-changelink.svg HTTP/1.1" 200 380
+ERROR 2025-07-15 13:22:57,707 log 19664 22516 Internal Server Error: /admin/blog/blogpost/
+Traceback (most recent call last):
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\db\backends\sqlite3\base.py", line 328, in execute
+    return super().execute(query, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.OperationalError: no such column: blog_blogpost.meta_description
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\contrib\admin\options.py", line 688, in wrapper
+    return self.admin_site.admin_view(view)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\utils\decorators.py", line 134, in _wrapper_view
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\views\decorators\cache.py", line 62, in _wrapper_view_func
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\contrib\admin\sites.py", line 242, in inner
+    return view(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\utils\decorators.py", line 46, in _wrapper
+    return bound_method(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\utils\decorators.py", line 134, in _wrapper_view
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\contrib\admin\options.py", line 2046, in changelist_view
+    media = self.media + formset.media
+                         ^^^^^^^^^^^^^
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\forms\formsets.py", line 521, in media
+    if self.forms:
+       ^^^^^^^^^^
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\utils\functional.py", line 57, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\forms\formsets.py", line 207, in forms
+    for i in range(self.total_form_count())
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\forms\formsets.py", line 182, in total_form_count
+    initial_forms = self.initial_form_count()
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\forms\models.py", line 685, in initial_form_count
+    return len(self.get_queryset())
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\db\models\query.py", line 380, in __len__
+    self._fetch_all()
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\db\models\query.py", line 1881, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\db\models\query.py", line 91, in __iter__
+    results = compiler.execute_sql(
+              ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1562, in execute_sql
+    cursor.execute(sql, params)
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\db\backends\utils.py", line 102, in execute
+    return super().execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\db\backends\utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\db\backends\utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    with self.db.wrap_database_errors:
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\db\utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\db\backends\sqlite3\base.py", line 328, in execute
+    return super().execute(query, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+django.db.utils.OperationalError: no such column: blog_blogpost.meta_description
+ERROR 2025-07-15 13:22:57,749 basehttp 19664 22516 "GET /admin/blog/blogpost/ HTTP/1.1" 500 205639
+ERROR 2025-07-15 13:23:05,351 log 19664 22516 Internal Server Error: /admin/admin_interface/theme/
+Traceback (most recent call last):
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\db\backends\sqlite3\base.py", line 328, in execute
+    return super().execute(query, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.OperationalError: no such table: admin_interface_theme
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\contrib\admin\options.py", line 688, in wrapper
+    return self.admin_site.admin_view(view)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\utils\decorators.py", line 134, in _wrapper_view
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\views\decorators\cache.py", line 62, in _wrapper_view_func
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\contrib\admin\sites.py", line 242, in inner
+    return view(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\utils\decorators.py", line 46, in _wrapper
+    return bound_method(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\utils\decorators.py", line 134, in _wrapper_view
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\contrib\admin\options.py", line 1926, in changelist_view
+    cl = self.get_changelist_instance(request)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\contrib\admin\options.py", line 836, in get_changelist_instance
+    return ChangeList(
+           ^^^^^^^^^^^
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\contrib\admin\views\main.py", line 123, in __init__
+    self.get_results(request)
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\contrib\admin\views\main.py", line 279, in get_results
+    result_count = paginator.count
+                   ^^^^^^^^^^^^^^^
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\utils\functional.py", line 57, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\core\paginator.py", line 93, in count
+    return c()
+           ^^^
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\db\models\query.py", line 608, in count
+    return self.query.get_count(using=self.db)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\db\models\sql\query.py", line 568, in get_count
+    return obj.get_aggregation(using, {"__count": Count("*")})["__count"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\db\models\sql\query.py", line 554, in get_aggregation
+    result = compiler.execute_sql(SINGLE)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1562, in execute_sql
+    cursor.execute(sql, params)
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\db\backends\utils.py", line 102, in execute
+    return super().execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\db\backends\utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\db\backends\utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    with self.db.wrap_database_errors:
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\db\utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\db\backends\sqlite3\base.py", line 328, in execute
+    return super().execute(query, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+django.db.utils.OperationalError: no such table: admin_interface_theme
+ERROR 2025-07-15 13:23:05,363 basehttp 19664 22516 "GET /admin/admin_interface/theme/ HTTP/1.1" 500 200274
+INFO 2025-07-15 13:23:10,005 basehttp 19664 12712 "GET /admin/auth/group/ HTTP/1.1" 200 14205
+INFO 2025-07-15 13:23:10,105 basehttp 19664 12712 "GET /static/admin/css/changelists.css HTTP/1.1" 200 6566
+INFO 2025-07-15 13:23:10,164 basehttp 19664 14788 "GET /admin/jsi18n/ HTTP/1.1" 200 3343
+INFO 2025-07-15 13:23:10,220 basehttp 19664 12712 "GET /static/admin/js/actions.js HTTP/1.1" 200 7872
+INFO 2025-07-15 13:23:10,226 basehttp 19664 16676 "GET /static/admin/js/jquery.init.js HTTP/1.1" 200 347
+INFO 2025-07-15 13:23:10,430 basehttp 19664 20316 "GET /static/admin/js/core.js HTTP/1.1" 200 5682
+INFO 2025-07-15 13:23:10,443 basehttp 19664 22196 "GET /static/admin/js/vendor/jquery/jquery.js HTTP/1.1" 200 292458
+INFO 2025-07-15 13:23:10,447 basehttp 19664 14788 "GET /static/admin/js/urlify.js HTTP/1.1" 200 7887
+INFO 2025-07-15 13:23:10,791 basehttp 19664 12712 "GET /static/admin/js/prepopulate.js HTTP/1.1" 200 1531
+INFO 2025-07-15 13:23:11,021 basehttp 19664 21524 "GET /static/admin/js/admin/RelatedObjectLookups.js HTTP/1.1" 200 8943
+INFO 2025-07-15 13:23:11,253 basehttp 19664 16676 "GET /static/admin/js/vendor/xregexp/xregexp.js HTTP/1.1" 200 232381
+INFO 2025-07-15 13:23:11,377 basehttp 19664 21524 "GET /static/admin/img/tooltag-add.svg HTTP/1.1" 200 331
+INFO 2025-07-15 13:23:11,380 basehttp 19664 12712 "GET /static/admin/img/search.svg HTTP/1.1" 200 458
+INFO 2025-07-15 13:23:11,454 basehttp 19664 16676 "GET /static/admin/js/filters.js HTTP/1.1" 200 978
+INFO 2025-07-15 13:23:19,252 basehttp 19664 14208 "GET /admin/ HTTP/1.1" 200 14950
+INFO 2025-07-15 13:23:28,920 basehttp 19664 14208 "GET /admin/contact/contactsubmission/ HTTP/1.1" 200 19729
+INFO 2025-07-15 13:23:29,228 basehttp 19664 14208 "GET /admin/jsi18n/ HTTP/1.1" 200 3343
+INFO 2025-07-15 13:23:29,570 basehttp 19664 14208 "GET /static/admin/img/sorting-icons.svg HTTP/1.1" 200 1097
+INFO 2025-07-15 13:23:46,029 basehttp 19664 9356 "GET /admin/ HTTP/1.1" 200 14950
+INFO 2025-07-15 13:23:56,132 basehttp 19664 18372 "GET /admin/contact/newslettersubscription/ HTTP/1.1" 200 18210
+INFO 2025-07-15 13:23:56,952 basehttp 19664 18372 "GET /static/admin/img/icon-yes.svg HTTP/1.1" 200 436
+INFO 2025-07-15 13:23:57,069 basehttp 19664 15048 "GET /admin/jsi18n/ HTTP/1.1" 200 3343
+INFO 2025-07-15 13:24:05,676 basehttp 19664 3392 "GET /admin/contact/contactsubmission/ HTTP/1.1" 200 19729
+INFO 2025-07-15 13:24:06,391 basehttp 19664 3392 "GET /admin/jsi18n/ HTTP/1.1" 200 3343
+WARNING 2025-07-15 13:24:47,132 log 19664 21460 Not Found: /blog
+WARNING 2025-07-15 13:24:47,137 basehttp 19664 21460 "GET /blog HTTP/1.1" 404 3704
+WARNING 2025-07-15 13:24:52,809 log 19664 21460 Not Found: /blog/admin
+WARNING 2025-07-15 13:24:52,809 basehttp 19664 21460 "GET /blog/admin HTTP/1.1" 404 3722
+WARNING 2025-07-15 13:25:01,002 log 19664 13768 Not Found: /blog/admin/
+WARNING 2025-07-15 13:25:01,002 basehttp 19664 13768 "GET /blog/admin/ HTTP/1.1" 404 3725
+WARNING 2025-07-15 13:25:17,884 log 19664 21904 Not Found: /
+WARNING 2025-07-15 13:25:18,001 basehttp 19664 21904 "GET / HTTP/1.1" 404 3674
+INFO 2025-07-15 13:25:39,300 basehttp 19664 21904 "GET /api/blog HTTP/1.1" 301 0
+ERROR 2025-07-15 13:25:39,732 log 19664 16680 Internal Server Error: /api/blog/
+Traceback (most recent call last):
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\db\backends\sqlite3\base.py", line 328, in execute
+    return super().execute(query, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.OperationalError: no such column: blog_blogpost.meta_description
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\rest_framework\generics.py", line 199, in get
+    return self.list(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\blog\views.py", line 44, in list
+    page = self.paginate_queryset(queryset)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\rest_framework\generics.py", line 171, in paginate_queryset
+    return self.paginator.paginate_queryset(queryset, self.request, view=self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\rest_framework\pagination.py", line 216, in paginate_queryset
+    return list(self.page)
+           ^^^^^^^^^^^^^^^
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\core\paginator.py", line 174, in __len__
+    return len(self.object_list)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\db\models\query.py", line 380, in __len__
+    self._fetch_all()
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\db\models\query.py", line 1881, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\db\models\query.py", line 91, in __iter__
+    results = compiler.execute_sql(
+              ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1562, in execute_sql
+    cursor.execute(sql, params)
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\db\backends\utils.py", line 102, in execute
+    return super().execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\db\backends\utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\db\backends\utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    with self.db.wrap_database_errors:
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\db\utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\db\backends\sqlite3\base.py", line 328, in execute
+    return super().execute(query, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+django.db.utils.OperationalError: no such column: blog_blogpost.meta_description
+ERROR 2025-07-15 13:25:39,750 basehttp 19664 16680 "GET /api/blog/ HTTP/1.1" 500 199067
+INFO 2025-07-15 13:27:55,250 autoreload 19664 22416 D:\PROJ\Maath_Mphepo\portfolio_backend\blog\views.py changed, reloading.
+INFO 2025-07-15 13:28:03,471 autoreload 12052 13288 Watching for file changes with StatReloader
+ERROR 2025-07-15 13:28:40,560 log 12052 10840 Internal Server Error: /api/blog/
+Traceback (most recent call last):
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\db\backends\sqlite3\base.py", line 328, in execute
+    return super().execute(query, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.OperationalError: no such column: blog_blogpost.meta_description
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\rest_framework\generics.py", line 199, in get
+    return self.list(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\blog\views.py", line 45, in list
+    page = self.paginate_queryset(queryset)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\rest_framework\generics.py", line 171, in paginate_queryset
+    return self.paginator.paginate_queryset(queryset, self.request, view=self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\rest_framework\pagination.py", line 216, in paginate_queryset
+    return list(self.page)
+           ^^^^^^^^^^^^^^^
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\core\paginator.py", line 174, in __len__
+    return len(self.object_list)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\db\models\query.py", line 380, in __len__
+    self._fetch_all()
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\db\models\query.py", line 1881, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\db\models\query.py", line 91, in __iter__
+    results = compiler.execute_sql(
+              ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1562, in execute_sql
+    cursor.execute(sql, params)
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\db\backends\utils.py", line 102, in execute
+    return super().execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\db\backends\utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\db\backends\utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    with self.db.wrap_database_errors:
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\db\utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\PROJ\Maath_Mphepo\portfolio_backend\venv\Lib\site-packages\django\db\backends\sqlite3\base.py", line 328, in execute
+    return super().execute(query, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+django.db.utils.OperationalError: no such column: blog_blogpost.meta_description
+ERROR 2025-07-15 13:28:40,657 basehttp 12052 10840 "GET /api/blog/ HTTP/1.1" 500 199204
+INFO 2025-07-15 13:29:24,124 autoreload 12052 13288 D:\PROJ\Maath_Mphepo\portfolio_backend\blog\serializers.py changed, reloading.
+INFO 2025-07-15 13:29:30,078 autoreload 5868 20520 Watching for file changes with StatReloader
+INFO 2025-07-15 13:30:21,126 autoreload 19592 2236 Watching for file changes with StatReloader
+INFO 2025-07-15 13:30:26,298 autoreload 19592 2236 D:\PROJ\Maath_Mphepo\portfolio_backend\blog\serializers.py changed, reloading.
+INFO 2025-07-15 13:30:31,535 autoreload 17732 12388 Watching for file changes with StatReloader
+INFO 2025-07-15 13:30:33,895 basehttp 17732 1216 "GET /api/blog/ HTTP/1.1" 200 2162
+INFO 2025-07-15 13:30:40,794 basehttp 17732 13512 "GET /api/blog/q HTTP/1.1" 301 0
+WARNING 2025-07-15 13:30:40,823 log 17732 20832 Not Found: /api/blog/q/
+WARNING 2025-07-15 13:30:40,936 basehttp 17732 20832 "GET /api/blog/q/ HTTP/1.1" 404 23
+INFO 2025-07-15 13:31:15,496 basehttp 17732 2196 "GET /api/blog/admin HTTP/1.1" 301 0
+WARNING 2025-07-15 13:31:15,521 log 17732 15348 Not Found: /api/blog/admin/
+WARNING 2025-07-15 13:31:15,523 basehttp 17732 15348 "GET /api/blog/admin/ HTTP/1.1" 404 23
+INFO 2025-07-15 13:31:21,169 basehttp 17732 20188 "GET /api/blog/admin/export HTTP/1.1" 301 0
+INFO 2025-07-15 13:31:21,245 basehttp 17732 2608 "GET /api/blog/admin/export/ HTTP/1.1" 200 46
+INFO 2025-07-15 13:31:43,827 basehttp 17732 18748 "GET /api/blog/admin/content-preview/ HTTP/1.1" 200 53
+INFO 2025-07-15 13:34:07,829 basehttp 17732 19280 "GET /api/blog/admin/content-preview/ HTTP/1.1" 302 0
+INFO 2025-07-15 13:34:31,818 basehttp 17732 18920 "GET /api/blog/admin/content-preview/ HTTP/1.1" 200 53
+INFO 2025-07-15 13:34:48,306 basehttp 17732 22288 "GET /api/blog/admin/content-preview/ HTTP/1.1" 302 0

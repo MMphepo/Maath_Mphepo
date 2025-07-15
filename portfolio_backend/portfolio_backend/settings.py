@@ -54,6 +54,12 @@ INSTALLED_APPS = [
     "django_filters",
     "django_extensions",
 
+    # Rich Text Editor and Admin Enhancements
+    "ckeditor",
+    "ckeditor_uploader",
+    "admin_interface",
+    "colorfield",
+
     # Local apps
     "core",
     "blog",
@@ -348,3 +354,107 @@ SECURE_CROSS_ORIGIN_OPENER_POLICY = 'same-origin'
 RATELIMIT_ENABLE = True
 RATELIMIT_USE_CACHE = 'default'
 RATELIMIT_VIEW = 'portfolio_backend.utils.ratelimit_exceeded'
+
+# CKEditor Configuration
+CKEDITOR_UPLOAD_PATH = "uploads/"
+CKEDITOR_IMAGE_BACKEND = "pillow"
+CKEDITOR_JQUERY_URL = 'https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js'
+CKEDITOR_RESTRICT_BY_USER = True
+CKEDITOR_BROWSE_SHOW_DIRS = True
+CKEDITOR_ALLOW_NONIMAGE_FILES = False
+
+# Custom storage for CKEditor
+CKEDITOR_STORAGE_BACKEND = 'blog.storage.CKEditorStorage'
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'full',
+        'height': 400,
+        'width': '100%',
+        'extraPlugins': ','.join([
+            'uploadimage',
+            'div',
+            'autolink',
+            'autoembed',
+            'embedsemantic',
+            'autogrow',
+            'widget',
+            'lineutils',
+            'clipboard',
+            'dialog',
+            'dialogui',
+            'elementspath'
+        ]),
+        'removePlugins': ','.join([
+            'stylesheetparser',
+        ]),
+        'allowedContent': True,
+        'toolbar_full': [
+            ['Styles', 'Format', 'Bold', 'Italic', 'Underline', 'Strike', 'SpellChecker', 'Undo', 'Redo'],
+            ['Link', 'Unlink', 'Anchor'],
+            ['Image', 'Flash', 'Table', 'HorizontalRule'],
+            ['TextColor', 'BGColor'],
+            ['Smiley', 'SpecialChar'], ['Source'],
+            ['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
+            ['NumberedList', 'BulletedList'],
+            ['Indent', 'Outdent'],
+            ['Maximize'],
+            ['CodeSnippet'],
+        ],
+        'codeSnippet_theme': 'github',
+        'format_tags': 'p;h1;h2;h3;h4;h5;h6;pre;address;div',
+        'mathJaxLib': 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS_HTML',
+        'tabSpaces': 4,
+        'skin': 'moono-lisa',
+    },
+    'blog_content': {
+        'toolbar': 'Custom',
+        'height': 500,
+        'width': '100%',
+        'extraPlugins': ','.join([
+            'uploadimage',
+            'codesnippet',
+            'widget',
+            'lineutils',
+            'clipboard',
+            'dialog',
+            'dialogui',
+            'elementspath',
+            'autogrow',
+        ]),
+        'toolbar_Custom': [
+            ['Bold', 'Italic', 'Underline', 'Strike'],
+            ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
+            ['Link', 'Unlink'],
+            ['RemoveFormat', 'Source'],
+            '/',
+            ['Styles', 'Format'],
+            ['TextColor', 'BGColor'],
+            ['Image', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar'],
+            ['CodeSnippet'],
+            ['Maximize', 'ShowBlocks']
+        ],
+        'format_tags': 'p;h1;h2;h3;h4;h5;h6;pre;address;div',
+        'codeSnippet_theme': 'github',
+        'allowedContent': True,
+        'removeDialogTabs': 'image:advanced;link:advanced',
+        'stylesSet': [
+            {'name': 'Marker', 'element': 'span', 'attributes': {'class': 'marker'}},
+            {'name': 'Big', 'element': 'big'},
+            {'name': 'Small', 'element': 'small'},
+            {'name': 'Typewriter', 'element': 'tt'},
+            {'name': 'Computer Code', 'element': 'code'},
+            {'name': 'Keyboard Phrase', 'element': 'kbd'},
+            {'name': 'Sample Text', 'element': 'samp'},
+            {'name': 'Variable', 'element': 'var'},
+            {'name': 'Deleted Text', 'element': 'del'},
+            {'name': 'Inserted Text', 'element': 'ins'},
+            {'name': 'Cited Work', 'element': 'cite'},
+            {'name': 'Inline Quotation', 'element': 'q'},
+        ],
+        'skin': 'moono-lisa',
+        'autoGrow_onStartup': True,
+        'autoGrow_minHeight': 300,
+        'autoGrow_maxHeight': 800,
+    }
+}

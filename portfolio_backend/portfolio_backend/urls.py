@@ -25,6 +25,9 @@ urlpatterns = [
     # Admin
     path("admin/", admin.site.urls),
 
+    # CKEditor
+    path("ckeditor/", include('ckeditor_uploader.urls')),
+
     # API Authentication
     path("api/auth/login/", login_view, name='api-login'),
     path("api/auth/logout/", logout_view, name='api-logout'),
