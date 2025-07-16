@@ -273,7 +273,7 @@ const SimpleRichTextEditor = ({
           <li>• *italic text* for italic formatting</li>
           <li>• `code` for inline code</li>
           <li>• # Heading 1, ## Heading 2, etc.</li>
-          <li>• > Quote for blockquotes</li>
+          <li>•  Quote for blockquotes</li>
           <li>• - List item for bullet lists</li>
           <li>• 1. List item for numbered lists</li>
           <li>• [Link text](URL) for links</li>
