@@ -21,7 +21,8 @@ import {
 import RichTextEditor from './RichTextEditor'
 import BlogContentRenderer from '../blog/BlogContentRenderer'
 
-interface BlogPost {
+// Local interface for editor form data
+interface BlogEditorPost {
   id?: number
   title: string
   slug: string
@@ -40,14 +41,14 @@ interface BlogPost {
 }
 
 interface BlogEditorProps {
-  post?: BlogPost
-  onSave: (post: BlogPost) => Promise<void>
+  post?: BlogEditorPost
+  onSave: (post: BlogEditorPost) => Promise<void>
   onCancel: () => void
   isLoading?: boolean
 }
 
 const BlogEditor = ({ post, onSave, onCancel, isLoading = false }: BlogEditorProps) => {
-  const [formData, setFormData] = useState<BlogPost>({
+  const [formData, setFormData] = useState<BlogEditorPost>({
     title: '',
     slug: '',
     description: '',
@@ -92,7 +93,7 @@ const BlogEditor = ({ post, onSave, onCancel, isLoading = false }: BlogEditorPro
     }
   }, [formData.description, formData.meta_description])
 
-  const handleInputChange = (field: keyof BlogPost, value: any) => {
+  const handleInputChange = (field: keyof BlogEditorPost, value: any) => {
     setFormData(prev => ({ ...prev, [field]: value }))
     setIsDirty(true)
     

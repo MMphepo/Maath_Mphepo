@@ -5,14 +5,50 @@ import { motion } from 'framer-motion'
 import { Plus, Settings, BarChart3, Users, FileText } from 'lucide-react'
 import BlogManagement from '@/components/admin/BlogManagement'
 import BlogEditor from '@/components/admin/BlogEditor'
-import { adminBlogAPI, BlogPost, DashboardStats } from '@/lib/api/blog'
+import { adminBlogAPI, DashboardStats } from '@/lib/api/blog'
 import { sanitizeContent } from '@/lib/security/contentSanitizer'
 
 type ViewMode = 'list' | 'create' | 'edit'
 
+// Type for management list view
+interface BlogManagementPost {
+  id: number
+  title: string
+  slug: string
+  description: string
+  banner_image?: string
+  tags: string[]
+  is_published: boolean
+  is_featured: boolean
+  views: number
+  likes: number
+  created_at: string
+  updated_at: string
+  author_name: string
+}
+
+// Type for editor form
+interface BlogEditorPost {
+  id?: number
+  title: string
+  slug: string
+  description: string
+  content: string
+  banner_image?: string
+  banner_image_alt?: string
+  meta_description?: string
+  meta_keywords?: string
+  tags: string[]
+  is_published: boolean
+  is_featured: boolean
+  author_name: string
+  author_bio: string
+  author_avatar?: string
+}
+
 const AdminBlogPage = () => {
   const [viewMode, setViewMode] = useState<ViewMode>('list')
-  const [editingPost, setEditingPost] = useState<BlogPost | undefined>()
+  const [editingPost, setEditingPost] = useState<BlogEditorPost | undefined>()
   const [dashboardStats, setDashboardStats] = useState<DashboardStats | null>(null)
   const [isLoading, setIsLoading] = useState(false)
 
@@ -37,9 +73,38 @@ const AdminBlogPage = () => {
     setViewMode('create')
   }
 
-  const handleEdit = (post: BlogPost) => {
-    setEditingPost(post)
+  const handleEdit = (post: BlogManagementPost) => {
+    // Fetch full post data for editing
+    fetchFullPostForEdit(post.id)
     setViewMode('edit')
+  }
+
+  const fetchFullPostForEdit = async (postId: number) => {
+    try {
+      const response = await adminBlogAPI.getPost(postId)
+      if (response.success) {
+        const fullPost: BlogEditorPost = {
+          id: response.data.id,
+          title: response.data.title,
+          slug: response.data.slug,
+          description: response.data.description,
+          content: response.data.content,
+          banner_image: response.data.banner_image,
+          banner_image_alt: response.data.banner_image_alt || '',
+          meta_description: response.data.meta_description || '',
+          meta_keywords: response.data.meta_keywords || '',
+          tags: response.data.tags || [],
+          is_published: response.data.is_published,
+          is_featured: response.data.is_featured,
+          author_name: response.data.author?.name || response.data.author_name || 'Unknown',
+          author_bio: response.data.author?.bio || response.data.author_bio || '',
+          author_avatar: response.data.author?.avatar || response.data.author_avatar || ''
+        }
+        setEditingPost(fullPost)
+      }
+    } catch (error) {
+      console.error('Error fetching full post:', error)
+    }
   }
 
   const handleSave = async (postData: any) => {
@@ -54,7 +119,7 @@ const AdminBlogPage = () => {
       }
 
       let response
-      if (editingPost) {
+      if (editingPost && editingPost.id) {
         response = await adminBlogAPI.updatePost(editingPost.id, sanitizedData)
       } else {
         response = await adminBlogAPI.createPost(sanitizedData)

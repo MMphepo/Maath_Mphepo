@@ -19,8 +19,10 @@ import {
   MoreVertical,
   RefreshCw
 } from 'lucide-react'
+import { BlogPost } from '@/lib/api/blog'
 
-interface BlogPost {
+// Local interface for management list view
+interface BlogManagementPost {
   id: number
   title: string
   slug: string
@@ -38,13 +40,13 @@ interface BlogPost {
 
 interface BlogManagementProps {
   onCreateNew: () => void
-  onEdit: (post: BlogPost) => void
+  onEdit: (post: BlogManagementPost) => void
   onDelete: (postId: number) => void
 }
 
 const BlogManagement = ({ onCreateNew, onEdit, onDelete }: BlogManagementProps) => {
-  const [posts, setPosts] = useState<BlogPost[]>([])
-  const [filteredPosts, setFilteredPosts] = useState<BlogPost[]>([])
+  const [posts, setPosts] = useState<BlogManagementPost[]>([])
+  const [filteredPosts, setFilteredPosts] = useState<BlogManagementPost[]>([])
   const [loading, setLoading] = useState(true)
   const [searchTerm, setSearchTerm] = useState('')
   const [statusFilter, setStatusFilter] = useState<'all' | 'published' | 'draft' | 'featured'>('all')
@@ -70,7 +72,23 @@ const BlogManagement = ({ onCreateNew, onEdit, onDelete }: BlogManagementProps) 
 
       if (response.ok) {
         const data = await response.json()
-        setPosts(data.results || data)
+        // Map API response to local interface
+        const mappedPosts = (data.results || data).map((post: any) => ({
+          id: post.id,
+          title: post.title,
+          slug: post.slug,
+          description: post.description,
+          banner_image: post.banner_image,
+          tags: post.tags || [],
+          is_published: post.is_published,
+          is_featured: post.is_featured,
+          views: post.views || 0,
+          likes: post.likes || 0,
+          created_at: post.created_at,
+          updated_at: post.updated_at,
+          author_name: post.author?.name || post.author_name || 'Unknown'
+        }))
+        setPosts(mappedPosts)
       }
     } catch (error) {
       console.error('Failed to fetch posts:', error)
