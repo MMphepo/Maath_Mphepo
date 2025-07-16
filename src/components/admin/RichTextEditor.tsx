@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef, useCallback, useEffect } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import dynamic from 'next/dynamic'
 import { 
@@ -15,7 +15,10 @@ import {
 } from 'lucide-react'
 
 // Dynamically import ReactQuill to avoid SSR issues
-const ReactQuill = dynamic(() => import('react-quill'), { ssr: false })
+const ReactQuill = dynamic(() => import('react-quill'), {
+  ssr: false,
+  loading: () => <div className="h-96 bg-dark-200/50 rounded-lg animate-pulse" />
+})
 import 'react-quill/dist/quill.snow.css'
 
 interface RichTextEditorProps {
@@ -38,7 +41,6 @@ const RichTextEditor = ({
   const [isPreviewMode, setIsPreviewMode] = useState(false)
   const [isUploading, setIsUploading] = useState(false)
   const [uploadError, setUploadError] = useState<string | null>(null)
-  const quillRef = useRef<any>(null)
 
   // Custom toolbar configuration
   const toolbarOptions = [
@@ -125,15 +127,10 @@ const RichTextEditor = ({
 
       try {
         const imageUrl = await onImageUpload(file)
-        
-        // Insert image into editor
-        const quill = quillRef.current?.getEditor()
-        if (quill) {
-          const range = quill.getSelection()
-          const index = range ? range.index : quill.getLength()
-          quill.insertEmbed(index, 'image', imageUrl)
-          quill.setSelection(index + 1)
-        }
+
+        // Insert image into editor by updating the content
+        const imageMarkup = `<img src="${imageUrl}" alt="${file.name}" style="max-width: 100%; height: auto;" />`
+        onChange(value + imageMarkup)
       } catch (error) {
         console.error('Image upload failed:', error)
         setUploadError('Failed to upload image. Please try again.')
@@ -145,12 +142,6 @@ const RichTextEditor = ({
 
   // Handle table insertion
   function handleTableInsert() {
-    const quill = quillRef.current?.getEditor()
-    if (!quill) return
-
-    const range = quill.getSelection()
-    if (!range) return
-
     // Insert a simple table structure
     const tableHTML = `
       <table style="border-collapse: collapse; width: 100%;">
@@ -175,8 +166,8 @@ const RichTextEditor = ({
         </tbody>
       </table>
     `
-    
-    quill.clipboard.dangerouslyPasteHTML(range.index, tableHTML)
+
+    onChange(value + tableHTML)
   }
 
   // Handle drag and drop
@@ -201,15 +192,10 @@ const RichTextEditor = ({
         }
 
         const imageUrl = await onImageUpload(file)
-        
-        // Insert image into editor
-        const quill = quillRef.current?.getEditor()
-        if (quill) {
-          const range = quill.getSelection()
-          const index = range ? range.index : quill.getLength()
-          quill.insertEmbed(index, 'image', imageUrl)
-          quill.setSelection(index + 1)
-        }
+
+        // Insert image into editor by updating the content
+        const imageMarkup = `<img src="${imageUrl}" alt="${file.name}" style="max-width: 100%; height: auto;" />`
+        onChange(value + imageMarkup)
       }
     } catch (error) {
       console.error('Image upload failed:', error)
@@ -312,7 +298,6 @@ const RichTextEditor = ({
             className="quill-container"
           >
             <ReactQuill
-              ref={quillRef}
               theme="snow"
               value={value}
               onChange={onChange}
@@ -327,7 +312,7 @@ const RichTextEditor = ({
         {/* Drag overlay */}
         <div className="absolute inset-0 pointer-events-none">
           <div className="w-full h-full border-2 border-dashed border-transparent transition-colors duration-300 rounded-lg" />
-        </div>
+        </div> 
       </div>
 
       {/* Editor Tips */}

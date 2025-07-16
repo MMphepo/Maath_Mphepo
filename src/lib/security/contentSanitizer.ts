@@ -98,7 +98,7 @@ class ContentSanitizer {
     if (!content) return ''
 
     // First pass: Basic sanitization
-    let sanitized = DOMPurify.sanitize(content, this.purifyConfig)
+    let sanitized = DOMPurify.sanitize(content, this.purifyConfig) as unknown as string
 
     // Second pass: Additional security checks
     sanitized = this.validateLinks(sanitized)
@@ -201,17 +201,14 @@ class ContentSanitizer {
   sanitizeUserInput(input: string): string {
     const userConfig = {
       ALLOWED_TAGS: ['p', 'br', 'strong', 'em', 'u', 'a', 'code'],
-      ALLOWED_ATTR: {
-        'a': ['href'],
-        'code': []
-      },
+      ALLOWED_ATTR: ['href'],
       ALLOW_DATA_ATTR: false,
       FORBID_SCRIPT: true,
       FORBID_TAGS: ['script', 'object', 'embed', 'form', 'input', 'button', 'img'],
       KEEP_CONTENT: true
     }
 
-    return DOMPurify.sanitize(input, userConfig)
+    return DOMPurify.sanitize(input, userConfig) as unknown as string
   }
 
   /**

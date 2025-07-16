@@ -2,24 +2,19 @@
 
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { 
-  Plus, 
-  Search, 
-  Filter, 
-  Edit, 
-  Trash2, 
-  Eye, 
-  Globe, 
-  Lock, 
-  Star, 
+import {
+  Plus,
+  Search,
+  Edit,
+  Trash2,
+  Globe,
+  Lock,
+  Star,
   Calendar,
   TrendingUp,
   Heart,
-  MessageCircle,
-  MoreVertical,
   RefreshCw
 } from 'lucide-react'
-import { BlogPost } from '@/lib/api/blog'
 
 // Local interface for management list view
 interface BlogManagementPost {
@@ -142,7 +137,7 @@ const BlogManagement = ({ onCreateNew, onEdit, onDelete }: BlogManagementProps) 
     setFilteredPosts(filtered)
   }
 
-  const handleTogglePublish = async (post: BlogPost) => {
+  const handleTogglePublish = async (post: BlogManagementPost) => {
     try {
       const response = await fetch(`/api/blog/admin/posts/${post.id}/toggle_publish/`, {
         method: 'POST',
@@ -161,7 +156,7 @@ const BlogManagement = ({ onCreateNew, onEdit, onDelete }: BlogManagementProps) 
     }
   }
 
-  const handleToggleFeatured = async (post: BlogPost) => {
+  const handleToggleFeatured = async (post: BlogManagementPost) => {
     try {
       const response = await fetch(`/api/blog/admin/posts/${post.id}/toggle_featured/`, {
         method: 'POST',
