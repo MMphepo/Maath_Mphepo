@@ -1,6 +1,6 @@
 // Blog API utilities
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://maath-mphepo.onrender.com/'
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://maath-mphepo.onrender.com'
 
 // Get auth token from localStorage
 const getAuthToken = () => {
