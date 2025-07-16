@@ -9,7 +9,7 @@ import json
 import sys
 from datetime import datetime
 
-BASE_URL = "http://localhost:8000"
+BASE_URL = "https://maath-mphepo.onrender.com/"
 
 class APITester:
     def __init__(self):

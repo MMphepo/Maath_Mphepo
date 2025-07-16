@@ -5,12 +5,12 @@ const nextConfig = {
 
   // Environment variables configuration
   env: {
-    NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000',
+    NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL || 'https://maath-mphepo.onrender.com/',
   },
 
   // Image optimization for Vercel
   images: {
-    domains: [
+    domains: [ 
       'via.placeholder.com',
       'picsum.photos',
       'images.unsplash.com',
