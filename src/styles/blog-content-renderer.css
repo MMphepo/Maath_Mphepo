@@ -162,7 +162,7 @@
 }
 
 .blog-content-renderer blockquote::before {
-  content: """;
+  content: "";
   font-size: 4rem;
   color: #10b981;
   position: absolute;
