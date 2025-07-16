@@ -3,22 +3,54 @@
 import { useState, useCallback, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import dynamic from 'next/dynamic'
-import { 
-  Image as ImageIcon, 
-  Code, 
-  Table, 
-  Eye, 
+import {
+  Image as ImageIcon,
+  Code,
+  Table,
+  Eye,
   EyeOff,
   Upload,
   Loader2,
   AlertCircle
 } from 'lucide-react'
 
+// Extend Window interface for hljs
+declare global {
+  interface Window {
+    hljs?: any
+  }
+}
+
 // Dynamically import ReactQuill to avoid SSR issues
-const ReactQuill = dynamic(() => import('react-quill'), {
-  ssr: false,
-  loading: () => <div className="h-96 bg-dark-200/50 rounded-lg animate-pulse" />
-})
+const ReactQuill = dynamic(
+  async () => {
+    // Import Quill modules
+    const { default: ReactQuill } = await import('react-quill')
+
+    // Register Quill modules if not already registered
+    if (typeof window !== 'undefined') {
+      const Quill = (await import('quill')).default
+
+      // Only register if not already registered
+      if (!Quill.imports['modules/syntax']) {
+        // Import and register syntax highlighting (optional)
+        try {
+          const { default: hljs } = await import('highlight.js')
+          window.hljs = hljs
+        } catch (e) {
+          console.warn('highlight.js not available, syntax highlighting disabled')
+        }
+      }
+    }
+
+    return ReactQuill
+  },
+  {
+    ssr: false,
+    loading: () => <div className="h-96 bg-dark-200/50 rounded-lg animate-pulse" />
+  }
+)
+
 import 'react-quill/dist/quill.snow.css'
 
 interface RichTextEditorProps {
@@ -42,31 +74,27 @@ const RichTextEditor = ({
   const [isUploading, setIsUploading] = useState(false)
   const [uploadError, setUploadError] = useState<string | null>(null)
 
-  // Custom toolbar configuration
+  // Custom toolbar configuration (simplified to avoid module issues)
   const toolbarOptions = [
     [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-    [{ 'font': [] }],
     [{ 'size': ['small', false, 'large', 'huge'] }],
     ['bold', 'italic', 'underline', 'strike'],
     [{ 'color': [] }, { 'background': [] }],
     [{ 'script': 'sub'}, { 'script': 'super' }],
     [{ 'list': 'ordered'}, { 'list': 'bullet' }],
     [{ 'indent': '-1'}, { 'indent': '+1' }],
-    [{ 'direction': 'rtl' }],
     [{ 'align': [] }],
     ['blockquote', 'code-block'],
-    ['link', 'image', 'video'],
-    ['table'],
+    ['link', 'image'],
     ['clean']
   ]
 
-  // Quill modules configuration
+  // Quill modules configuration (simplified)
   const modules = {
     toolbar: {
       container: toolbarOptions,
       handlers: {
-        image: handleImageUpload,
-        table: handleTableInsert
+        image: handleImageUpload
       }
     },
     clipboard: {
@@ -76,22 +104,19 @@ const RichTextEditor = ({
       delay: 1000,
       maxStack: 100,
       userOnly: true
-    },
-    syntax: true,
-    table: true
+    }
   }
 
-  // Quill formats
+  // Quill formats (simplified)
   const formats = [
-    'header', 'font', 'size',
+    'header', 'size',
     'bold', 'italic', 'underline', 'strike',
     'color', 'background',
     'script',
     'list', 'bullet', 'indent',
-    'direction', 'align',
+    'align',
     'blockquote', 'code-block',
-    'link', 'image', 'video',
-    'table'
+    'link', 'image'
   ]
 
   // Handle image upload
@@ -140,35 +165,7 @@ const RichTextEditor = ({
     }
   }
 
-  // Handle table insertion
-  function handleTableInsert() {
-    // Insert a simple table structure
-    const tableHTML = `
-      <table style="border-collapse: collapse; width: 100%;">
-        <thead>
-          <tr>
-            <th style="border: 1px solid #ddd; padding: 8px; background-color: #f2f2f2;">Header 1</th>
-            <th style="border: 1px solid #ddd; padding: 8px; background-color: #f2f2f2;">Header 2</th>
-            <th style="border: 1px solid #ddd; padding: 8px; background-color: #f2f2f2;">Header 3</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td style="border: 1px solid #ddd; padding: 8px;">Cell 1</td>
-            <td style="border: 1px solid #ddd; padding: 8px;">Cell 2</td>
-            <td style="border: 1px solid #ddd; padding: 8px;">Cell 3</td>
-          </tr>
-          <tr>
-            <td style="border: 1px solid #ddd; padding: 8px;">Cell 4</td>
-            <td style="border: 1px solid #ddd; padding: 8px;">Cell 5</td>
-            <td style="border: 1px solid #ddd; padding: 8px;">Cell 6</td>
-          </tr>
-        </tbody>
-      </table>
-    `
 
-    onChange(value + tableHTML)
-  }
 
   // Handle drag and drop
   const handleDrop = useCallback(async (e: React.DragEvent) => {
@@ -321,9 +318,9 @@ const RichTextEditor = ({
         <ul className="text-xs text-gray-400 space-y-1">
           <li>• Drag and drop images directly into the editor</li>
           <li>• Use Ctrl+Z/Cmd+Z to undo changes</li>
-          <li>• Click the table button to insert tables</li>
           <li>• Use the preview mode to see how your content will look</li>
           <li>• Supported image formats: JPEG, PNG, WebP (max 10MB)</li>
+          <li>• Use the toolbar for text formatting and styling</li>
         </ul>
       </div>
     </div>

@@ -19,6 +19,7 @@ import {
   Loader2
 } from 'lucide-react'
 import RichTextEditor from './RichTextEditor'
+import SimpleRichTextEditor from './SimpleRichTextEditor'
 import BlogContentRenderer from '../blog/BlogContentRenderer'
 
 // Local interface for editor form data
@@ -70,6 +71,7 @@ const BlogEditor = ({ post, onSave, onCancel, isLoading = false }: BlogEditorPro
   const [tagInput, setTagInput] = useState('')
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [isDirty, setIsDirty] = useState(false)
+  const [useSimpleEditor, setUseSimpleEditor] = useState(false)
 
   // Auto-generate slug from title
   useEffect(() => {
@@ -332,15 +334,35 @@ const BlogEditor = ({ post, onSave, onCancel, isLoading = false }: BlogEditorPro
 
                 {/* Rich Text Editor */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">
-                    Content *
-                  </label>
-                  <RichTextEditor
-                    value={formData.content}
-                    onChange={(value) => handleInputChange('content', value)}
-                    onImageUpload={handleImageUpload}
-                    height={500}
-                  />
+                  <div className="flex items-center justify-between mb-2">
+                    <label className="block text-sm font-medium text-gray-300">
+                      Content *
+                    </label>
+                    <button
+                      type="button"
+                      onClick={() => setUseSimpleEditor(!useSimpleEditor)}
+                      className="text-xs text-primary hover:text-green-400 transition-colors duration-300"
+                    >
+                      {useSimpleEditor ? 'Use Rich Editor' : 'Use Simple Editor'}
+                    </button>
+                  </div>
+
+                  {useSimpleEditor ? (
+                    <SimpleRichTextEditor
+                      value={formData.content}
+                      onChange={(value) => handleInputChange('content', value)}
+                      onImageUpload={handleImageUpload}
+                      height={500}
+                    />
+                  ) : (
+                    <RichTextEditor
+                      value={formData.content}
+                      onChange={(value) => handleInputChange('content', value)}
+                      onImageUpload={handleImageUpload}
+                      height={500}
+                    />
+                  )}
+
                   {errors.content && (
                     <p className="mt-1 text-sm text-red-400">{errors.content}</p>
                   )}
