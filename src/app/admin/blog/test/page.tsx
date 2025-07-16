@@ -1,6 +1,9 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+
+// Force dynamic rendering for admin pages
+export const dynamic = 'force-dynamic'
 import { motion } from 'framer-motion'
 import { Eye, Code, CheckCircle, AlertCircle, RefreshCw } from 'lucide-react'
 import BlogPostLayout from '@/components/blog/BlogPostLayout'
@@ -9,6 +12,7 @@ import { adminBlogAPI } from '@/lib/api/blog'
 import { sanitizeContent, validateContent } from '@/lib/security/contentSanitizer'
 
 const BlogTestPage = () => {
+  const [isClient, setIsClient] = useState(false)
   const [testContent, setTestContent] = useState(`
     <h1>Test Blog Post</h1>
     <p>This is a <strong>test blog post</strong> to verify that content appears <em>identically</em> between the admin editor and public display.</p>
@@ -71,12 +75,20 @@ function hello() {
   const [isLoading, setIsLoading] = useState(false)
   const [activeView, setActiveView] = useState<'editor' | 'preview' | 'comparison'>('editor')
 
+  // Ensure we're on the client side
+  useEffect(() => {
+    setIsClient(true)
+  }, [])
+
   // Create test post object
   useEffect(() => {
     const createTestPost = () => {
+      // Only run on client side
+      if (typeof window === 'undefined') return
+
       const sanitized = sanitizeContent(testContent)
       const validation = validateContent(testContent)
-      
+
       setValidationResult(validation)
       setTestPost({
         id: 999,
@@ -158,6 +170,15 @@ function hello() {
     { id: 'preview', label: 'Public Preview', icon: <Eye className="w-4 h-4" /> },
     { id: 'comparison', label: 'Side by Side', icon: <CheckCircle className="w-4 h-4" /> }
   ]
+
+  // Show loading state during SSR
+  if (!isClient) {
+    return (
+      <div className="min-h-screen bg-dark-100 flex items-center justify-center">
+        <div className="text-white">Loading...</div>
+      </div>
+    )
+  }
 
   return (
     <div className="min-h-screen bg-dark-100">

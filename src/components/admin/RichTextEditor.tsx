@@ -73,6 +73,12 @@ const RichTextEditor = ({
   const [isPreviewMode, setIsPreviewMode] = useState(false)
   const [isUploading, setIsUploading] = useState(false)
   const [uploadError, setUploadError] = useState<string | null>(null)
+  const [isClient, setIsClient] = useState(false)
+
+  // Ensure we're on the client side
+  useEffect(() => {
+    setIsClient(true)
+  }, [])
 
   // Custom toolbar configuration (simplified to avoid module issues)
   const toolbarOptions = [
@@ -213,6 +219,17 @@ const RichTextEditor = ({
         className="prose prose-invert prose-lg max-w-none p-6 min-h-[400px] bg-dark-200/50 rounded-lg border border-dark-300"
         dangerouslySetInnerHTML={{ __html: value }}
       />
+    )
+  }
+
+  // Show loading state during SSR
+  if (!isClient) {
+    return (
+      <div className={`rich-text-editor ${className}`}>
+        <div className="h-96 bg-dark-200/50 rounded-lg animate-pulse flex items-center justify-center">
+          <div className="text-gray-400">Loading editor...</div>
+        </div>
+      </div>
     )
   }
 

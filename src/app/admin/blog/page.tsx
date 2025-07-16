@@ -1,6 +1,9 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+
+// Force dynamic rendering for admin pages
+export const dynamic = 'force-dynamic'
 import { motion } from 'framer-motion'
 import { Plus, Settings, BarChart3, Users, FileText } from 'lucide-react'
 import BlogManagement from '@/components/admin/BlogManagement'
@@ -51,11 +54,20 @@ const AdminBlogPage = () => {
   const [editingPost, setEditingPost] = useState<BlogEditorPost | undefined>()
   const [dashboardStats, setDashboardStats] = useState<DashboardStats | null>(null)
   const [isLoading, setIsLoading] = useState(false)
+  const [isClient, setIsClient] = useState(false)
+
+  // Ensure we're on the client side
+  useEffect(() => {
+    setIsClient(true)
+  }, [])
 
   // Fetch dashboard stats
   useEffect(() => {
     const fetchStats = async () => {
       try {
+        // Only fetch on client side
+        if (typeof window === 'undefined') return
+
         const response = await adminBlogAPI.getDashboardStats()
         if (response.success) {
           setDashboardStats(response.data)
@@ -166,6 +178,15 @@ const AdminBlogPage = () => {
     } catch (error) {
       console.error('Error deleting post:', error)
     }
+  }
+
+  // Show loading state during SSR
+  if (!isClient) {
+    return (
+      <div className="min-h-screen bg-dark-100 flex items-center justify-center">
+        <div className="text-white">Loading...</div>
+      </div>
+    )
   }
 
   return (
