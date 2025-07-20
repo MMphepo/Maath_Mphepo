@@ -3,7 +3,7 @@
  * Tests Next.js frontend integration with Django REST API backend
  */
 
-const API_BASE_URL = 'https://maath-mphepo.onrender.com/';
+const API_BASE_URL = 'https://maath-mphepo.onrender.com';
 
 class FrontendIntegrationTester {
     constructor() {

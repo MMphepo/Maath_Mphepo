@@ -5,7 +5,7 @@ const nextConfig = {
 
   // Environment variables configuration
   env: {
-    NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL || 'https://maath-mphepo.onrender.com/',
+    NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL || 'https://maath-mphepo.onrender.com',
   },
 
   // Image optimization for Vercel
