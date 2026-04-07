@@ -13,6 +13,7 @@ from .serializers import (
     ContactSubmissionSerializer, NewsletterSubscriptionSerializer, 
     SocialLinkSerializer
 )
+from .whatsapp_service import send_contact_whatsapp
 
 
 @api_view(['POST'])
@@ -25,6 +26,27 @@ def contact_submit(request):
     
     if serializer.is_valid():
         submission = serializer.save()
+        
+        # Prepare contact data for notifications
+        contact_data = {
+            'name': submission.name,
+            'email': submission.email,
+            'phone': submission.phone,
+            'subject': submission.subject,
+            'message': submission.message,
+            'website': submission.website,
+            'budget_range': submission.budget_range,
+            'project_timeline': submission.project_timeline,
+        }
+        
+        # Send WhatsApp notification (async)
+        try:
+            whatsapp_sent = send_contact_whatsapp(contact_data)
+            if whatsapp_sent:
+                submission.admin_notes = f"WhatsApp notification sent successfully"
+                submission.save(update_fields=['admin_notes'])
+        except Exception as e:
+            print(f"Failed to send WhatsApp notification: {e}")
         
         # Send notification email to admin
         try:

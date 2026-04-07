@@ -13,6 +13,7 @@ const ContactForm = () => {
     email: '',
     subject: '',
     message: '',
+    phone: '',
     honeypot: ''
   })
 
@@ -29,6 +30,13 @@ const ContactForm = () => {
     return emailRegex.test(email)
   }
 
+  const validatePhone = (phone: string): boolean => {
+    if (!phone.trim()) return true // Phone is optional
+    // Accept phone numbers with digits, spaces, dashes, parentheses, plus sign
+    const phoneRegex = /^[\d\s\-+()]+$/
+    return phoneRegex.test(phone) && phone.trim().length >= 7
+  }
+
   const validateForm = (): boolean => {
     const newErrors: ContactFormErrors = {}
     
@@ -42,6 +50,10 @@ const ContactForm = () => {
       newErrors.email = 'Email is required'
     } else if (!validateEmail(formData.email)) {
       newErrors.email = 'Please enter a valid email address'
+    }
+
+    if (formData.phone && !validatePhone(formData.phone)) {
+      newErrors.phone = 'Please enter a valid phone number (at least 7 characters)'
     }
     
     if (!formData.message.trim()) {
@@ -84,7 +96,8 @@ const ContactForm = () => {
         name: formData.name.trim(),
         email: formData.email.trim(),
         subject: formData.subject.trim() || 'Contact Form Submission',
-        message: formData.message.trim()
+        message: formData.message.trim(),
+        ...(formData.phone && { phone: formData.phone.trim() })
       })
       
       if (response.success) {
@@ -94,6 +107,7 @@ const ContactForm = () => {
           email: '',
           subject: '',
           message: '',
+          phone: '',
           honeypot: ''
         })
         console.log('Message sent successfully! I\'ll get back to you within 24 hours.')
@@ -275,6 +289,47 @@ const ContactForm = () => {
           >
             Subject (Optional)
           </motion.label>
+        </div>
+
+        {/* Phone Field */}
+        <div className="relative">
+          <motion.input
+            variants={inputVariants}
+            animate={focusedField === 'phone' ? 'focused' : 'unfocused'}
+            type="tel"
+            name="phone"
+            value={formData.phone}
+            onChange={handleInputChange}
+            onFocus={() => setFocusedField('phone')}
+            onBlur={() => setFocusedField(null)}
+            className={`w-full px-4 py-4 bg-dark-300/50 border rounded-lg text-white placeholder-transparent focus:outline-none focus:ring-2 transition-all duration-300 ${
+              errors.phone 
+                ? 'border-red-500 focus:ring-red-500/50' 
+                : 'border-gray-600 focus:border-primary-500 focus:ring-primary-500/50'
+            }`}
+            placeholder="Phone Number"
+          />
+          <motion.label
+            variants={labelVariants}
+            animate={focusedField === 'phone' || formData.phone ? 'focused' : 'unfocused'}
+            htmlFor="phone"
+            className="absolute left-4 top-4 pointer-events-none transition-all duration-300"
+          >
+            Phone Number (Optional - for WhatsApp replies)
+          </motion.label>
+          <AnimatePresence>
+            {errors.phone && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                className="flex items-center mt-2 text-red-400 text-sm"
+              >
+                <AlertCircle className="w-4 h-4 mr-1" />
+                {errors.phone}
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
 
         {/* Message Field */}

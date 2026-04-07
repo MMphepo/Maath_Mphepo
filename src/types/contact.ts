@@ -4,6 +4,7 @@ export interface ContactFormData {
   email: string
   subject: string
   message: string
+  phone?: string // Optional phone for WhatsApp integration
   honeypot?: string // Bot prevention field
 }
 
@@ -12,6 +13,7 @@ export interface ContactFormErrors {
   email?: string
   subject?: string
   message?: string
+  phone?: string
   general?: string
 }
 
