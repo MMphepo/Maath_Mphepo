@@ -2,11 +2,11 @@
 
 import { motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
-import { api } from '@/lib/api-config'
+import skillsData from '@/data/skills.json'
 
 interface Technology {
   name: string
-  icon: string
+  icon_class: string
   description: string
   color: string
   level?: number
@@ -28,140 +28,13 @@ const TechStack = () => {
   const [isVisible, setIsVisible] = useState(false)
   const [hoveredTech, setHoveredTech] = useState<string | null>(null)
   const [skillCategories, setSkillCategories] = useState<SkillCategory[]>([])
-  const [loading, setLoading] = useState(true)
-
-  // Fetch comprehensive skills from Django API
-  const fetchSkills = async () => {
-    try {
-      setLoading(true)
-      const response = await api.skills.list();
-
-
-      if (!response.success && !response.data) {
-        // Transform Django skills data to match component interface
-        let transformedCategories: SkillCategory[] = []
-
-        if (response.data.skillsByCategory && Array.isArray(response.data.skillsByCategory)) {
-          transformedCategories = response.data.skillsByCategory.map((category: any) => ({
-            id: category.id,
-            name: category.name,
-            slug: category.slug,
-            description: category.description,
-            icon_class: category.icon_class,
-            color: category.color,
-            skills: category.skills ? category.skills.map((skill: any) => ({
-              name: skill.name || 'Unknown',
-              icon: skill.icon_class || getDefaultIcon(skill.name),
-              description: skill.description || `${skill.name} technology`,
-              color: category.color || '#10B981',
-              level: skill.proficiency_percentage || 85,
-              proficiency_percentage: skill.proficiency_percentage || 85,
-              years_experience: skill.years_experience || 1
-            })) : []
-          }))
-        }
-
-        if (transformedCategories.length > 0) {
-          setSkillCategories(transformedCategories)
-        } else {
-          console.log('No skill categories found in API response, using defaults')
-          setSkillCategories(getDefaultSkillCategories())
-        }
-      } else {
-        console.error('Error fetching skills:', response.error)
-        // Fallback to default categories if API fails
-        setSkillCategories(getDefaultSkillCategories())
-      }
-    } catch (error) {
-      console.error('Error fetching skills:', error)
-      setSkillCategories(getDefaultSkillCategories())
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  // Helper function to get default icon based on skill name
-  const getDefaultIcon = (skillName: string): string => {
-    const iconMap: Record<string, string> = {
-      'Python': '🐍',
-      'Django': '🎯',
-      'Laravel': '🔥',
-      'PostgreSQL': '🐘',
-      'MySQL': '🗄️',
-      'Git': '📚',
-      'REST API': '🔗',
-      'Docker': '🐳',
-      'JavaScript': '⚡',
-      'TypeScript': '📘',
-      'React': '⚛️',
-      'Vue': '💚',
-      'Node.js': '🟢',
-      'MongoDB': '🍃',
-      'Redis': '🔴',
-      'AWS': '☁️',
-      'Linux': '🐧'
-    }
-    return iconMap[skillName] || '⚙️'
-  }
-
-  // Helper function to get color gradient for skill
-  const getColorForSkill = (skillName: string, index: number): string => {
-    const colors = [
-      'from-yellow-400 to-blue-500',
-      'from-green-400 to-green-600',
-      'from-red-400 to-red-600',
-      'from-blue-400 to-blue-600',
-      'from-purple-400 to-purple-600',
-      'from-orange-400 to-orange-600',
-      'from-pink-400 to-pink-600',
-      'from-indigo-400 to-indigo-600'
-    ]
-    return colors[index % colors.length]
-  }
-
-  // Default skill categories fallback
-  const getDefaultSkillCategories = (): SkillCategory[] => [
-    {
-      id: 1,
-      name: 'Languages',
-      slug: 'languages',
-      description: 'Programming languages I work with',
-      icon_class: 'fas fa-code',
-      color: '#10B981',
-      skills: [
-        { name: 'Python', icon: '🐍', description: 'Primary backend language', color: '#10B981', level: 95, proficiency_percentage: 95, years_experience: 3 },
-        { name: 'PHP', icon: '🔥', description: 'Laravel development', color: '#10B981', level: 85, proficiency_percentage: 85, years_experience: 2 },
-        { name: 'JavaScript', icon: '⚡', description: 'Frontend and Node.js', color: '#10B981', level: 80, proficiency_percentage: 80, years_experience: 2 }
-      ]
-    },
-    {
-      id: 2,
-      name: 'Backend Frameworks',
-      slug: 'backend-frameworks',
-      description: 'Server-side frameworks',
-      icon_class: 'fas fa-server',
-      color: '#3B82F6',
-      skills: [
-        { name: 'Django', icon: '🎯', description: 'REST API development', color: '#3B82F6', level: 90, proficiency_percentage: 90, years_experience: 3 },
-        { name: 'Laravel', icon: '🔥', description: 'PHP web framework', color: '#3B82F6', level: 85, proficiency_percentage: 85, years_experience: 2 }
-      ]
-    },
-    {
-      id: 3,
-      name: 'Databases',
-      slug: 'databases',
-      description: 'Database systems',
-      icon_class: 'fas fa-database',
-      color: '#F59E0B',
-      skills: [
-        { name: 'MySQL', icon: '🗄️', description: 'Production databases', color: '#F59E0B', level: 85, proficiency_percentage: 85, years_experience: 3 },
-        { name: 'PostgreSQL', icon: '🐘', description: 'Advanced relational DB', color: '#F59E0B', level: 80, proficiency_percentage: 80, years_experience: 2 }
-      ]
-    }
-  ]
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
-    fetchSkills()
+    // Use hardcoded skills data - instant loading
+    if (skillsData?.data?.skillsByCategory) {
+      setSkillCategories(skillsData.data.skillsByCategory as SkillCategory[])
+    }
   }, [])
 
   useEffect(() => {
@@ -288,11 +161,11 @@ const TechStack = () => {
                           transition={{ duration: 0.5 }}
                           className="text-4xl mb-3"
                         >
-                          {/* Check if icon is a Font Awesome class or emoji */}
-                          {skill.icon.startsWith('fa') ? (
-                            <i className={skill.icon} style={{ color: category.color }}></i>
+                          {/* Render icon from Font Awesome class */}
+                          {skill.icon_class ? (
+                            <i className={skill.icon_class} style={{ color: category.color }}></i>
                           ) : (
-                            <span>{skill.icon}</span>
+                            <span>⚙️</span>
                           )}
                         </motion.div>
 

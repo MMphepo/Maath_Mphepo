@@ -3,10 +3,10 @@
 import { motion } from 'framer-motion'
 import { Quote, Star } from 'lucide-react'
 import { useEffect, useState } from 'react'
-import { api } from '@/lib/api-config'
+import testimonialsData from '@/data/testimonials.json'
 
 interface TestimonialData {
-  id: string
+  id: string | number
   name: string
   position: string
   company: string
@@ -18,42 +18,16 @@ interface TestimonialData {
 const Testimonial = () => {
   const [isVisible, setIsVisible] = useState(false)
   const [testimonial, setTestimonial] = useState<TestimonialData | null>(null)
-  const [loading, setLoading] = useState(true)
-
-  // Fetch testimonials from Django API
-  const fetchTestimonials = async () => {
-    try {
-      setLoading(true)
-      const response = await api.testimonials()
-
-      if (response.success && response.data && response.data.length > 0) {
-        // Use the first testimonial for the main display
-        setTestimonial(response.data[0])
-      } else {
-        console.error('Error fetching testimonials:', response.error)
-        // Fallback to default testimonial
-        setTestimonial(getDefaultTestimonial())
-      }
-    } catch (error) {
-      console.error('Error fetching testimonials:', error)
-      setTestimonial(getDefaultTestimonial())
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  // Fallback default testimonial
-  const getDefaultTestimonial = (): TestimonialData => ({
-    id: 'default',
-    name: 'Sarah Johnson',
-    position: 'CTO',
-    company: 'TechStart Inc.',
-    content: 'Working with Maath was a great experience. His backend logic was clean, efficient, and delivered on time. The API he built for our e-commerce platform handles thousands of requests daily without any issues. Highly recommended!',
-    rating: 5
-  })
+  const [loading, setLoading] = useState(false)
+  const [currentIndex, setCurrentIndex] = useState(0)
+  const [testimonials, setTestimonials] = useState<TestimonialData[]>([])
 
   useEffect(() => {
-    fetchTestimonials()
+    // Use hardcoded testimonials data - instant loading
+    if (testimonialsData?.data && Array.isArray(testimonialsData.data)) {
+      setTestimonials(testimonialsData.data)
+      setTestimonial(testimonialsData.data[0])
+    }
   }, [])
 
   useEffect(() => {
@@ -253,13 +227,19 @@ const Testimonial = () => {
             initial={{ opacity: 0 }}
             animate={isVisible ? { opacity: 1 } : { opacity: 0 }}
             transition={{ duration: 0.6, delay: 1.8 }}
-            className="flex justify-center gap-2 mt-8"
+            className="flex justify-center gap-2 mt-8 cursor-pointer"
           >
-            {[0, 1, 2].map((index) => (
-              <div
+            {testimonials.map((_, index) => (
+              <motion.div
                 key={index}
+                onClick={() => {
+                  setCurrentIndex(index)
+                  setTestimonial(testimonials[index])
+                }}
+                whileHover={{ scale: 1.2 }}
+                whileTap={{ scale: 0.9 }}
                 className={`w-3 h-3 rounded-full transition-colors duration-300 ${
-                  index === 0 ? 'bg-primary' : 'bg-gray-600'
+                  index === currentIndex ? 'bg-primary' : 'bg-gray-600'
                 }`}
               />
             ))}

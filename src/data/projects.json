@@ -1,0 +1,186 @@
+{
+  "success": true,
+  "data": {
+    "projects": [
+      {
+        "id": 1,
+        "title": "School Power Schedule Management System",
+        "slug": "school-power-schedule",
+        "description": "Comprehensive school power schedule management system that handles electricity scheduling for educational institutions",
+        "image": "https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&q=80",
+        "status": "completed",
+        "is_featured": true,
+        "my_role": "Lead Backend Developer",
+        "tech_stack": [
+          "Django",
+          "Django REST Framework",
+          "PostgreSQL",
+          "Redis",
+          "Celery",
+          "Docker"
+        ],
+        "github_link": "https://github.com",
+        "live_link": "https://example.com",
+        "features": [
+          "Real-time schedule generation",
+          "Automated notifications",
+          "User management system",
+          "Analytics dashboard",
+          "Mobile app integration"
+        ]
+      },
+      {
+        "id": 2,
+        "title": "Student Task Tracking System",
+        "slug": "student-task-tracking",
+        "description": "Advanced task tracking and project management system designed for student collaboration and productivity",
+        "image": "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&q=80",
+        "status": "completed",
+        "is_featured": true,
+        "my_role": "Team Lead & Backend Developer",
+        "tech_stack": [
+          "Django",
+          "PostgreSQL",
+          "Docker",
+          "Git",
+          "Celery",
+          "React"
+        ],
+        "github_link": "https://github.com",
+        "live_link": "https://example.com",
+        "features": [
+          "Task assignment and tracking",
+          "Team collaboration tools",
+          "Progress visualization",
+          "Automated testing",
+          "Real-time notifications"
+        ]
+      },
+      {
+        "id": 3,
+        "title": "E-Commerce Platform API",
+        "slug": "ecommerce-api",
+        "description": "Scalable REST API for e-commerce platform handling thousands of daily requests with high reliability",
+        "image": "https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&q=80",
+        "status": "completed",
+        "is_featured": true,
+        "my_role": "Backend Developer",
+        "tech_stack": [
+          "Laravel",
+          "MySQL",
+          "Redis",
+          "AWS",
+          "Docker",
+          "API Gateway"
+        ],
+        "github_link": "https://github.com",
+        "live_link": "https://example.com",
+        "features": [
+          "Product catalog management",
+          "Order processing system",
+          "Payment integration",
+          "Inventory management",
+          "Customer analytics"
+        ]
+      },
+      {
+        "id": 4,
+        "title": "Real-Time IoT Monitoring Dashboard",
+        "slug": "iot-monitoring",
+        "description": "IoT monitoring system with real-time data visualization and alert management for industrial applications",
+        "image": "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=800&q=80",
+        "status": "completed",
+        "is_featured": true,
+        "my_role": "Full Stack Developer",
+        "tech_stack": [
+          "Python",
+          "Django",
+          "WebSocket",
+          "PostgreSQL",
+          "React",
+          "MQTT"
+        ],
+        "github_link": "https://github.com",
+        "live_link": "https://example.com",
+        "features": [
+          "Real-time data streaming",
+          "Alert management",
+          "Historical data analysis",
+          "Custom dashboard builder",
+          "Multi-device support"
+        ]
+      },
+      {
+        "id": 5,
+        "title": "Blog Content Management System",
+        "slug": "blog-cms",
+        "description": "Headless CMS for managing blog content with rich text editing, SEO optimization, and analytics",
+        "image": "https://images.unsplash.com/photo-1460925895917-adf4e566c039?w=800&q=80",
+        "status": "completed",
+        "is_featured": false,
+        "my_role": "Backend Developer",
+        "tech_stack": [
+          "Django",
+          "Wagtail",
+          "PostgreSQL",
+          "Elasticsearch",
+          "CDN"
+        ],
+        "github_link": "https://github.com",
+        "live_link": "https://example.com",
+        "features": [
+          "Rich text editor",
+          "SEO management",
+          "Content scheduling",
+          "Analytics integration",
+          "Media management"
+        ]
+      },
+      {
+        "id": 6,
+        "title": "Microservices Architecture Migration",
+        "slug": "microservices",
+        "description": "Migrated monolithic application to microservices architecture improving scalability and maintainability",
+        "image": "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800&q=80",
+        "status": "completed",
+        "is_featured": false,
+        "my_role": "Senior Backend Developer",
+        "tech_stack": [
+          "Docker",
+          "Kubernetes",
+          "Python",
+          "Go",
+          "gRPC",
+          "PostgreSQL",
+          "RabbitMQ"
+        ],
+        "github_link": "https://github.com",
+        "live_link": "https://example.com",
+        "features": [
+          "Service decomposition",
+          "API gateway",
+          "Service discovery",
+          "Distributed logging",
+          "Container orchestration"
+        ]
+      }
+    ],
+    "filters": {
+      "availableCategories": [
+        "backend",
+        "frontend",
+        "devops",
+        "database"
+      ],
+      "currentStatus": null,
+      "currentCategory": null,
+      "featuredOnly": false,
+      "searchQuery": ""
+    },
+    "stats": {
+      "total": 6,
+      "featured": 4,
+      "completed": 6
+    }
+  }
+}

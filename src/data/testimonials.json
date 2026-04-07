@@ -1,0 +1,41 @@
+{
+  "success": true,
+  "data": [
+    {
+      "id": 1,
+      "name": "Sarah Johnson",
+      "position": "CTO",
+      "company": "TechStart Inc.",
+      "image": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop",
+      "content": "Working with Maath was a great experience. His backend logic was clean, efficient, and delivered on time. The API he built for our e-commerce platform handles thousands of requests daily without any issues. Highly recommended!",
+      "rating": 5
+    },
+    {
+      "id": 2,
+      "name": "Michael Chen",
+      "position": "Product Manager",
+      "company": "Digital Solutions Ltd",
+      "image": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop",
+      "content": "Maath demonstrated exceptional problem-solving skills during our IoT project. He not only delivered the infrastructure but also mentored our junior developers. His knowledge in scalable systems architecture is impressive.",
+      "rating": 5
+    },
+    {
+      "id": 3,
+      "name": "Emily Rodriguez",
+      "position": "Founder & CEO",
+      "company": "EduTech Solutions",
+      "image": "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop",
+      "content": "The school power scheduling system Maath built transformed how our institution manages electricity distribution. His attention to detail and understanding of our requirements was exceptional. Professional and reliable!",
+      "rating": 5
+    },
+    {
+      "id": 4,
+      "name": "James Wilson",
+      "position": "Technical Lead",
+      "company": "CloudScale Systems",
+      "image": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=400&fit=crop",
+      "content": "Maath's expertise in microservices architecture was invaluable to our platform migration. He managed the entire process smoothly, ensuring zero downtime. His documentation was impeccable and his code quality is outstanding.",
+      "rating": 5
+    }
+  ]
+}

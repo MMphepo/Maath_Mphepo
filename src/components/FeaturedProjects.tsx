@@ -3,10 +3,10 @@
 import { motion } from 'framer-motion'
 import { ExternalLink, Github } from 'lucide-react'
 import { useEffect, useState } from 'react'
-import { api } from '@/lib/api-config'
+import projectsData from '@/data/projects.json'
 
 interface Project {
-  id: string
+  id: string | number
   title: string
   description: string
   detailed_description?: string
@@ -26,37 +26,20 @@ interface Project {
 const FeaturedProjects = () => {
   const [isVisible, setIsVisible] = useState(false)
   const [projects, setProjects] = useState<Project[]>([])
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(false)
   const [showAll, setShowAll] = useState(false)
 
-  // Fetch projects from Django API
-  const fetchProjects = async () => {
-    try {
-      setLoading(true)
-      const response = await api.projects.list()
-
-      if (response.success && response.data) {
-        // Get all projects and sort by featured status
-        const allProjects = response.data.projects || []
-        const sortedProjects = allProjects.sort((a: Project, b: Project) => {
-          // Featured projects first, then by title
-          if (a.is_featured && !b.is_featured) return -1
-          if (!a.is_featured && b.is_featured) return 1
-          return a.title.localeCompare(b.title)
-        })
-        setProjects(sortedProjects)
-      } else {
-        console.error('Error fetching projects:', response.error)
-      }
-    } catch (error) {
-      console.error('Error fetching projects:', error)
-    } finally {
-      setLoading(false)
-    }
-  }
-
   useEffect(() => {
-    fetchProjects()
+    // Use hardcoded project data - instant loading
+    if (projectsData?.data?.projects) {
+      const sortedProjects = projectsData.data.projects.sort((a: Project, b: Project) => {
+        // Featured projects first, then by title
+        if (a.is_featured && !b.is_featured) return -1
+        if (!a.is_featured && b.is_featured) return 1
+        return a.title.localeCompare(b.title)
+      })
+      setProjects(sortedProjects)
+    }
   }, [])
 
   useEffect(() => {
