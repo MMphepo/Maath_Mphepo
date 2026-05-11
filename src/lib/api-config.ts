@@ -156,6 +156,12 @@ export class ApiClient {
       },
     }
     
+    console.log('[ApiClient] 🌐 Making request to:', url)
+    console.log('[ApiClient] Method:', options.method || 'GET')
+    if (options.body) {
+      console.log('[ApiClient] Body:', JSON.parse(options.body as string))
+    }
+    
     try {
       let response = await fetch(url, config)
       
@@ -177,16 +183,21 @@ export class ApiClient {
       
       const data = await response.json()
       
+      console.log('[ApiClient] Status:', response.status)
+      console.log('[ApiClient] Response:', data)
+      
       if (!response.ok) {
+        console.error('[ApiClient] ❌ Request failed with status', response.status)
         return {
           success: false,
           error: data.error || data.detail || `HTTP ${response.status}`,
         }
       }
       
+      console.log('[ApiClient] ✅ Request successful')
       return data
     } catch (error) {
-      console.error('API request failed:', error)
+      console.error('[ApiClient] ❌ API request failed:', error)
       return {
         success: false,
         error: error instanceof Error ? error.message : 'Network error',

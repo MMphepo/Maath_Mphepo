@@ -11,14 +11,21 @@ class ContactSubmissionSerializer(serializers.ModelSerializer):
         ]
     
     def create(self, validated_data):
+        print('[ContactSubmissionSerializer] === SERIALIZER CREATE STARTED ===')
+        print('[ContactSubmissionSerializer] Validated data:', validated_data)
+        
         # Add IP address and user agent from request context
         request = self.context.get('request')
         if request:
             validated_data['ip_address'] = request.META.get('REMOTE_ADDR', '127.0.0.1')
             validated_data['user_agent'] = request.META.get('HTTP_USER_AGENT', '')
             validated_data['referrer'] = request.META.get('HTTP_REFERER', '')
+            print(f'[ContactSubmissionSerializer] ✅ Added request metadata - IP: {validated_data["ip_address"]}')
         
-        return super().create(validated_data)
+        result = super().create(validated_data)
+        print(f'[ContactSubmissionSerializer] ✅ Contact submission created with ID: {result.id}')
+        print('[ContactSubmissionSerializer] === SERIALIZER CREATE ENDED ===')
+        return result
 
 
 class NewsletterSubscriptionSerializer(serializers.ModelSerializer):

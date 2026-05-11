@@ -79,28 +79,39 @@ const ContactForm = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     
+    console.log('[ContactForm] === CONTACT FORM SUBMISSION STARTED ===')
+    console.log('[ContactForm] Form data:', formData)
+    
     // Bot prevention - if honeypot is filled, it's likely a bot
     if (formData.honeypot) {
+      console.warn('[ContactForm] ⚠️ Honeypot field filled - likely a bot, ignoring submission')
       return
     }
     
     if (!validateForm()) {
+      console.error('[ContactForm] ❌ Form validation failed', errors)
       console.error('Please fix the errors below')
       return
     }
     
+    console.log('[ContactForm] ✅ Form validation passed')
     setIsSubmitting(true)
     
     try {
-      const response = await api.contact.submit({
+      const submitData = {
         name: formData.name.trim(),
         email: formData.email.trim(),
         subject: formData.subject.trim() || 'Contact Form Submission',
         message: formData.message.trim(),
         ...(formData.phone && { phone: formData.phone.trim() })
-      })
+      }
       
+      console.log('[ContactForm] 📤 Sending to API...', submitData)
+      const response = await api.contact.submit(submitData)
+      
+      console.log('[ContactForm] 📥 API Response:', response)
       if (response.success) {
+        console.log('[ContactForm] ✅ Submission successful!', response.data)
         setIsSubmitted(true)
         setFormData({
           name: '',
@@ -115,9 +126,10 @@ const ContactForm = () => {
         throw new Error(response.error || 'Failed to send message')
       }
     } catch (error: any) {
-      console.error('Contact form error:', error)
-      console.error(error.message || 'Failed to send message. Please try again.')
+      console.error('[ContactForm] ❌ Contact form error:', error)
+      console.error('[ContactForm] Error details:', error.message || 'Failed to send message. Please try again.')
     } finally {
+      console.log('[ContactForm] === CONTACT FORM SUBMISSION ENDED ===')
       setIsSubmitting(false)
     }
   }
