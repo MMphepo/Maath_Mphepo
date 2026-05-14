@@ -3,48 +3,19 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Mail, Clock, MapPin, Github, Linkedin, Twitter, ExternalLink } from 'lucide-react'
-import { api } from '@/lib/api-config'
+import contactData from '@/data/contact.json'
 import { ContactInfo } from '@/types/contact'
 
 const ContactSidebar = () => {
   const [contactInfo, setContactInfo] = useState<ContactInfo | null>(null)
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
-    const fetchContactInfo = async () => {
-      try {
-        const response = await api.contact.info()
-        if (response.success && response.data) {
-          setContactInfo(response.data)
-        } else {
-          // Fallback to default contact info
-          setContactInfo(getDefaultContactInfo())
-        }
-      } catch (error) {
-        console.error('Failed to fetch contact info:', error)
-        setContactInfo(getDefaultContactInfo())
-      } finally {
-        setLoading(false)
-      }
+    // Load contact info from local JSON file - instant loading
+    if (contactData?.data) {
+      setContactInfo(contactData.data as ContactInfo)
     }
-
-    fetchContactInfo()
   }, [])
-
-  const getDefaultContactInfo = (): ContactInfo => ({
-    email: 'maathmphepo80@gmail.com',
-    location: 'Malawi, Lilongwe, Working Globally',
-    socialLinks: [
-      { platform: 'GitHub', url: 'https://github.com/Mmphepo', is_active: true },
-      { platform: 'LinkedIn', url: 'https://linkedin.com/in/maathmphepo', is_active: true },
-      { platform: 'Twitter', url: 'https://x.com/MMphepo32688', is_active: true }
-    ],
-    availability: {
-      status: 'Available for projects',
-      responseTime: '24 hours',
-      timezone: 'UTC+2 (CAT)'
-    }
-  })
 
   const getSocialIcon = (platform: string) => {
     switch (platform.toLowerCase()) {

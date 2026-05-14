@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion'
 import { ArrowRight, Mail, MessageCircle, Calendar } from 'lucide-react'
 import { useEffect, useState } from 'react'
-import { api } from '@/lib/api-config'
+import contactData from '@/data/contact.json'
 
 const AboutCTAFooter = () => {
   const [isVisible, setIsVisible] = useState(false)
@@ -46,19 +46,10 @@ const AboutCTAFooter = () => {
     window.location.href = '/contact'
   }
 
-  const handleEmailClick = async () => {
-    try {
-      // Try to get contact info from API first
-      const response = await api.contact.info()
-      const email = response.success && response.data?.email
-        ? response.data.email
-        : 'maathmphepo80@gmail.com' // fallback
-
-      window.location.href = `mailto:${email}`
-    } catch (error) {
-      // Fallback to default email
-      window.location.href = 'mailto:maathmphepo80@gmail.com'
-    }
+  const handleEmailClick = () => {
+    // Use email from local contact data
+    const email = contactData?.data?.email || 'maathmphepo80@gmail.com'
+    window.location.href = `mailto:${email}`
   }
 
   const handleScheduleClick = () => {

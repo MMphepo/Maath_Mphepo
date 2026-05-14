@@ -1,0 +1,29 @@
+{
+  "success": true,
+  "data": {
+    "email": "maathmphepo80@gmail.com",
+    "location": "Malawi, Lilongwe, Working Globally",
+    "socialLinks": [
+      {
+        "platform": "GitHub",
+        "url": "https://github.com/Mmphepo",
+        "is_active": true
+      },
+      {
+        "platform": "LinkedIn",
+        "url": "https://linkedin.com/in/maathmphepo",
+        "is_active": true
+      },
+      {
+        "platform": "Twitter",
+        "url": "https://x.com/MMphepo32688",
+        "is_active": true
+      }
+    ],
+    "availability": {
+      "status": "Available for projects",
+      "responseTime": "24 hours",
+      "timezone": "UTC+2 (CAT)"
+    }
+  }
+}

@@ -3,14 +3,14 @@
 import { motion } from 'framer-motion'
 import { Github, Linkedin, Mail, ArrowUp, Heart, Twitter } from 'lucide-react'
 import { useEffect, useState } from 'react'
-import { api } from '@/lib/api-config'
+import contactData from '@/data/contact.json'
 import { ContactInfo } from '@/types/contact'
 
 const Footer = () => {
   const [isVisible, setIsVisible] = useState(false)
   const [showScrollTop, setShowScrollTop] = useState(false)
   const [contactInfo, setContactInfo] = useState<ContactInfo | null>(null)
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(false)
 
   const quickLinks = [
     { name: 'Home', href: '#home' },
@@ -19,43 +19,6 @@ const Footer = () => {
     { name: 'Skills', href: '#skills' },
     { name: 'Contact', href: '/contact' },
   ]
-
-  // Fetch contact information from Django API
-  const fetchContactInfo = async () => {
-    try {
-      setLoading(true)
-      const response = await api.contact.info()
-
-      if (response.success && response.data) {
-        setContactInfo(response.data)
-      } else {
-        console.error('Error fetching contact info:', response.error)
-        // Fallback to default contact info
-        setContactInfo(getDefaultContactInfo())
-      }
-    } catch (error) {
-      console.error('Error fetching contact info:', error)
-      setContactInfo(getDefaultContactInfo())
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  // Default contact info fallback
-  const getDefaultContactInfo = (): ContactInfo => ({
-    email: 'maathmphepo80@gmail.com',
-    location: 'Malawi, Lilongwe, Working Globally',
-    socialLinks: [
-      { platform: 'GitHub', url: 'https://github.com/Mmphepo', is_active: true },
-      { platform: 'LinkedIn', url: 'https://linkedin.com/in/maathmphepo', is_active: true },
-      { platform: 'Twitter', url: 'https://twitter.com/maathmphepo', is_active: true }
-    ],
-    availability: {
-      status: 'Available for projects',
-      responseTime: '24-48 hours',
-      timezone: 'UTC+2 (CAT)'
-    }
-  })
 
   // Map platform names to icons and colors
   const getSocialIcon = (platform: string) => {
@@ -69,7 +32,10 @@ const Footer = () => {
   }
 
   useEffect(() => {
-    fetchContactInfo()
+    // Load contact info from local JSON file - instant loading
+    if (contactData?.data) {
+      setContactInfo(contactData.data as ContactInfo)
+    }
   }, [])
 
   useEffect(() => {

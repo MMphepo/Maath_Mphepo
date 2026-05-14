@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion'
 import { Filter, SortAsc } from 'lucide-react'
 import { useEffect, useState } from 'react'
-import { api } from '@/lib/api-config'
+import skillsData from '@/data/skills.json'
 
 interface Skill {
   name: string
@@ -21,45 +21,7 @@ const SkillsTechnologies = () => {
   const [hoveredSkill, setHoveredSkill] = useState<string | null>(null)
   const [skills, setSkills] = useState<Skill[]>([])
   const [categories, setCategories] = useState<string[]>(['All'])
-  const [loading, setLoading] = useState(true)
-
-  // Fetch skills from Django API
-  const fetchSkills = async () => {
-    try {
-      setLoading(true)
-      const response = await api.skills.list()
-
-      if (response.success && response.data) {
-        // Transform Django skills data to match component interface
-        const transformedSkills: Skill[] = response.data.skillsByCategory
-          .flatMap((category: any) =>
-            category.skills.map((skill: any) => ({
-              name: skill.name,
-              category: category.name,
-              level: getLevelFromProficiency(skill.proficiency),
-              description: skill.description || `${skill.name} technology`,
-              icon: skill.icon || getDefaultIcon(skill.name),
-              color: getColorForSkill(skill.name)
-            }))
-          )
-
-        // Extract unique categories
-        const uniqueCategories = ['All', ...Array.from(new Set(transformedSkills.map(skill => skill.category)))]
-
-        setSkills(transformedSkills)
-        setCategories(uniqueCategories)
-      } else {
-        console.error('Error fetching skills:', response.error)
-        // Fallback to default skills if API fails
-        setSkills(getDefaultSkills())
-      }
-    } catch (error) {
-      console.error('Error fetching skills:', error)
-      setSkills(getDefaultSkills())
-    } finally {
-      setLoading(false)
-    }
-  }
+  const [loading, setLoading] = useState(false)
 
   // Helper function to convert proficiency to level
   const getLevelFromProficiency = (proficiency: number): string => {
@@ -230,7 +192,26 @@ const SkillsTechnologies = () => {
     })
 
   useEffect(() => {
-    fetchSkills()
+    // Load skills from local JSON file - instant loading, no API call
+    if (skillsData?.data?.skillsByCategory) {
+      const transformedSkills: Skill[] = skillsData.data.skillsByCategory
+        .flatMap((category: any) =>
+          category.skills.map((skill: any) => ({
+            name: skill.name,
+            category: category.name,
+            level: getLevelFromProficiency(skill.proficiency),
+            description: skill.description || `${skill.name} technology`,
+            icon: skill.icon_class || getDefaultIcon(skill.name),
+            color: getColorForSkill(skill.name)
+          }))
+        )
+
+      // Extract unique categories
+      const uniqueCategories = ['All', ...Array.from(new Set(transformedSkills.map(skill => skill.category)))]
+
+      setSkills(transformedSkills)
+      setCategories(uniqueCategories)
+    }
   }, [])
 
   useEffect(() => {
