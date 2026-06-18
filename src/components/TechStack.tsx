@@ -60,18 +60,18 @@ const TechStack = () => {
   }, [])
 
   return (
-    <section id="skills" className="py-20 bg-dark-100">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="skills" className="py-12 sm:py-20 bg-dark-100 overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-4">
             Tech <span className="text-primary">Stack</span>
           </h2>
-          <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+          <p className="text-gray-400 text-sm sm:text-lg max-w-2xl mx-auto px-2">
             Technologies and tools I use to build robust backend systems
           </p>
         </motion.div>
@@ -118,17 +118,17 @@ const TechStack = () => {
                     >
                       <i className={category.icon_class}></i>
                     </div>
-                    <h3 className="text-2xl font-bold text-white">
+                    <h3 className="text-xl sm:text-2xl font-bold text-white">
                       {category.name}
                     </h3>
                   </div>
-                  <p className="text-gray-400 text-sm max-w-md mx-auto">
+                  <p className="text-gray-400 text-xs sm:text-sm max-w-md mx-auto px-2">
                     {category.description}
                   </p>
                 </motion.div>
 
                 {/* Skills Grid */}
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
+                <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6 w-full">
                   {category.skills.map((skill, skillIndex) => (
                     <motion.div
                       key={skill.name}
@@ -150,7 +150,7 @@ const TechStack = () => {
                       className="relative group cursor-pointer"
                     >
                       <div
-                        className="glass rounded-xl p-6 text-center transition-all duration-300 group-hover:shadow-2xl border-2 border-transparent group-hover:border-opacity-50"
+                        className="glass rounded-xl p-3 sm:p-6 text-center transition-all duration-300 group-hover:shadow-2xl border-2 border-transparent group-hover:border-opacity-50 w-full"
                         style={{ borderColor: category.color }}
                       >
                         <motion.div
@@ -159,7 +159,7 @@ const TechStack = () => {
                             scale: hoveredTech === skill.name ? 1.2 : 1
                           }}
                           transition={{ duration: 0.5 }}
-                          className="text-4xl mb-3"
+                          className="text-3xl sm:text-4xl mb-2 sm:mb-3"
                         >
                           {/* Render icon from Font Awesome class */}
                           {skill.icon_class ? (
@@ -169,7 +169,7 @@ const TechStack = () => {
                           )}
                         </motion.div>
 
-                        <h4 className="text-white font-semibold mb-2 group-hover:text-primary transition-colors duration-300">
+                        <h4 className="text-sm sm:text-base text-white font-semibold mb-2 group-hover:text-primary transition-colors duration-300">
                           {skill.name}
                         </h4>
 
@@ -192,14 +192,14 @@ const TechStack = () => {
                           {skill.proficiency_percentage}%
                         </div>
 
-                        {/* Enhanced Tooltip */}
+                        {/* Enhanced Tooltip - Hidden on Mobile */}
                         <motion.div
                           initial={{ opacity: 0, y: 10 }}
                           animate={{
                             opacity: hoveredTech === skill.name ? 1 : 0,
                             y: hoveredTech === skill.name ? 0 : 10
                           }}
-                          className="absolute -top-24 left-1/2 transform -translate-x-1/2 glass rounded-lg px-4 py-3 z-20 pointer-events-none min-w-48 max-w-64 text-center"
+                          className="hidden md:block absolute -top-24 left-1/2 transform -translate-x-1/2 glass rounded-lg px-4 py-3 z-20 pointer-events-none min-w-48 max-w-64 text-center"
                           style={{
                             backdropFilter: 'blur(10px)',
                             border: `1px solid ${category.color}40`
