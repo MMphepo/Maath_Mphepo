@@ -38,13 +38,19 @@ const TechStack = () => {
   }, [])
 
   useEffect(() => {
+    // Set visible immediately if it's a mobile device for better UX
+    const isMobile = window.innerWidth < 768
+    if (isMobile) {
+      setIsVisible(true)
+    }
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           setIsVisible(true)
         }
       },
-      { threshold: 0.2 }
+      { threshold: 0 }
     )
 
     const element = document.getElementById('skills')
