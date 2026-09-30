@@ -1,418 +1,140 @@
 'use client'
 
-import { useState, useRef } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { Send, CheckCircle, AlertCircle, Loader2 } from 'lucide-react'
+import { useState } from 'react'
 import { api } from '@/lib/api-config'
-import { ContactFormData, ContactFormErrors } from '@/types/contact'
-// Note: Using console.log for now, will implement toast later
+import type { ContactFormData } from '@/types/contact'
 
-const ContactForm = () => {
-  const [formData, setFormData] = useState<ContactFormData>({
-    name: '',
-    email: '',
-    subject: '',
-    message: '',
-    phone: '',
-    honeypot: ''
-  })
+const initialForm: ContactFormData = {
+  name: '',
+  email: '',
+  subject: '',
+  message: '',
+  phone: '',
+  honeypot: '',
+}
 
-  const [errors, setErrors] = useState<ContactFormErrors>({})
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [isSubmitted, setIsSubmitted] = useState(false)
-  const [focusedField, setFocusedField] = useState<string | null>(null)
-  
-  const formRef = useRef<HTMLFormElement>(null)
+export default function ContactForm() {
+  const [form, setForm] = useState(initialForm)
+  const [error, setError] = useState('')
+  const [submitted, setSubmitted] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
 
-  // Validation functions
-  const validateEmail = (email: string): boolean => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    return emailRegex.test(email)
+  const updateField = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = event.target
+    setForm((current) => ({ ...current, [name]: value }))
+    setError('')
   }
 
-  const validatePhone = (phone: string): boolean => {
-    if (!phone.trim()) return true // Phone is optional
-    // Accept phone numbers with digits, spaces, dashes, parentheses, plus sign
-    const phoneRegex = /^[\d\s\-+()]+$/
-    return phoneRegex.test(phone) && phone.trim().length >= 7
-  }
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    if (submitting) return
 
-  const validateForm = (): boolean => {
-    const newErrors: ContactFormErrors = {}
-    
-    if (!formData.name.trim()) {
-      newErrors.name = 'Name is required'
-    } else if (formData.name.trim().length < 2) {
-      newErrors.name = 'Name must be at least 2 characters'
-    }
-    
-    if (!formData.email.trim()) {
-      newErrors.email = 'Email is required'
-    } else if (!validateEmail(formData.email)) {
-      newErrors.email = 'Please enter a valid email address'
-    }
-
-    if (formData.phone && !validatePhone(formData.phone)) {
-      newErrors.phone = 'Please enter a valid phone number (at least 7 characters)'
-    }
-    
-    if (!formData.message.trim()) {
-      newErrors.message = 'Message is required'
-    } else if (formData.message.trim().length < 10) {
-      newErrors.message = 'Message must be at least 10 characters'
-    }
-    
-    setErrors(newErrors)
-    return Object.keys(newErrors).length === 0
-  }
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target
-    setFormData(prev => ({ ...prev, [name]: value }))
-    
-    // Clear error when user starts typing
-    if (errors[name as keyof ContactFormErrors]) {
-      setErrors(prev => ({ ...prev, [name]: undefined }))
-    }
-  }
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    
-    console.log('[ContactForm] === CONTACT FORM SUBMISSION STARTED ===')
-    console.log('[ContactForm] Form data:', formData)
-    
-    // Bot prevention - if honeypot is filled, it's likely a bot
-    if (formData.honeypot) {
-      console.warn('[ContactForm] ⚠️ Honeypot field filled - likely a bot, ignoring submission')
+    if (form.honeypot) {
+      setError('The form could not be submitted. Please try again.')
       return
     }
-    
-    if (!validateForm()) {
-      console.error('[ContactForm] ❌ Form validation failed', errors)
-      console.error('Please fix the errors below')
+
+    if (!form.name.trim() || !form.email.trim() || form.message.trim().length < 10) {
+      setError('Add your name, a valid email address and a message of at least 10 characters.')
       return
     }
-    
-    console.log('[ContactForm] ✅ Form validation passed')
-    setIsSubmitting(true)
-    
+
+    setSubmitting(true)
+    setError('')
+
     try {
-      const submitData = {
-        name: formData.name.trim(),
-        email: formData.email.trim(),
-        subject: formData.subject.trim() || 'Contact Form Submission',
-        message: formData.message.trim(),
-        ...(formData.phone && { phone: formData.phone.trim() })
+      const response = await api.contact.submit({
+        name: form.name.trim(),
+        email: form.email.trim(),
+        subject: form.subject.trim() || 'Contact Form Submission',
+        message: form.message.trim(),
+        ...(form.phone?.trim() ? { phone: form.phone.trim() } : {}),
+      })
+
+      if (!response.success) {
+        throw new Error(response.error || 'The message could not be sent.')
       }
-      
-      console.log('[ContactForm] 📤 Sending to API...', submitData)
-      const response = await api.contact.submit(submitData)
-      
-      console.log('[ContactForm] 📥 API Response:', response)
-      if (response.success) {
-        console.log('[ContactForm] ✅ Submission successful!', response.data)
-        setIsSubmitted(true)
-        setFormData({
-          name: '',
-          email: '',
-          subject: '',
-          message: '',
-          phone: '',
-          honeypot: ''
-        })
-        console.log('Message sent successfully! I\'ll get back to you within 24 hours.')
-      } else {
-        throw new Error(response.error || 'Failed to send message')
-      }
-    } catch (error: any) {
-      console.error('[ContactForm] ❌ Contact form error:', error)
-      console.error('[ContactForm] Error details:', error.message || 'Failed to send message. Please try again.')
+
+      setSubmitted(true)
+      setForm(initialForm)
+    } catch (submitError) {
+      console.error('Contact form submission failed:', submitError)
+      setError('Your message could not be sent right now. Please email me directly instead.')
     } finally {
-      console.log('[ContactForm] === CONTACT FORM SUBMISSION ENDED ===')
-      setIsSubmitting(false)
+      setSubmitting(false)
     }
   }
 
-  const inputVariants = {
-    focused: { scale: 1.02, transition: { duration: 0.2 } },
-    unfocused: { scale: 1, transition: { duration: 0.2 } }
-  }
-
-  const labelVariants = {
-    focused: { y: -25, scale: 0.85, color: '#10B981' },
-    unfocused: { y: 0, scale: 1, color: '#9CA3AF' }
-  }
-
-  if (isSubmitted) {
+  if (submitted) {
     return (
-      <motion.div
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-2xl p-8 text-center"
-      >
-        <motion.div
-          initial={{ scale: 0 }}
-          animate={{ scale: 1 }}
-          transition={{ delay: 0.2, type: "spring" }}
-        >
-          <CheckCircle className="w-16 h-16 text-primary-500 mx-auto mb-4" />
-        </motion.div>
-        <h3 className="text-2xl font-bold text-white mb-2">Message Sent!</h3>
-        <p className="text-gray-300 mb-6">
-          Thank you for reaching out. I'll get back to you within 24 hours.
-        </p>
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={() => setIsSubmitted(false)}
-          className="px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white rounded-lg transition-colors"
-        >
-          Send Another Message
-        </motion.button>
-      </motion.div>
+      <div aria-live="polite" className="contact-form contact-form--success" role="status">
+        <p className="portfolio-eyebrow">Message sent</p>
+        <h2>Thank you for getting in touch.</h2>
+        <p>Your message has been submitted.</p>
+        <button className="portfolio-text-link" onClick={() => setSubmitted(false)} type="button">
+          Send another message
+        </button>
+      </div>
     )
   }
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 50 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6 }}
-      className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-2xl p-8"
-    >
-      <h2 className="text-3xl font-bold text-white mb-8">Get In Touch</h2>
-      
-      <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
-        {/* Honeypot field - hidden from users */}
+    <form className="contact-form" onSubmit={handleSubmit}>
+      <p className="portfolio-eyebrow">Send a message</p>
+      <h2>Tell me a little about it.</h2>
+      <div aria-hidden="true" className="contact-form__trap">
+        <label htmlFor="contact-website">Leave this field empty</label>
         <input
-          type="text"
-          name="honeypot"
-          value={formData.honeypot}
-          onChange={handleInputChange}
-          style={{ display: 'none' }}
-          tabIndex={-1}
           autoComplete="off"
+          id="contact-website"
+          name="honeypot"
+          onChange={updateField}
+          tabIndex={-1}
+          value={form.honeypot}
         />
-        
-        {/* Name Field */}
-        <div className="relative">
-          <motion.input
-            variants={inputVariants}
-            animate={focusedField === 'name' ? 'focused' : 'unfocused'}
-            type="text"
+      </div>
+      <div className="contact-form__grid">
+        <label>
+          Name
+          <input
+            autoComplete="name"
             name="name"
-            value={formData.name}
-            onChange={handleInputChange}
-            onFocus={() => setFocusedField('name')}
-            onBlur={() => setFocusedField(null)}
-            className={`w-full px-4 py-4 bg-dark-300/50 border rounded-lg text-white placeholder-transparent focus:outline-none focus:ring-2 transition-all duration-300 ${
-              errors.name 
-                ? 'border-red-500 focus:ring-red-500/50' 
-                : 'border-gray-600 focus:border-primary-500 focus:ring-primary-500/50'
-            }`}
-            placeholder="Full Name"
+            onChange={updateField}
             required
+            value={form.name}
           />
-          <motion.label
-            variants={labelVariants}
-            animate={focusedField === 'name' || formData.name ? 'focused' : 'unfocused'}
-            htmlFor="name"
-            className="absolute left-4 top-4 pointer-events-none transition-all duration-300"
-          >
-            Full Name *
-          </motion.label>
-          <AnimatePresence>
-            {errors.name && (
-              <motion.div
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                className="flex items-center mt-2 text-red-400 text-sm"
-              >
-                <AlertCircle className="w-4 h-4 mr-1" />
-                {errors.name}
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
-
-        {/* Email Field */}
-        <div className="relative">
-          <motion.input
-            variants={inputVariants}
-            animate={focusedField === 'email' ? 'focused' : 'unfocused'}
-            type="email"
+        </label>
+        <label>
+          Email
+          <input
+            autoComplete="email"
             name="email"
-            value={formData.email}
-            onChange={handleInputChange}
-            onFocus={() => setFocusedField('email')}
-            onBlur={() => setFocusedField(null)}
-            className={`w-full px-4 py-4 bg-dark-300/50 border rounded-lg text-white placeholder-transparent focus:outline-none focus:ring-2 transition-all duration-300 ${
-              errors.email 
-                ? 'border-red-500 focus:ring-red-500/50' 
-                : 'border-gray-600 focus:border-primary-500 focus:ring-primary-500/50'
-            }`}
-            placeholder="Email Address"
+            onChange={updateField}
             required
+            type="email"
+            value={form.email}
           />
-          <motion.label
-            variants={labelVariants}
-            animate={focusedField === 'email' || formData.email ? 'focused' : 'unfocused'}
-            htmlFor="email"
-            className="absolute left-4 top-4 pointer-events-none transition-all duration-300"
-          >
-            Email Address *
-          </motion.label>
-          <AnimatePresence>
-            {errors.email && (
-              <motion.div
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                className="flex items-center mt-2 text-red-400 text-sm"
-              >
-                <AlertCircle className="w-4 h-4 mr-1" />
-                {errors.email}
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
-
-        {/* Subject Field */}
-        <div className="relative">
-          <motion.input
-            variants={inputVariants}
-            animate={focusedField === 'subject' ? 'focused' : 'unfocused'}
-            type="text"
-            name="subject"
-            value={formData.subject}
-            onChange={handleInputChange}
-            onFocus={() => setFocusedField('subject')}
-            onBlur={() => setFocusedField(null)}
-            className="w-full px-4 py-4 bg-dark-300/50 border border-gray-600 rounded-lg text-white placeholder-transparent focus:outline-none focus:ring-2 focus:border-primary-500 focus:ring-primary-500/50 transition-all duration-300"
-            placeholder="Subject"
-          />
-          <motion.label
-            variants={labelVariants}
-            animate={focusedField === 'subject' || formData.subject ? 'focused' : 'unfocused'}
-            htmlFor="subject"
-            className="absolute left-4 top-4 pointer-events-none transition-all duration-300"
-          >
-            Subject (Optional)
-          </motion.label>
-        </div>
-
-        {/* Phone Field */}
-        <div className="relative">
-          <motion.input
-            variants={inputVariants}
-            animate={focusedField === 'phone' ? 'focused' : 'unfocused'}
-            type="tel"
-            name="phone"
-            value={formData.phone}
-            onChange={handleInputChange}
-            onFocus={() => setFocusedField('phone')}
-            onBlur={() => setFocusedField(null)}
-            className={`w-full px-4 py-4 bg-dark-300/50 border rounded-lg text-white placeholder-transparent focus:outline-none focus:ring-2 transition-all duration-300 ${
-              errors.phone 
-                ? 'border-red-500 focus:ring-red-500/50' 
-                : 'border-gray-600 focus:border-primary-500 focus:ring-primary-500/50'
-            }`}
-            placeholder="Phone Number"
-          />
-          <motion.label
-            variants={labelVariants}
-            animate={focusedField === 'phone' || formData.phone ? 'focused' : 'unfocused'}
-            htmlFor="phone"
-            className="absolute left-4 top-4 pointer-events-none transition-all duration-300"
-          >
-            Phone Number (Optional - for WhatsApp replies)
-          </motion.label>
-          <AnimatePresence>
-            {errors.phone && (
-              <motion.div
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                className="flex items-center mt-2 text-red-400 text-sm"
-              >
-                <AlertCircle className="w-4 h-4 mr-1" />
-                {errors.phone}
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
-
-        {/* Message Field */}
-        <div className="relative">
-          <motion.textarea
-            variants={inputVariants}
-            animate={focusedField === 'message' ? 'focused' : 'unfocused'}
-            name="message"
-            value={formData.message}
-            onChange={handleInputChange}
-            onFocus={() => setFocusedField('message')}
-            onBlur={() => setFocusedField(null)}
-            rows={6}
-            className={`w-full px-4 py-4 bg-dark-300/50 border rounded-lg text-white placeholder-transparent focus:outline-none focus:ring-2 transition-all duration-300 resize-none ${
-              errors.message 
-                ? 'border-red-500 focus:ring-red-500/50' 
-                : 'border-gray-600 focus:border-primary-500 focus:ring-primary-500/50'
-            }`}
-            placeholder="Your Message"
-            required
-          />
-          <motion.label
-            variants={labelVariants}
-            animate={focusedField === 'message' || formData.message ? 'focused' : 'unfocused'}
-            htmlFor="message"
-            className="absolute left-4 top-4 pointer-events-none transition-all duration-300"
-          >
-            Your Message *
-          </motion.label>
-          <AnimatePresence>
-            {errors.message && (
-              <motion.div
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                className="flex items-center mt-2 text-red-400 text-sm"
-              >
-                <AlertCircle className="w-4 h-4 mr-1" />
-                {errors.message}
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
-
-        {/* Submit Button */}
-        <motion.button
-          type="submit"
-          disabled={isSubmitting}
-          whileHover={{ scale: isSubmitting ? 1 : 1.02 }}
-          whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
-          className={`w-full py-4 px-6 rounded-lg font-semibold text-white transition-all duration-300 flex items-center justify-center space-x-2 ${
-            isSubmitting
-              ? 'bg-gray-600 cursor-not-allowed'
-              : 'bg-primary-600 hover:bg-primary-700 hover:shadow-lg hover:shadow-primary-500/25'
-          }`}
-        >
-          {isSubmitting ? (
-            <>
-              <Loader2 className="w-5 h-5 animate-spin" />
-              <span>Sending...</span>
-            </>
-          ) : (
-            <>
-              <Send className="w-5 h-5" />
-              <span>Send Message</span>
-            </>
-          )}
-        </motion.button>
-      </form>
-    </motion.div>
+        </label>
+      </div>
+      <label>
+        Subject <span>(optional)</span>
+        <input name="subject" onChange={updateField} value={form.subject} />
+      </label>
+      <label>
+        Message
+        <textarea
+          minLength={10}
+          name="message"
+          onChange={updateField}
+          required
+          rows={6}
+          value={form.message}
+        />
+      </label>
+      {error && <p className="contact-form__error" role="alert">{error}</p>}
+      <button className="portfolio-button" disabled={submitting} type="submit">
+        {submitting ? 'Sending…' : 'Send message'} <span aria-hidden="true">↗</span>
+      </button>
+    </form>
   )
 }
-
-export default ContactForm

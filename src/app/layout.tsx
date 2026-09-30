@@ -1,19 +1,22 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
+import '@/styles/portfolio.css'
 import '@fortawesome/fontawesome-free/css/all.min.css'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Maath Mphepo - Backend Developer & Problem Solver',
-  description: 'I build reliable, scalable, and elegant backend systems using Django, Laravel, and modern databases to power real-world applications.',
-  keywords: 'Backend Developer, Django, Laravel, Python, PHP, API Development, Database Design, Malawi Developer',
+  title: 'Maath Mphepo — Software, systems and delivery',
+  description:
+    'I work from organisational needs and requirements through system design, software and delivery.',
+  keywords: 'Software engineering, systems design, API development, Malawi',
   authors: [{ name: 'Maath Mphepo' }],
   creator: 'Maath Mphepo',
   openGraph: {
-    title: 'Maath Mphepo - Backend Developer & Problem Solver',
-    description: 'I build reliable, scalable, and elegant backend systems using Django, Laravel, and modern databases to power real-world applications.',
+    title: 'Maath Mphepo — Software, systems and delivery',
+    description:
+      'I work from organisational needs and requirements through system design, software and delivery.',
     url: 'https://maathmphepo.dev',
     siteName: 'Maath Mphepo Portfolio',
     locale: 'en_US',
@@ -21,8 +24,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Maath Mphepo - Backend Developer & Problem Solver',
-    description: 'I build reliable, scalable, and elegant backend systems using Django, Laravel, and modern databases to power real-world applications.',
+    title: 'Maath Mphepo — Software, systems and delivery',
+    description:
+      'I work from organisational needs and requirements through system design, software and delivery.',
     creator: '@maathmphepo',
   },
   robots: {
