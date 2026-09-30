@@ -1,249 +1,219 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { Search, Filter, Calendar, Clock, Eye, Heart, Tag } from 'lucide-react'
-import { BlogPost, BlogTag, BlogListResponse } from '@/types/blog'
+import { useEffect, useState } from 'react'
+import Link from 'next/link'
+import type { BlogPost, BlogTag } from '@/types/blog'
 import { formatDate, extractExcerpt } from '@/lib/blog-utils'
 import { api } from '@/lib/api-config'
-import BlogCard from './BlogCard'
-import BlogFilters from './BlogFilters'
-import BlogPagination from './BlogPagination'
 
-const BlogList = () => {
+type SortBy = 'createdAt' | 'views' | 'likes'
+
+export default function BlogList() {
   const [posts, setPosts] = useState<BlogPost[]>([])
   const [tags, setTags] = useState<BlogTag[]>([])
   const [loading, setLoading] = useState(true)
-  const [searchQuery, setSearchQuery] = useState('')
+  const [unavailable, setUnavailable] = useState(false)
+  const [search, setSearch] = useState('')
   const [selectedTag, setSelectedTag] = useState('')
-  const [sortBy, setSortBy] = useState<'createdAt' | 'views' | 'likes'>('createdAt')
-  const [currentPage, setCurrentPage] = useState(1)
+  const [sortBy, setSortBy] = useState<SortBy>('createdAt')
+  const [page, setPage] = useState(1)
   const [totalPages, setTotalPages] = useState(1)
-  const [showFilters, setShowFilters] = useState(false)
-
-  // Fetch blog posts
-  const fetchPosts = async () => {
-    try {
-      setLoading(true)
-      const params = {
-        page: currentPage.toString(),
-        limit: '6',
-        ...(searchQuery && { search: searchQuery }),
-        ...(selectedTag && { tag: selectedTag }),
-        sortBy,
-        sortOrder: 'desc'
-      }
-
-      const response = await api.blog.list(params)
-
-      if (response.success && response.data) {
-        setPosts(response.data.posts)
-        setTotalPages(response.data.totalPages)
-      } else {
-        console.error('Error fetching posts:', response.error)
-      }
-    } catch (error) {
-      console.error('Error fetching posts:', error)
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  // Fetch tags
-  const fetchTags = async () => {
-    try {
-      const response = await api.blog.tags()
-      if (response.success && response.data) {
-        setTags(response.data)
-      } else {
-        console.error('Error fetching tags:', response.error)
-      }
-    } catch (error) {
-      console.error('Error fetching tags:', error)
-    }
-  }
 
   useEffect(() => {
-    fetchTags()
+    let active = true
+
+    const loadTags = async () => {
+      try {
+        const response = await api.blog.tags()
+        if (active && response.success && Array.isArray(response.data)) {
+          setTags(response.data)
+        }
+      } catch (error) {
+        console.error('Unable to load blog tags:', error)
+      }
+    }
+
+    loadTags()
+    return () => {
+      active = false
+    }
   }, [])
 
   useEffect(() => {
-    fetchPosts()
-  }, [currentPage, searchQuery, selectedTag, sortBy])
+    let active = true
 
-  const handleSearch = (query: string) => {
-    setSearchQuery(query)
-    setCurrentPage(1)
-  }
+    const loadPosts = async () => {
+      setLoading(true)
+      setUnavailable(false)
 
-  const handleTagFilter = (tag: string) => {
-    setSelectedTag(tag)
-    setCurrentPage(1)
-  }
+      try {
+        const response = await api.blog.list({
+          page: page.toString(),
+          limit: '6',
+          ...(search.trim() ? { search: search.trim() } : {}),
+          ...(selectedTag ? { tag: selectedTag } : {}),
+          sortBy,
+          sortOrder: 'desc',
+        })
 
-  const handleSortChange = (sort: 'createdAt' | 'views' | 'likes') => {
-    setSortBy(sort)
-    setCurrentPage(1)
+        if (!response.success || !response.data) {
+          if (active) {
+            setPosts([])
+            setUnavailable(true)
+          }
+          return
+        }
+
+        if (active) {
+          setPosts(response.data.posts ?? [])
+          setTotalPages(response.data.totalPages ?? 1)
+        }
+      } catch (error) {
+        console.error('Unable to load blog posts:', error)
+        if (active) {
+          setPosts([])
+          setUnavailable(true)
+        }
+      } finally {
+        if (active) setLoading(false)
+      }
+    }
+
+    loadPosts()
+    return () => {
+      active = false
+    }
+  }, [page, search, selectedTag, sortBy])
+
+  const resetFilters = () => {
+    setSearch('')
+    setSelectedTag('')
+    setPage(1)
   }
 
   return (
-    <section className="py-20 bg-dark-100">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Search and Filters */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="mb-12"
-        >
-          {/* Search Bar */}
-          <div className="relative max-w-2xl mx-auto mb-8">
-            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+    <section className="portfolio-section portfolio-section--compact">
+      <div className="portfolio-container">
+        <div className="blog-controls">
+          <label>
+            <span>Search articles</span>
             <input
-              type="text"
-              placeholder="Search articles..."
-              value={searchQuery}
-              onChange={(e) => handleSearch(e.target.value)}
-              className="w-full pl-12 pr-4 py-4 bg-dark-200 border border-dark-300 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:border-primary transition-colors duration-300"
+              onChange={(event) => {
+                setSearch(event.target.value)
+                setPage(1)
+              }}
+              placeholder="Search by title or topic"
+              type="search"
+              value={search}
             />
-          </div>
-
-          {/* Filter Toggle */}
-          <div className="flex justify-center mb-6">
-            <motion.button
-              onClick={() => setShowFilters(!showFilters)}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="flex items-center gap-2 px-6 py-3 bg-dark-200 border border-dark-300 rounded-xl text-white hover:border-primary transition-colors duration-300"
+          </label>
+          <label>
+            <span>Topic</span>
+            <select
+              onChange={(event) => {
+                setSelectedTag(event.target.value)
+                setPage(1)
+              }}
+              value={selectedTag}
             >
-              <Filter className="w-4 h-4" />
-              {showFilters ? 'Hide Filters' : 'Show Filters'}
-            </motion.button>
-          </div>
-
-          {/* Filters */}
-          <AnimatePresence>
-            {showFilters && (
-              <BlogFilters
-                tags={tags}
-                selectedTag={selectedTag}
-                sortBy={sortBy}
-                onTagChange={handleTagFilter}
-                onSortChange={handleSortChange}
-              />
-            )}
-          </AnimatePresence>
-        </motion.div>
-
-        {/* Results Info */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="flex justify-between items-center mb-8"
-        >
-          <div className="text-gray-400">
-            {loading ? 'Loading...' : `${posts.length} articles found`}
-            {selectedTag && (
-              <span className="ml-2">
-                in <span className="text-primary">{selectedTag}</span>
-              </span>
-            )}
-          </div>
-          
-          {selectedTag && (
-            <motion.button
-              onClick={() => handleTagFilter('')}
-              whileHover={{ scale: 1.05 }}
-              className="text-sm text-primary hover:text-secondary transition-colors duration-300"
+              <option value="">All topics</option>
+              {tags.map((tag) => (
+                <option key={tag.id} value={tag.slug}>{tag.name}</option>
+              ))}
+            </select>
+          </label>
+          <label>
+            <span>Order</span>
+            <select
+              onChange={(event) => {
+                const value = event.target.value
+                if (value === 'createdAt' || value === 'views' || value === 'likes') {
+                  setSortBy(value)
+                }
+                setPage(1)
+              }}
+              value={sortBy}
             >
-              Clear filter
-            </motion.button>
-          )}
-        </motion.div>
+              <option value="createdAt">Newest</option>
+              <option value="views">Most viewed</option>
+              <option value="likes">Most liked</option>
+            </select>
+          </label>
+        </div>
 
-        {/* Blog Posts Grid */}
-        <AnimatePresence mode="wait">
+        <div aria-live="polite" className="blog-results">
           {loading ? (
-            <motion.div
-              key="loading"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-            >
-              {[...Array(6)].map((_, index) => (
-                <div key={index} className="glass rounded-xl p-6 animate-pulse">
-                  <div className="w-full h-48 bg-dark-300 rounded-lg mb-4"></div>
-                  <div className="h-4 bg-dark-300 rounded mb-2"></div>
-                  <div className="h-4 bg-dark-300 rounded w-3/4 mb-4"></div>
-                  <div className="flex gap-2 mb-4">
-                    <div className="h-6 bg-dark-300 rounded w-16"></div>
-                    <div className="h-6 bg-dark-300 rounded w-20"></div>
-                  </div>
-                  <div className="h-3 bg-dark-300 rounded mb-2"></div>
-                  <div className="h-3 bg-dark-300 rounded w-2/3"></div>
-                </div>
-              ))}
-            </motion.div>
-          ) : posts.length > 0 ? (
-            <motion.div
-              key="posts"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-            >
-              {posts.map((post, index) => (
-                <BlogCard
-                  key={post.id}
-                  post={post}
-                  index={index}
-                />
-              ))}
-            </motion.div>
-          ) : (
-            <motion.div
-              key="no-posts"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              className="text-center py-20"
-            >
-              <div className="text-6xl mb-4">📝</div>
-              <h3 className="text-2xl font-bold text-white mb-2">No articles found</h3>
-              <p className="text-gray-400 mb-6">
-                {searchQuery || selectedTag
-                  ? 'Try adjusting your search or filter criteria'
-                  : 'Check back soon for new content!'}
+            <p className="blog-message">Loading writing…</p>
+          ) : unavailable ? (
+            <div className="blog-message">
+              <p className="portfolio-eyebrow">Publication</p>
+              <h2>Articles are temporarily unavailable.</h2>
+              <p>
+                The writing service could not be reached. The project directory is available while
+                articles are offline.
               </p>
-              {(searchQuery || selectedTag) && (
-                <motion.button
-                  onClick={() => {
-                    setSearchQuery('')
-                    setSelectedTag('')
-                  }}
-                  whileHover={{ scale: 1.05 }}
-                  className="px-6 py-3 bg-primary text-white rounded-xl hover:bg-primary/90 transition-colors duration-300"
-                >
-                  Clear all filters
-                </motion.button>
+              <Link className="portfolio-text-link" href="/work">
+                Explore the work <span aria-hidden="true">↗</span>
+              </Link>
+            </div>
+          ) : posts.length ? (
+            <div className="article-list">
+              {posts.map((post) => (
+                <article className="article-row" key={post.id}>
+                  <div>
+                    <p className="project-row__category">
+                      {post.tags
+                        .slice(0, 2)
+                        .map((tag) => (typeof tag === 'string' ? tag : tag.name))
+                        .join(' · ')}
+                    </p>
+                    <h2><Link href={`/blog/${post.slug}`}>{post.title}</Link></h2>
+                    <p>{extractExcerpt(post.description, 220)}</p>
+                  </div>
+                  <div className="article-row__meta">
+                    <time dateTime={post.createdAt}>{formatDate(post.createdAt)}</time>
+                    <span>{post.readTime} min read</span>
+                    <Link aria-label={`Read ${post.title}`} href={`/blog/${post.slug}`}>
+                      Read article <span aria-hidden="true">↗</span>
+                    </Link>
+                  </div>
+                </article>
+              ))}
+            </div>
+          ) : (
+            <div className="blog-message">
+              <p className="portfolio-eyebrow">Field notes</p>
+              <h2>{search || selectedTag ? 'No matching articles.' : 'Writing will appear here.'}</h2>
+              <p>
+                {search || selectedTag
+                  ? 'Try a different search or clear the selected topic.'
+                  : 'This publication is reserved for practical notes on systems, software and delivery.'}
+              </p>
+              {(search || selectedTag) && (
+                <button className="portfolio-text-link" onClick={resetFilters} type="button">
+                  Clear search and topic
+                </button>
               )}
-            </motion.div>
+            </div>
           )}
-        </AnimatePresence>
+        </div>
 
-        {/* Pagination */}
-        {!loading && posts.length > 0 && totalPages > 1 && (
-          <BlogPagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={setCurrentPage}
-          />
+        {!loading && !unavailable && totalPages > 1 && (
+          <nav aria-label="Article pages" className="blog-pagination">
+            <button disabled={page <= 1} onClick={() => setPage((current) => current - 1)} type="button">
+              Previous
+            </button>
+            <span aria-live="polite">Page {page} of {totalPages}</span>
+            <button
+              disabled={page >= totalPages}
+              onClick={() => setPage((current) => current + 1)}
+              type="button"
+            >
+              Next
+            </button>
+          </nav>
         )}
       </div>
     </section>
   )
 }
-
-export default BlogList

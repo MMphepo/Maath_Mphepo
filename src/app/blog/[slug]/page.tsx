@@ -1,7 +1,7 @@
 import { Metadata } from 'next'
-import { notFound } from 'next/navigation'
 import Navigation from '@/components/Navigation'
-import Footer from '@/components/Footer'
+import PortfolioFooter from '@/components/PortfolioFooter'
+import Link from 'next/link'
 import BlogPostContent from '@/components/blog/BlogPostContent'
 import { API_BASE_URL, API_ENDPOINTS } from '@/lib/api-config'
 import { BlogPost } from '@/types/blog'
@@ -154,14 +154,27 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const post = await getBlogPost(params.slug)
 
   if (!post) {
-    notFound()
+    return (
+      <div className="portfolio-site">
+        <Navigation />
+        <main className="portfolio-container portfolio-missing">
+          <p className="portfolio-eyebrow">Writing</p>
+          <h1>This article is unavailable right now.</h1>
+          <p>The publication service may be offline, or this article may no longer be available.</p>
+          <Link className="portfolio-text-link" href="/blog">Return to writing</Link>
+        </main>
+        <PortfolioFooter />
+      </div>
+    )
   }
 
   return (
-    <main className="min-h-screen bg-dark-100">
+    <div className="portfolio-site">
       <Navigation />
-      <BlogPostContent post={post} />
-      <Footer />
-    </main>
+      <main className="portfolio-blog-post">
+        <BlogPostContent post={post} />
+      </main>
+      <PortfolioFooter />
+    </div>
   )
 }

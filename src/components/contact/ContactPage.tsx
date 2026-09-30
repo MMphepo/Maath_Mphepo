@@ -1,48 +1,48 @@
-'use client'
-
-import { motion } from 'framer-motion'
-import ContactHero from './ContactHero'
+import contactData from '@/data/contact.json'
 import ContactForm from './ContactForm'
-import ContactSidebar from './ContactSidebar'
-import ContactCTA from './ContactCTA'
 
-const ContactPage = () => {
+const contact = contactData.data
+
+export default function ContactPage() {
   return (
-    <div className="min-h-screen bg-dark-100">
-      {/* Hero Section */}
-      <ContactHero />
-      
-      {/* Main Contact Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-            {/* Contact Form - Takes 2/3 on desktop */}
-            <motion.div
-              initial={{ opacity: 0, x: -50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="lg:col-span-2"
-            >
-              <ContactForm />
-            </motion.div>
-            
-            {/* Contact Sidebar - Takes 1/3 on desktop */}
-            <motion.div
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              className="lg:col-span-1"
-            >
-              <ContactSidebar />
-            </motion.div>
-          </div>
+    <div>
+      <header className="portfolio-page-hero portfolio-container">
+        <p className="portfolio-eyebrow">Contact</p>
+        <h1>Let’s talk about the work.</h1>
+        <p className="portfolio-lede">
+          Share the problem, project or system you have in mind. A clear first conversation starts
+          with context.
+        </p>
+      </header>
+      <section className="portfolio-section portfolio-section--stone">
+        <div className="portfolio-container contact-layout">
+          <ContactForm />
+          <aside className="contact-details">
+            <p className="portfolio-eyebrow">Direct contact</p>
+            <h2>Prefer email?</h2>
+            <a href={`mailto:${contact.email}`}>{contact.email}</a>
+            <dl>
+              <div>
+                <dt>Based in</dt>
+                <dd>{contact.location}</dd>
+              </div>
+              <div>
+                <dt>Time zone</dt>
+                <dd>{contact.availability.timezone}</dd>
+              </div>
+            </dl>
+            <div className="contact-socials">
+              {contact.socialLinks
+                .filter((link) => link.is_active && ['LinkedIn', 'GitHub'].includes(link.platform))
+                .map((link) => (
+                  <a href={link.url} key={link.platform} rel="noreferrer" target="_blank">
+                    {link.platform} <span aria-hidden="true">↗</span>
+                  </a>
+                ))}
+            </div>
+          </aside>
         </div>
       </section>
-      
-      {/* CTA Footer */}
-      <ContactCTA />
     </div>
   )
 }
-
-export default ContactPage
