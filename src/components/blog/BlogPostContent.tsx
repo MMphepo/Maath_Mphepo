@@ -14,30 +14,43 @@ import 'highlight.js/styles/github-dark.css'
 import '@/styles/markdown.css'
 
 interface BlogPostContentProps {
-  post: BlogPost
+  post?: BlogPost
 }
 
-const BlogPostContent = ({ post }: BlogPostContentProps) => {
-  const [enrichedPost, setEnrichedPost] = useState<any>(post)
-  const [isLoading, setIsLoading] = useState(true)
+const BlogPostContent = ({ post: initialPost }: BlogPostContentProps) => {
+  const [enrichedPost, setEnrichedPost] = useState<any>(initialPost)
+  const [isLoading, setIsLoading] = useState(!initialPost)
 
   // Fetch enriched post data with processed content
   useEffect(() => {
+    if (initialPost) {
+      setEnrichedPost({
+        ...initialPost,
+        author: {
+          name: initialPost.author?.name || 'Maath Mphepo',
+          bio: initialPost.author?.bio || 'Backend Developer & Software Engineer',
+          avatar: initialPost.author?.avatar
+        }
+      })
+      setIsLoading(false)
+      return
+    }
+
     const fetchEnrichedPost = async () => {
       try {
         setIsLoading(true)
-        const response = await blogAPI.getPost(post.slug)
+        const response = await blogAPI.getPost(initialPost?.slug || '')
 
         if (response.success) {
           setEnrichedPost({
-            ...post,
+            ...initialPost,
             ...response.data,
             // Map the response to match BlogPostLayout expectations
             content_metadata: response.data.content_metadata,
             table_of_contents: response.data.table_of_contents,
             processed_content: response.data.processed_content,
             author: {
-              name: response.data.author?.name || post.author || 'Maath Mphepo',
+              name: response.data.author?.name || initialPost?.author || 'Maath Mphepo',
               bio: response.data.author?.bio || 'Backend Developer & Software Engineer',
               avatar: response.data.author?.avatar
             }
@@ -47,9 +60,9 @@ const BlogPostContent = ({ post }: BlogPostContentProps) => {
         console.error('Error fetching enriched post:', error)
         // Use original post data as fallback
         setEnrichedPost({
-          ...post,
+          ...initialPost,
           author: {
-            name: post.author || 'Maath Mphepo',
+            name: initialPost?.author || 'Maath Mphepo',
             bio: 'Backend Developer & Software Engineer'
           }
         })
@@ -59,7 +72,13 @@ const BlogPostContent = ({ post }: BlogPostContentProps) => {
     }
 
     fetchEnrichedPost()
-  }, [post])
+  }, [initialPost])
+
+  if (!enrichedPost) {
+    return null
+  }
+
+  const post = enrichedPost
 
   const handleLike = async () => {
     try {
@@ -135,7 +154,7 @@ const BlogPostContent = ({ post }: BlogPostContentProps) => {
 
       {/* Main Blog Post Layout */}
       <BlogPostLayout
-        post={enrichedPost}
+        post={post}
         onLike={handleLike}
         onShare={handleShare}
         onBookmark={handleBookmark}

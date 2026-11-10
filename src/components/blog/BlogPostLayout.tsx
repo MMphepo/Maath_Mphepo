@@ -13,7 +13,7 @@ import {
 import BlogContentRenderer from './BlogContentRenderer'
 import TableOfContents from './TableOfContents'
 import ContentStats from './ContentStats'
-import { BlogPost } from '@/lib/api/blog'
+import { BlogPost } from '@/types/blog'
 
 interface BlogPostLayoutProps {
   post: BlogPost
@@ -120,7 +120,7 @@ const BlogPostLayout = ({
               >
                 <div className="flex items-center gap-2">
                   <Calendar className="w-4 h-4" />
-                  {formatDate(post.published_at || post.created_at)}
+                  {formatDate(post.createdAt || post.updatedAt)}
                 </div>
                 
                 {post.content_metadata && (

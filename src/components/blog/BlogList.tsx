@@ -8,10 +8,14 @@ import { api } from '@/lib/api-config'
 
 type SortBy = 'createdAt' | 'views' | 'likes'
 
-export default function BlogList() {
-  const [posts, setPosts] = useState<BlogPost[]>([])
+interface BlogListProps {
+  posts?: BlogPost[]
+}
+
+export default function BlogList({ posts: initialPosts }: BlogListProps) {
+  const [posts, setPosts] = useState<BlogPost[]>(initialPosts ?? [])
   const [tags, setTags] = useState<BlogTag[]>([])
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(!initialPosts)
   const [unavailable, setUnavailable] = useState(false)
   const [search, setSearch] = useState('')
   const [selectedTag, setSelectedTag] = useState('')
@@ -20,6 +24,11 @@ export default function BlogList() {
   const [totalPages, setTotalPages] = useState(1)
 
   useEffect(() => {
+    if (initialPosts) {
+      setTotalPages(Math.ceil(initialPosts.length / 6))
+      return
+    }
+
     let active = true
 
     const loadTags = async () => {
@@ -37,9 +46,11 @@ export default function BlogList() {
     return () => {
       active = false
     }
-  }, [])
+  }, [initialPosts])
 
   useEffect(() => {
+    if (initialPosts) return
+
     let active = true
 
     const loadPosts = async () => {
@@ -83,7 +94,7 @@ export default function BlogList() {
     return () => {
       active = false
     }
-  }, [page, search, selectedTag, sortBy])
+  }, [page, search, selectedTag, sortBy, initialPosts])
 
   const resetFilters = () => {
     setSearch('')

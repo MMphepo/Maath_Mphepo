@@ -3,8 +3,7 @@ import Navigation from '@/components/Navigation'
 import PortfolioFooter from '@/components/PortfolioFooter'
 import Link from 'next/link'
 import BlogPostContent from '@/components/blog/BlogPostContent'
-import { API_BASE_URL, API_ENDPOINTS } from '@/lib/api-config'
-import { BlogPost } from '@/types/blog'
+import { getBlogPostBySlug, getAllBlogSlugs } from '@/lib/blog-files'
 
 interface BlogPostPageProps {
   params: {
@@ -12,65 +11,9 @@ interface BlogPostPageProps {
   }
 }
 
-// Fetch blog post from Django backend (server-side)
-async function getBlogPost(slug: string): Promise<BlogPost | null> {
-  try {
-    const url = `${API_BASE_URL}${API_ENDPOINTS.BLOG.DETAIL(slug)}`
-    const response = await fetch(url, {
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-      },
-      // Add cache revalidation for production
-      next: { revalidate: 3600 } // Revalidate every hour
-    })
-
-    if (!response.ok) {
-      return null
-    }
-
-    const data = await response.json()
-    if (data.success && data.data) {
-      return data.data
-    }
-    return null
-  } catch (error) {
-    console.error('Error fetching blog post:', error)
-    return null
-  }
-}
-
-// Fetch blog posts list from Django backend (server-side)
-async function getBlogPosts(): Promise<BlogPost[]> {
-  try {
-    const url = `${API_BASE_URL}${API_ENDPOINTS.BLOG.LIST}`
-    const response = await fetch(url, {
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-      },
-      // Add cache revalidation for production
-      next: { revalidate: 3600 } // Revalidate every hour
-    })
-
-    if (!response.ok) {
-      return []
-    }
-
-    const data = await response.json()
-    if (data.success && data.data && data.data.posts) {
-      return data.data.posts
-    }
-    return []
-  } catch (error) {
-    console.error('Error fetching blog posts:', error)
-    return []
-  }
-}
-
 // Generate metadata for SEO
 export async function generateMetadata({ params }: BlogPostPageProps): Promise<Metadata> {
-  const post = await getBlogPost(params.slug)
+  const post = getBlogPostBySlug(params.slug)
 
   if (!post) {
     return {
@@ -79,10 +22,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
     }
   }
 
-  // Convert tags to strings for metadata
-  const tagStrings = post.tags.map(tag =>
-    typeof tag === 'string' ? tag : tag.name
-  )
+  const tagStrings = Array.isArray(post.tags) ? post.tags : []
 
   return {
     title: `${post.title} - Maath Mphepo Blog`,
@@ -98,7 +38,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
       siteName: 'Maath Mphepo Portfolio',
       images: [
         {
-          url: post.bannerImage || '/images/blog-default-og.jpg',
+          url: '/images/blog-default-og.jpg',
           width: 1200,
           height: 630,
           alt: post.title,
@@ -115,7 +55,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
       card: 'summary_large_image',
       title: post.title,
       description: post.description,
-      images: [post.bannerImage || '/images/blog-default-twitter.jpg'],
+      images: ['/images/blog-default-twitter.jpg'],
       creator: '@maathmphepo',
     },
     robots: {
@@ -137,21 +77,13 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
 
 // Generate static params for static generation
 export async function generateStaticParams() {
-  try {
-    const posts = await getBlogPosts()
-    return posts.map((post: BlogPost) => ({
-      slug: post.slug,
-    }))
-  } catch (error) {
-    console.error('Error generating static params:', error)
-  }
-
-  // Return empty array if API fails
-  return []
+  return getAllBlogSlugs().map((slug) => ({
+    slug,
+  }))
 }
 
-export default async function BlogPostPage({ params }: BlogPostPageProps) {
-  const post = await getBlogPost(params.slug)
+export default function BlogPostPage({ params }: BlogPostPageProps) {
+  const post = getBlogPostBySlug(params.slug)
 
   if (!post) {
     return (
@@ -160,7 +92,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         <main className="portfolio-container portfolio-missing">
           <p className="portfolio-eyebrow">Writing</p>
           <h1>This article is unavailable right now.</h1>
-          <p>The publication service may be offline, or this article may no longer be available.</p>
+          <p>The article may no longer be available.</p>
           <Link className="portfolio-text-link" href="/blog">Return to writing</Link>
         </main>
         <PortfolioFooter />
