@@ -22,7 +22,9 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
     }
   }
 
-  const tagStrings = Array.isArray(post.tags) ? post.tags : []
+  const tagStrings = Array.isArray(post.tags)
+    ? post.tags.map((tag) => (typeof tag === 'string' ? tag : tag.name))
+    : []
 
   return {
     title: `${post.title} - Maath Mphepo Blog`,
