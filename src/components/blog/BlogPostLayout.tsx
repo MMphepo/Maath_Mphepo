@@ -83,7 +83,7 @@ const BlogPostLayout = ({
                       className="inline-flex items-center gap-1 px-3 py-1 bg-primary/20 text-primary rounded-full text-sm font-medium"
                     >
                       <TagIcon className="w-3 h-3" />
-                      {tag}
+                      {typeof tag === 'string' ? tag : tag.name}
                     </span>
                   ))}
                 </motion.div>
@@ -123,9 +123,9 @@ const BlogPostLayout = ({
                   {formatDate(post.createdAt || post.updatedAt)}
                 </div>
                 
-                {post.content_metadata && (
+                {(post as any).content_metadata && (
                   <ContentStats 
-                    metadata={post.content_metadata} 
+                    metadata={(post as any).content_metadata} 
                     showDetailed={false}
                   />
                 )}
@@ -170,7 +170,7 @@ const BlogPostLayout = ({
               )}
 
               {/* Banner Image */}
-              {post.banner_image && (
+              {post.bannerImage && (
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -178,8 +178,8 @@ const BlogPostLayout = ({
                   className="relative h-64 sm:h-80 lg:h-96 rounded-xl overflow-hidden"
                 >
                   <img
-                    src={post.banner_image}
-                    alt={post.banner_image_alt || post.title}
+                    src={post.bannerImage}
+                    alt={post.title}
                     className="w-full h-full object-cover"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
@@ -234,7 +234,7 @@ const BlogPostLayout = ({
               transition={{ duration: 0.6, delay: 0.7 }}
             >
               <BlogContentRenderer 
-                content={post.processed_content || post.content} 
+                content={post.content} 
                 isPreview={isPreview}
               />
             </motion.div>
@@ -244,25 +244,25 @@ const BlogPostLayout = ({
         {/* Sidebar */}
         <div className="space-y-6">
           {/* Table of Contents */}
-          {showTOC && post.table_of_contents && post.table_of_contents.length > 0 && (
+          {showTOC && (post as any).table_of_contents && (post as any).table_of_contents.length > 0 && (
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, delay: 0.8 }}
             >
-              <TableOfContents items={post.table_of_contents} />
+              <TableOfContents items={(post as any).table_of_contents} />
             </motion.div>
           )}
 
           {/* Content Statistics */}
-          {showStats && post.content_metadata && (
+          {showStats && (post as any).content_metadata && (
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, delay: 0.9 }}
             >
               <ContentStats 
-                metadata={post.content_metadata} 
+                metadata={(post as any).content_metadata} 
                 showDetailed={true}
               />
             </motion.div>

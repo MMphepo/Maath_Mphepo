@@ -54,6 +54,18 @@ const BlogPostContent = ({ post: initialPost }: BlogPostContentProps) => {
         console.error('Error fetching enriched post:', error)
         // Use original post data as fallback
         setEnrichedPost({
+          id: slug || '',
+          title: '',
+          slug: slug || '',
+          description: '',
+          content: '',
+          tags: [],
+          views: 0,
+          likes: 0,
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+          isPublished: true,
+          readTime: 0,
           author: {
             name: initialAuthor?.name || 'Maath Mphepo',
             bio: 'Backend Developer & Software Engineer'
