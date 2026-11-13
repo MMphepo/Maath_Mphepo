@@ -45,7 +45,7 @@ const BlogPostLayout = ({
   }
 
   return (
-    <div className={`max-w-7xl mx-auto ${className}`}>
+    <div className={`portfolio-container ${className}`}>
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
         {/* Main Content */}
         <div className="lg:col-span-3">
@@ -57,13 +57,13 @@ const BlogPostLayout = ({
                 <motion.div
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="bg-yellow-500/10 border border-yellow-500/20 rounded-lg p-4"
+                  className="bg-blue/10 border border-blue/20 rounded-lg p-4"
                 >
-                  <div className="flex items-center gap-2 text-yellow-400">
+                  <div className="flex items-center gap-2 text-blue">
                     <Eye className="w-4 h-4" />
                     <span className="font-medium">Preview Mode</span>
                   </div>
-                  <p className="text-yellow-300 text-sm mt-1">
+                  <p className="text-blue/80 text-sm mt-1">
                     This is how your blog post will appear to visitors
                   </p>
                 </motion.div>
@@ -80,7 +80,7 @@ const BlogPostLayout = ({
                   {post.tags.map((tag, index) => (
                     <span
                       key={index}
-                      className="inline-flex items-center gap-1 px-3 py-1 bg-primary/20 text-primary rounded-full text-sm font-medium"
+                      className="inline-flex items-center gap-1 px-3 py-1 bg-blue/10 text-blue rounded-full text-sm font-medium"
                     >
                       <TagIcon className="w-3 h-3" />
                       {typeof tag === 'string' ? tag : tag.name}
@@ -94,7 +94,7 @@ const BlogPostLayout = ({
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.1 }}
-                className="text-4xl sm:text-5xl font-bold text-white leading-tight"
+                className="text-4xl sm:text-5xl font-bold text-ink leading-tight"
               >
                 {post.title}
               </motion.h1>
@@ -105,7 +105,7 @@ const BlogPostLayout = ({
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.2 }}
-                  className="text-xl text-gray-300 leading-relaxed"
+                  className="text-xl text-muted leading-relaxed"
                 >
                   {post.description}
                 </motion.p>
@@ -116,7 +116,7 @@ const BlogPostLayout = ({
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.3 }}
-                className="flex flex-wrap items-center gap-6 text-gray-400 text-sm"
+                className="flex flex-wrap items-center gap-6 text-muted text-sm"
               >
                 <div className="flex items-center gap-2">
                   <Calendar className="w-4 h-4" />
@@ -147,9 +147,9 @@ const BlogPostLayout = ({
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.4 }}
-                  className="flex items-center gap-4 p-4 bg-dark-200/30 border border-dark-300 rounded-lg"
+                  className="flex items-center gap-4 p-4 bg-stone border border-border rounded-lg"
                 >
-                  <div className="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center">
+                  <div className="w-12 h-12 bg-blue/10 rounded-full flex items-center justify-center">
                     {post.author.avatar ? (
                       <img
                         src={post.author.avatar}
@@ -157,13 +157,13 @@ const BlogPostLayout = ({
                         className="w-full h-full rounded-full object-cover"
                       />
                     ) : (
-                      <User className="w-6 h-6 text-primary" />
+                      <User className="w-6 h-6 text-blue" />
                     )}
                   </div>
                   <div>
-                    <div className="text-white font-semibold">{post.author.name}</div>
+                    <div className="text-ink font-semibold">{post.author.name}</div>
                     {post.author.bio && (
-                      <div className="text-gray-400 text-sm">{post.author.bio}</div>
+                      <div className="text-muted text-sm">{post.author.bio}</div>
                     )}
                   </div>
                 </motion.div>
@@ -175,14 +175,14 @@ const BlogPostLayout = ({
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.5 }}
-                  className="relative h-64 sm:h-80 lg:h-96 rounded-xl overflow-hidden"
+                  className="relative h-64 sm:h-80 lg:h-96 rounded-lg overflow-hidden"
                 >
                   <img
                     src={post.bannerImage}
                     alt={post.title}
                     className="w-full h-full object-cover"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-graphite/20 to-transparent" />
                 </motion.div>
               )}
 
@@ -197,7 +197,7 @@ const BlogPostLayout = ({
                   {onLike && (
                     <button
                       onClick={onLike}
-                      className="flex items-center gap-2 px-4 py-2 bg-red-500/20 text-red-400 rounded-lg hover:bg-red-500/30 transition-colors duration-300"
+                      className="flex items-center gap-2 px-4 py-2 bg-red-500/10 text-red-500 rounded-lg hover:bg-red-500/20 transition-colors duration-300"
                     >
                       <Heart className="w-4 h-4" />
                       Like
@@ -207,7 +207,7 @@ const BlogPostLayout = ({
                   {onShare && (
                     <button
                       onClick={onShare}
-                      className="flex items-center gap-2 px-4 py-2 bg-blue-500/20 text-blue-400 rounded-lg hover:bg-blue-500/30 transition-colors duration-300"
+                      className="flex items-center gap-2 px-4 py-2 bg-blue/10 text-blue rounded-lg hover:bg-blue/20 transition-colors duration-300"
                     >
                       <Share2 className="w-4 h-4" />
                       Share
@@ -217,7 +217,7 @@ const BlogPostLayout = ({
                   {onBookmark && (
                     <button
                       onClick={onBookmark}
-                      className="flex items-center gap-2 px-4 py-2 bg-yellow-500/20 text-yellow-400 rounded-lg hover:bg-yellow-500/30 transition-colors duration-300"
+                      className="flex items-center gap-2 px-4 py-2 bg-yellow-500/10 text-yellow-600 rounded-lg hover:bg-yellow-500/20 transition-colors duration-300"
                     >
                       <Bookmark className="w-4 h-4" />
                       Bookmark
@@ -274,14 +274,14 @@ const BlogPostLayout = ({
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, delay: 1.0 }}
-              className="bg-dark-200/30 border border-dark-300 rounded-lg p-6"
+              className="bg-stone border border-border rounded-lg p-6"
             >
-              <h3 className="text-lg font-semibold text-white mb-4">Tags</h3>
+              <h3 className="text-lg font-semibold text-ink mb-4">Tags</h3>
               <div className="flex flex-wrap gap-2">
                 {post.tags.map((tag, index) => (
                   <span
                     key={index}
-                    className="px-3 py-1 bg-primary/20 text-primary rounded-full text-sm hover:bg-primary/30 transition-colors duration-300 cursor-pointer"
+                    className="px-3 py-1 bg-blue/10 text-blue rounded-full text-sm hover:bg-blue/20 transition-colors duration-300 cursor-pointer"
                   >
                     {typeof tag === 'string' ? tag : tag.name}
                   </span>

@@ -10,7 +10,7 @@ import BlogComments from './BlogComments'
 import BlogScrollProgress from './BlogScrollProgress'
 
 // Import highlight.js styles and custom markdown styles
-import 'highlight.js/styles/github-dark.css'
+import 'highlight.js/styles/github.css'
 import '@/styles/markdown.css'
 
 interface BlogPostContentProps {
@@ -128,14 +128,16 @@ const BlogPostContent = ({ post: initialPost }: BlogPostContentProps) => {
 
   if (isLoading) {
     return (
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="animate-pulse space-y-8">
-          <div className="h-8 bg-dark-300 rounded w-3/4"></div>
-          <div className="h-4 bg-dark-300 rounded w-1/2"></div>
-          <div className="space-y-3">
-            <div className="h-4 bg-dark-300 rounded"></div>
-            <div className="h-4 bg-dark-300 rounded w-5/6"></div>
-            <div className="h-4 bg-dark-300 rounded w-4/6"></div>
+      <div className="portfolio-site">
+        <div className="portfolio-container" style={{ paddingTop: '4rem', paddingBottom: '4rem' }}>
+          <div className="animate-pulse space-y-8 max-w-3xl mx-auto">
+            <div className="h-8 bg-stone rounded w-3/4"></div>
+            <div className="h-4 bg-stone rounded w-1/2"></div>
+            <div className="space-y-3">
+              <div className="h-4 bg-stone rounded"></div>
+              <div className="h-4 bg-stone rounded w-5/6"></div>
+              <div className="h-4 bg-stone rounded w-4/6"></div>
+            </div>
           </div>
         </div>
       </div>
@@ -143,17 +145,17 @@ const BlogPostContent = ({ post: initialPost }: BlogPostContentProps) => {
   }
 
   return (
-    <>
+    <div className="portfolio-site">
       <BlogScrollProgress />
 
       {/* Back Button */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+      <div className="portfolio-container py-4">
         <Link
           href="/blog"
-          className="inline-flex items-center gap-2 text-gray-400 hover:text-primary transition-colors duration-300"
+          className="inline-flex items-center gap-2 text-muted hover:text-blue transition-colors duration-300"
         >
           <ArrowLeft className="w-4 h-4" />
-          Back to Blog
+          Back to Writing
         </Link>
       </div>
 
@@ -163,14 +165,14 @@ const BlogPostContent = ({ post: initialPost }: BlogPostContentProps) => {
         onLike={handleLike}
         onShare={handleShare}
         onBookmark={handleBookmark}
-        className="px-4 sm:px-6 lg:px-8 pb-16"
+        className="pb-16"
       />
 
       {/* Comments Section */}
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="portfolio-container py-8">
         <BlogComments postSlug={post.slug} />
       </div>
-    </>
+    </div>
   )
 }
 

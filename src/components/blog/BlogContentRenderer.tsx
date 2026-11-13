@@ -3,7 +3,7 @@
 import { useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
 import hljs from 'highlight.js'
-import 'highlight.js/styles/github-dark.css'
+import 'highlight.js/styles/github.css'
 
 interface BlogContentRendererProps {
   content: string
@@ -55,7 +55,7 @@ const BlogContentRenderer = ({
     const img = e.target as HTMLImageElement
     // Create lightbox overlay
     const overlay = document.createElement('div')
-    overlay.className = 'fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 cursor-pointer'
+    overlay.className = 'fixed inset-0 bg-graphite/75 flex items-center justify-center z-50 cursor-pointer'
     overlay.onclick = () => document.body.removeChild(overlay)
 
     const enlargedImg = document.createElement('img')
