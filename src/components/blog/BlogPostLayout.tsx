@@ -283,7 +283,7 @@ const BlogPostLayout = ({
                     key={index}
                     className="px-3 py-1 bg-primary/20 text-primary rounded-full text-sm hover:bg-primary/30 transition-colors duration-300 cursor-pointer"
                   >
-                    {tag}
+                    {typeof tag === 'string' ? tag : tag.name}
                   </span>
                 ))}
               </div>

@@ -101,7 +101,7 @@ export function getBlogPostBySlug(slug: string): BlogPost | null {
     createdAt: frontmatter.date || new Date().toISOString(),
     updatedAt: frontmatter.date || new Date().toISOString(),
     isPublished: true,
-    readTime: parseInt(frontmatter.readTime || calculateReadTime(body), 10),
+    readTime: parseInt(String(frontmatter.readTime || calculateReadTime(body)), 10),
     author: {
       name: frontmatter.author_name || 'Maath Mphepo',
       avatar: frontmatter.author_avatar || '/images/hero-profile.png',
