@@ -15,10 +15,10 @@ const BlogReactions = ({ isLiked, likeCount, onLike }: BlogReactionsProps) => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
-      className="flex items-center justify-center py-12 border-y border-dark-300"
+      className="flex items-center justify-center py-12 border-y border-border"
     >
       <div className="text-center">
-        <p className="text-gray-400 mb-6">Did you find this article helpful?</p>
+        <p className="text-muted mb-6">Did you find this article helpful?</p>
         
         <motion.button
           onClick={onLike}
@@ -26,8 +26,8 @@ const BlogReactions = ({ isLiked, likeCount, onLike }: BlogReactionsProps) => {
           whileTap={{ scale: 0.95 }}
           className={`flex items-center gap-3 px-8 py-4 rounded-xl font-medium transition-all duration-300 ${
             isLiked
-              ? 'bg-primary text-white shadow-lg shadow-primary/25'
-              : 'bg-dark-200 text-gray-300 hover:bg-primary hover:text-white hover:shadow-lg hover:shadow-primary/25'
+              ? 'bg-blue text-white shadow-lg shadow-blue/25'
+              : 'bg-stone text-muted hover:bg-blue hover:text-white hover:shadow-lg hover:shadow-blue/25'
           }`}
         >
           <motion.div
@@ -44,7 +44,7 @@ const BlogReactions = ({ isLiked, likeCount, onLike }: BlogReactionsProps) => {
           </span>
           
           {likeCount > 0 && (
-            <span className="px-2 py-1 bg-white/20 rounded-full text-sm">
+            <span className="px-2 py-1 bg-stone/50 rounded-full text-sm">
               {likeCount}
             </span>
           )}
@@ -54,7 +54,7 @@ const BlogReactions = ({ isLiked, likeCount, onLike }: BlogReactionsProps) => {
           <motion.p
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-primary text-sm mt-3"
+            className="text-blue text-sm mt-3"
           >
             Thank you for your feedback! 🎉
           </motion.p>

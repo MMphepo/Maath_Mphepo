@@ -44,12 +44,12 @@ const BlogSocialShare = ({ title, url }: BlogSocialShareProps) => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
-      className="py-8 border-b border-dark-300"
+      className="py-8 border-b border-border"
     >
       <div className="flex items-center justify-between">
         <div>
-          <h3 className="text-white font-semibold mb-2">Share this article</h3>
-          <p className="text-gray-400 text-sm">Help others discover this content</p>
+          <h3 className="text-ink font-semibold mb-2">Share this article</h3>
+          <p className="text-muted text-sm">Help others discover this content</p>
         </div>
 
         <div className="relative">
@@ -57,7 +57,7 @@ const BlogSocialShare = ({ title, url }: BlogSocialShareProps) => {
             onClick={() => setIsOpen(!isOpen)}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors duration-300"
+            className="flex items-center gap-2 px-4 py-2 bg-blue text-white rounded-lg hover:bg-blue/90 transition-colors duration-300"
           >
             <Share2 className="w-4 h-4" />
             Share
@@ -70,7 +70,7 @@ const BlogSocialShare = ({ title, url }: BlogSocialShareProps) => {
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.95, y: 10 }}
                 transition={{ duration: 0.2 }}
-                className="absolute right-0 top-full mt-2 bg-dark-200 border border-dark-300 rounded-xl p-4 shadow-xl z-10 min-w-[200px]"
+                className="absolute right-0 top-full mt-2 bg-stone border border-border rounded-xl p-4 shadow-xl z-10 min-w-[200px]"
               >
                 <div className="grid grid-cols-1 gap-2">
                   {socialShareButtons.map((button) => {
@@ -82,7 +82,7 @@ const BlogSocialShare = ({ title, url }: BlogSocialShareProps) => {
                         key={button.platform}
                         onClick={() => handleShare(button.platform, shareUrl)}
                         whileHover={{ scale: 1.02, x: 5 }}
-                        className="flex items-center gap-3 px-3 py-2 text-left text-gray-300 hover:text-white hover:bg-dark-300 rounded-lg transition-all duration-300"
+                        className="flex items-center gap-3 px-3 py-2 text-left text-muted hover:text-ink hover:bg-stone rounded-lg transition-all duration-300"
                       >
                         <Icon 
                           className="w-4 h-4" 
@@ -103,7 +103,7 @@ const BlogSocialShare = ({ title, url }: BlogSocialShareProps) => {
 
       {/* Quick Share Buttons */}
       <div className="flex items-center gap-3 mt-6">
-        <span className="text-gray-400 text-sm">Quick share:</span>
+        <span className="text-muted text-sm">Quick share:</span>
         {socialShareButtons.slice(0, 4).map((button) => {
           const Icon = getIcon(button.icon)
           const shareUrl = button.shareUrl({ title, text: title, url })
@@ -114,7 +114,7 @@ const BlogSocialShare = ({ title, url }: BlogSocialShareProps) => {
               onClick={() => handleShare(button.platform, shareUrl)}
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
-              className="w-8 h-8 rounded-full flex items-center justify-center transition-colors duration-300 hover:bg-dark-300"
+              className="w-8 h-8 rounded-full flex items-center justify-center transition-colors duration-300 hover:bg-stone"
               style={{ color: button.color }}
             >
               <Icon className="w-4 h-4" />

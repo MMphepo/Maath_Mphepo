@@ -1,9 +1,11 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
-import { motion } from 'framer-motion'
-import hljs from 'highlight.js'
+import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
+import rehypeHighlight from 'rehype-highlight'
 import 'highlight.js/styles/github.css'
+import { motion } from 'framer-motion'
+import { useEffect, useRef } from 'react'
 
 interface BlogContentRendererProps {
   content: string
@@ -19,14 +21,8 @@ const BlogContentRenderer = ({
   const contentRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    // Highlight code blocks after content is rendered
+    // Add click handlers for images (lightbox effect)
     if (contentRef.current) {
-      const codeBlocks = contentRef.current.querySelectorAll('pre code')
-      codeBlocks.forEach((block) => {
-        hljs.highlightElement(block as HTMLElement)
-      })
-
-      // Add click handlers for images (lightbox effect)
       const images = contentRef.current.querySelectorAll('img')
       images.forEach((img) => {
         img.addEventListener('click', handleImageClick)
@@ -53,7 +49,6 @@ const BlogContentRenderer = ({
 
   const handleImageClick = (e: Event) => {
     const img = e.target as HTMLImageElement
-    // Create lightbox overlay
     const overlay = document.createElement('div')
     overlay.className = 'fixed inset-0 bg-graphite/75 flex items-center justify-center z-50 cursor-pointer'
     overlay.onclick = () => document.body.removeChild(overlay)
@@ -79,25 +74,6 @@ const BlogContentRenderer = ({
     }
   }
 
-  // Process content to add IDs to headings for table of contents
-  const processContent = (htmlContent: string) => {
-    return htmlContent.replace(
-      /<h([1-6])([^>]*)>(.*?)<\/h[1-6]>/g,
-      (match, level, attrs, text) => {
-        const cleanText = text.replace(/<[^>]*>/g, '')
-        const id = cleanText
-          .toLowerCase()
-          .replace(/[^\w\s-]/g, '')
-          .replace(/\s+/g, '-')
-          .trim()
-        
-        return `<h${level}${attrs} id="${id}">${text}</h${level}>`
-      }
-    )
-  }
-
-  const processedContent = processContent(content)
-
   return (
     <motion.div
       ref={contentRef}
@@ -105,8 +81,14 @@ const BlogContentRenderer = ({
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
       className={`blog-content-renderer ${className} ${isPreview ? 'preview-mode' : ''}`}
-      dangerouslySetInnerHTML={{ __html: processedContent }}
-    />
+    >
+      <ReactMarkdown
+        remarkPlugins={[remarkGfm]}
+        rehypePlugins={[rehypeHighlight]}
+      >
+        {content}
+      </ReactMarkdown>
+    </motion.div>
   )
 }
 

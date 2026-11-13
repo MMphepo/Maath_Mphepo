@@ -34,43 +34,43 @@ const ContentStats = ({
       icon: <Type className="w-4 h-4" />,
       label: 'Words',
       value: metadata.word_count.toLocaleString(),
-      color: 'text-blue-400',
-      bgColor: 'bg-blue-500/20'
+      color: 'text-blue',
+      bgColor: 'bg-blue/20'
     },
     {
       icon: <Clock className="w-4 h-4" />,
       label: 'Read Time',
       value: `${metadata.reading_time} min`,
-      color: 'text-green-400',
-      bgColor: 'bg-green-500/20'
+      color: 'text-blue',
+      bgColor: 'bg-blue/20'
     },
     {
       icon: <ImageIcon className="w-4 h-4" />,
       label: 'Images',
       value: metadata.image_count.toString(),
-      color: 'text-purple-400',
-      bgColor: 'bg-purple-500/20'
+      color: 'text-blue',
+      bgColor: 'bg-blue/20'
     },
     {
       icon: <Link className="w-4 h-4" />,
       label: 'Links',
       value: metadata.link_count.toString(),
-      color: 'text-yellow-400',
-      bgColor: 'bg-yellow-500/20'
+      color: 'text-blue',
+      bgColor: 'bg-blue/20'
     },
     {
       icon: <Hash className="w-4 h-4" />,
       label: 'Headings',
       value: metadata.heading_count.toString(),
-      color: 'text-red-400',
-      bgColor: 'bg-red-500/20'
+      color: 'text-blue',
+      bgColor: 'bg-blue/20'
     }
   ]
 
   if (!showDetailed) {
     // Simple inline stats
     return (
-      <div className={`flex items-center gap-6 text-sm text-gray-400 ${className}`}>
+      <div className={`flex items-center gap-6 text-sm text-muted ${className}`}>
         <span className="flex items-center gap-1">
           <Clock className="w-4 h-4" />
           {metadata.reading_time} min read
@@ -91,11 +91,11 @@ const ContentStats = ({
 
   // Detailed stats card
   return (
-    <div className={`bg-dark-200/30 border border-dark-300 rounded-lg ${className}`}>
-      <div className="p-4 border-b border-dark-300">
+    <div className={`bg-stone border border-border rounded-lg ${className}`}>
+      <div className="p-4 border-b border-border">
         <div className="flex items-center gap-2">
-          <BarChart3 className="w-5 h-5 text-primary" />
-          <h3 className="font-semibold text-white">Content Statistics</h3>
+          <BarChart3 className="w-5 h-5 text-blue" />
+          <h3 className="font-semibold text-ink">Content Statistics</h3>
         </div>
       </div>
 
@@ -107,7 +107,7 @@ const ContentStats = ({
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3, delay: index * 0.1 }}
-              className="flex items-center gap-3 p-3 bg-dark-300/30 rounded-lg"
+              className="flex items-center gap-3 p-3 bg-stone/30 rounded-lg"
             >
               <div className={`p-2 rounded-lg ${stat.bgColor}`}>
                 <div className={stat.color}>
@@ -116,22 +116,22 @@ const ContentStats = ({
               </div>
               
               <div>
-                <p className="text-lg font-semibold text-white">{stat.value}</p>
-                <p className="text-sm text-gray-400">{stat.label}</p>
+                <p className="text-lg font-semibold text-ink">{stat.value}</p>
+                <p className="text-sm text-muted">{stat.label}</p>
               </div>
             </motion.div>
           ))}
         </div>
 
         {/* Reading difficulty indicator */}
-        <div className="mt-6 p-4 bg-dark-300/30 rounded-lg">
-          <h4 className="text-sm font-medium text-white mb-3">Reading Analysis</h4>
+        <div className="mt-6 p-4 bg-stone/30 rounded-lg">
+          <h4 className="text-sm font-medium text-ink mb-3">Reading Analysis</h4>
           
           <div className="space-y-3">
             {/* Reading level */}
             <div className="flex items-center justify-between">
-              <span className="text-sm text-gray-400">Reading Level</span>
-              <span className="text-sm text-white">
+              <span className="text-sm text-muted">Reading Level</span>
+              <span className="text-sm text-ink">
                 {metadata.word_count < 500 ? 'Quick Read' :
                  metadata.word_count < 1500 ? 'Medium Read' : 'Long Read'}
               </span>
@@ -139,8 +139,8 @@ const ContentStats = ({
 
             {/* Content density */}
             <div className="flex items-center justify-between">
-              <span className="text-sm text-gray-400">Content Density</span>
-              <span className="text-sm text-white">
+              <span className="text-sm text-muted">Content Density</span>
+              <span className="text-sm text-ink">
                 {metadata.heading_count / Math.max(1, Math.ceil(metadata.word_count / 100)) > 0.1 
                   ? 'Well Structured' : 'Dense'}
               </span>
@@ -148,8 +148,8 @@ const ContentStats = ({
 
             {/* Visual content */}
             <div className="flex items-center justify-between">
-              <span className="text-sm text-gray-400">Visual Content</span>
-              <span className="text-sm text-white">
+              <span className="text-sm text-muted">Visual Content</span>
+              <span className="text-sm text-ink">
                 {metadata.image_count === 0 ? 'Text Only' :
                  metadata.image_count < 3 ? 'Light Visual' : 'Rich Visual'}
               </span>
@@ -158,13 +158,13 @@ const ContentStats = ({
         </div>
 
         {/* Engagement prediction */}
-        <div className="mt-4 p-4 bg-primary/10 border border-primary/20 rounded-lg">
+        <div className="mt-4 p-4 bg-blue/10 border border-blue/20 rounded-lg">
           <div className="flex items-center gap-2 mb-2">
-            <div className="w-2 h-2 bg-primary rounded-full"></div>
-            <span className="text-sm font-medium text-primary">Engagement Prediction</span>
+            <div className="w-2 h-2 bg-blue rounded-full"></div>
+            <span className="text-sm font-medium text-blue">Engagement Prediction</span>
           </div>
           
-          <p className="text-sm text-gray-300">
+          <p className="text-sm text-muted">
             {getEngagementPrediction(metadata)}
           </p>
         </div>

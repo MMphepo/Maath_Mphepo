@@ -88,7 +88,7 @@ const BlogComments = ({ postSlug }: BlogCommentsProps) => {
           placeholder="Your name"
           value={formData.name}
           onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-          className="px-4 py-3 bg-dark-200 border border-dark-300 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-primary transition-colors duration-300"
+          className="px-4 py-3 bg-stone border border-border rounded-lg text-ink placeholder-muted focus:outline-none focus:border-blue transition-colors duration-300"
           required
         />
         <input
@@ -96,7 +96,7 @@ const BlogComments = ({ postSlug }: BlogCommentsProps) => {
           placeholder="Your email"
           value={formData.email}
           onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-          className="px-4 py-3 bg-dark-200 border border-dark-300 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-primary transition-colors duration-300"
+          className="px-4 py-3 bg-stone border border-border rounded-lg text-ink placeholder-muted focus:outline-none focus:border-blue transition-colors duration-300"
           required
         />
       </div>
@@ -106,7 +106,7 @@ const BlogComments = ({ postSlug }: BlogCommentsProps) => {
         value={formData.content}
         onChange={(e) => setFormData({ ...formData, content: e.target.value })}
         rows={4}
-        className="w-full px-4 py-3 bg-dark-200 border border-dark-300 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-primary transition-colors duration-300 resize-none"
+        className="w-full px-4 py-3 bg-stone border border-border rounded-lg text-ink placeholder-muted focus:outline-none focus:border-blue transition-colors duration-300 resize-none"
         required
       />
       
@@ -116,7 +116,7 @@ const BlogComments = ({ postSlug }: BlogCommentsProps) => {
           disabled={submitting}
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
-          className="flex items-center gap-2 px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-300"
+          className="flex items-center gap-2 px-6 py-3 bg-blue text-white rounded-lg hover:bg-blue/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-300"
         >
           <Send className="w-4 h-4" />
           {submitting ? 'Posting...' : parentId ? 'Post Reply' : 'Post Comment'}
@@ -126,7 +126,7 @@ const BlogComments = ({ postSlug }: BlogCommentsProps) => {
           <button
             type="button"
             onClick={() => setReplyingTo(null)}
-            className="px-4 py-3 text-gray-400 hover:text-white transition-colors duration-300"
+            className="px-4 py-3 text-muted hover:text-ink transition-colors duration-300"
           >
             Cancel
           </button>
@@ -144,27 +144,27 @@ const BlogComments = ({ postSlug }: BlogCommentsProps) => {
       transition={{ duration: 0.3 }}
       className={`${depth > 0 ? 'ml-8 mt-4' : 'mb-6'}`}
     >
-      <div className="glass rounded-lg p-6">
+      <div className="bg-stone border border-border rounded-lg p-6">
         {/* Comment Header */}
         <div className="flex items-center gap-3 mb-4">
-          <div className="w-8 h-8 bg-primary/20 rounded-full flex items-center justify-center">
-            <User className="w-4 h-4 text-primary" />
+          <div className="w-8 h-8 bg-blue/10 rounded-full flex items-center justify-center">
+            <User className="w-4 h-4 text-blue" />
           </div>
           <div>
-            <div className="text-white font-medium">{comment.name}</div>
-            <div className="text-gray-400 text-sm">{formatRelativeTime(comment.createdAt)}</div>
+            <div className="text-ink font-medium">{comment.name}</div>
+            <div className="text-muted text-sm">{formatRelativeTime(comment.createdAt)}</div>
           </div>
         </div>
 
         {/* Comment Content */}
-        <p className="text-gray-300 mb-4 leading-relaxed">{comment.content}</p>
+        <p className="text-muted mb-4 leading-relaxed">{comment.content}</p>
 
         {/* Comment Actions */}
         <div className="flex items-center gap-4">
           <motion.button
             onClick={() => setReplyingTo(replyingTo === comment.id ? null : comment.id)}
             whileHover={{ scale: 1.05 }}
-            className="flex items-center gap-2 text-sm text-gray-400 hover:text-primary transition-colors duration-300"
+            className="flex items-center gap-2 text-sm text-muted hover:text-blue transition-colors duration-300"
           >
             <Reply className="w-3 h-3" />
             Reply
@@ -199,15 +199,15 @@ const BlogComments = ({ postSlug }: BlogCommentsProps) => {
     >
       {/* Section Header */}
       <div className="flex items-center gap-3 mb-8">
-        <MessageCircle className="w-6 h-6 text-primary" />
-        <h2 className="text-2xl font-bold text-white">
+        <MessageCircle className="w-6 h-6 text-blue" />
+        <h2 className="text-2xl font-bold text-ink">
           Comments ({comments.length})
         </h2>
       </div>
 
       {/* Comment Form */}
-      <div className="glass rounded-xl p-6 mb-8">
-        <h3 className="text-white font-semibold mb-6">Leave a Comment</h3>
+      <div className="bg-stone border border-border rounded-xl p-6 mb-8">
+        <h3 className="text-ink font-semibold mb-6">Leave a Comment</h3>
         {renderCommentForm()}
       </div>
 
@@ -215,7 +215,7 @@ const BlogComments = ({ postSlug }: BlogCommentsProps) => {
       <div>
         {loading ? (
           <div className="text-center py-8">
-            <div className="text-gray-400">Loading comments...</div>
+            <div className="text-muted">Loading comments...</div>
           </div>
         ) : comments.length > 0 ? (
           <div>
@@ -223,9 +223,9 @@ const BlogComments = ({ postSlug }: BlogCommentsProps) => {
           </div>
         ) : (
           <div className="text-center py-12">
-            <MessageCircle className="w-12 h-12 text-gray-600 mx-auto mb-4" />
-            <h3 className="text-white font-semibold mb-2">No comments yet</h3>
-            <p className="text-gray-400">Be the first to share your thoughts!</p>
+            <MessageCircle className="w-12 h-12 text-muted mx-auto mb-4" />
+            <h3 className="text-ink font-semibold mb-2">No comments yet</h3>
+            <p className="text-muted">Be the first to share your thoughts!</p>
           </div>
         )}
       </div>
